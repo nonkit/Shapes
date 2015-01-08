@@ -786,66 +786,69 @@ dm_exit:
         buf = buf + "  ' return shX, shY - current position of shapes" + CR + LF
         buf = buf + "  ' return shape - array of shapes" + CR + LF
         If nShapes > 0 Then
-            xmin = shape(1)("x")
-            ymin = shape(1)("y")
-            xmax = shape(1)("x")
-            ymax = shape(1)("y")
+            shp = shape(1)
+            xmin = shp("x")
+            ymin = shp("y")
+            xmax = shp("x")
+            ymax = shp("y")
         End If
         For i = 2 To nShapes
-            If shape(i)("x") < xmin Then
-                xmin = shape(i)("x")
+            shp = shape(i)
+            If shp("x") < xmin Then
+                xmin = shp("x")
             End If
-            If shape(i)("y") < ymin Then
-                ymin = shape(i)("y")
+            If shp("y") < ymin Then
+                ymin = shp("y")
             End If
-            If xmax < shape(i)("x") Then
-                xmax = shape(i)("x")
+            If xmax < shp("x") Then
+                xmax = shp("x")
             End If
-            If ymax < shape(i)("y") Then
-                ymax = shape(i)("y")
+            If ymax < shp("y") Then
+                ymax = shp("y")
             End If
         Next
         buf = buf + "  shX = " + xmin + " ' x offset" + CR + LF
         buf = buf + "  shY = " + ymin + " ' y offset" + CR + LF
         buf = buf + "  shape = " + WQ + WQ + CR + LF
         For i = 1 To nShapes
-            If (shape(i)("func") = CType("rect", Primitive)) Or (shape(i)("func") = CType("ell", Primitive)) Then
-                buf = buf + "  shape[" + i + "] = " + WQ + "func=" + shape(i)("func") + ";"
-                buf = buf + "x=" + (shape(i)("x") - xmin) + ";"
-                buf = buf + "y=" + (shape(i)("y") - ymin) + ";"
-                buf = buf + "width=" + shape(i)("width") + ";"
-                buf = buf + "height=" + shape(i)("height") + ";"
-                If (shape(i)("angle") <> 0) And (shape(i)("angle") <> CType("", Primitive)) Then
-                    buf = buf + "angle=" + shape(i)("angle") + ";"
+            shp = shape(i)
+            If (shp("func") = CType("rect", Primitive)) Or (shp("func") = CType("ell", Primitive)) Then
+                buf = buf + "  shape[" + i + "] = " + WQ + "func=" + shp("func") + ";"
+                buf = buf + "x=" + (shp("x") - xmin) + ";"
+                buf = buf + "y=" + (shp("y") - ymin) + ";"
+                buf = buf + "width=" + shp("width") + ";"
+                buf = buf + "height=" + shp("height") + ";"
+                If (shp("angle") <> 0) And (shp("angle") <> CType("", Primitive)) Then
+                    buf = buf + "angle=" + shp("angle") + ";"
                 End If
-                buf = buf + "bc=" + shape(i)("bc") + ";"
-            ElseIf shape(i)("func") = CType("tri", Primitive) Then
+                buf = buf + "bc=" + shp("bc") + ";"
+            ElseIf shp("func") = CType("tri", Primitive) Then
                 buf = buf + "  shape[" + i + "] = " + WQ + "func=tri;"
-                buf = buf + "x=" + (shape(i)("x") - xmin) + ";"
-                buf = buf + "y=" + (shape(i)("y") - ymin) + ";"
-                buf = buf + "x1=" + shape(i)("x1") + ";"
-                buf = buf + "y1=" + shape(i)("y1") + ";"
-                buf = buf + "x2=" + shape(i)("x2") + ";"
-                buf = buf + "y2=" + shape(i)("y2") + ";"
-                buf = buf + "x3=" + shape(i)("x3") + ";"
-                buf = buf + "y3=" + shape(i)("y3") + ";"
-                If (shape(i)("angle") <> 0) And (shape(i)("angle") <> CType("", Primitive)) Then
-                    buf = buf + "angle=" + shape(i)("angle") + ";"
+                buf = buf + "x=" + (shp("x") - xmin) + ";"
+                buf = buf + "y=" + (shp("y") - ymin) + ";"
+                buf = buf + "x1=" + shp("x1") + ";"
+                buf = buf + "y1=" + shp("y1") + ";"
+                buf = buf + "x2=" + shp("x2") + ";"
+                buf = buf + "y2=" + shp("y2") + ";"
+                buf = buf + "x3=" + shp("x3") + ";"
+                buf = buf + "y3=" + shp("y3") + ";"
+                If (shp("angle") <> 0) And (shp("angle") <> CType("", Primitive)) Then
+                    buf = buf + "angle=" + shp("angle") + ";"
                 End If
-                buf = buf + "bc=" + shape(i)("bc") + ";"
-            ElseIf shape(i)("func") = CType("line", Primitive) Then
+                buf = buf + "bc=" + shp("bc") + ";"
+            ElseIf shp("func") = CType("line", Primitive) Then
                 buf = buf + "  shape[" + i + "] = " + WQ + "func=line;"
-                buf = buf + "x=" + (shape(i)("x") - xmin) + ";"
-                buf = buf + "y=" + (shape(i)("y") - ymin) + ";"
-                buf = buf + "x1=" + shape(i)("x1") + ";"
-                buf = buf + "y1=" + shape(i)("y1") + ";"
-                buf = buf + "x2=" + shape(i)("x2") + ";"
-                buf = buf + "y2=" + shape(i)("y2") + ";"
+                buf = buf + "x=" + (shp("x") - xmin) + ";"
+                buf = buf + "y=" + (shp("y") - ymin) + ";"
+                buf = buf + "x1=" + shp("x1") + ";"
+                buf = buf + "y1=" + shp("y1") + ";"
+                buf = buf + "x2=" + shp("x2") + ";"
+                buf = buf + "y2=" + shp("y2") + ";"
             End If
-            If shape(i)("pw") > 0 Then
-                buf = buf + "pc=" + shape(i)("pc") + ";"
+            If shp("pw") > 0 Then
+                buf = buf + "pc=" + shp("pc") + ";"
             End If
-            buf = buf + "pw=" + shape(i)("pw") + ";" + WQ + CR + LF
+            buf = buf + "pw=" + shp("pw") + ";" + WQ + CR + LF
         Next
         buf = buf + "EndSub" + CR + LF
         filename = Program.Directory + "\" + pgmname
@@ -2744,24 +2747,26 @@ rs_exit:
         nShapes = Microsoft.SmallBasic.Library.Array.GetItemCount(shape)
         iMax = nShapes
         For i = iMin To iMax
-            shape(i)("x") = shape(i)("x") + shX
-            shape(i)("y") = shape(i)("y") + shY
-            If (shape(i)("func") = CType("tri", Primitive)) And (shape(i)("y2") < shape(i)("y1")) Then
-                shape(i)("y2") = shape(i)("y1")
-                shape(i)("y1") = shape(i)("y3")
-                shape(i)("y3") = shape(i)("y2")
-                shape(i)("angle") = shape(i)("angle") + 180
-                If shape(i)("angle") >= 360 Then
-                    shape(i)("angle") = shape(i)("angle") - 360
+            shp = shape(i)
+            shp("x") = shp("x") + shX
+            shp("y") = shp("y") + shY
+            If (shp("func") = CType("tri", Primitive)) And (shp("y2") < shp("y1")) Then
+                shp("y2") = shp("y1")
+                shp("y1") = shp("y3")
+                shp("y3") = shp("y2")
+                shp("angle") = shp("angle") + 180
+                If shp("angle") >= 360 Then
+                    shp("angle") = shp("angle") - 360
                 End If
             End If
+            shape(i) = shp
             CalcDetectBorder()
-            If shape(i)("pc") <> CType("", Primitive) Then
-                color = shape(i)("pc")
+            If shp("pc") <> CType("", Primitive) Then
+                color = shp("pc")
                 CS_AddColorToPalette()
             End If
-            If shape(i)("bc") <> CType("", Primitive) Then
-                color = shape(i)("bc")
+            If shp("bc") <> CType("", Primitive) Then
+                color = shp("bc")
                 CS_AddColorToPalette()
             End If
         Next

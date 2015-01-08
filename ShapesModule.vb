@@ -1921,7 +1921,7 @@ scco_obj_found:
         CS_RemovePalette()
         CS_RemoveSliders()
         Microsoft.SmallBasic.Library.Shapes.Remove(oColor)
-        'Shapes.Remove(oColor2)
+        'Microsoft.SmallBasic.Library.Shapes.Remove(oColor2)
         Microsoft.SmallBasic.Library.Shapes.Remove(oNewColor)
         Microsoft.SmallBasic.Library.Shapes.Remove(oRectCurrent)
         Microsoft.SmallBasic.Library.Shapes.Remove(oRect)
