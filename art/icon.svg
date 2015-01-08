@@ -1,0 +1,13 @@
+﻿<svg width="598" height="428">
+  <defs>
+    <g id="g1">
+      <ellipse cx="66" cy="53" rx="52" ry="52" 
+        style="fill:#ee892b;stroke:#8e4a0b;stroke-width:2"/>
+      <rect x="76" y="54" width="84" height="84" 
+        style="fill:#2beede;stroke:#0b8e83;stroke-width:2"/>
+      <polygon points="37,79 0,155 75,155" 
+        style="fill:#55ee2b;stroke:#278e0b;stroke-width:2"/>
+    </g>
+  </defs>
+  <use x="217" y="180" xlink:href="#g1" />
+</svg>

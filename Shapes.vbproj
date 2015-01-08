@@ -3,10 +3,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5836FCFE-621B-4924-8493-4D9B99902275}</ProjectGuid>
+    <ProjectGuid>{B62C6A99-1250-4BEB-BAE8-7539942E14B1}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <StartupObject>SmallSVGEditor.SmallSVGEditorModule</StartupObject>
-    <AssemblyName>SmallSVGEditor</AssemblyName>
+    <StartupObject>Shapes.ShapesModule</StartupObject>
+    <AssemblyName>Shapes</AssemblyName>
     <RootNamespace>$(AssemblyName)</RootNamespace>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsFormsWithCustomSubMain</MyType>
@@ -20,7 +20,6 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>3.5</OldToolsVersion>
-    <TargetFrameworkProfile />
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -44,7 +43,6 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -53,12 +51,11 @@
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="SmallBasicLibrary">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(programfiles)\ (x86)\Microsoft\Small Basic\SmallBasicLibrary.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Microsoft\Small Basic\SmallBasicLibrary.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
@@ -76,10 +73,7 @@
     <Import Include="Microsoft.SmallBasic.Library" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SmallSVGEditorModule.vb" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
+    <Compile Include="ShapesModule.vb" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="My Project\" />

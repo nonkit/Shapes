@@ -1,0 +1,48 @@
+<svg width="598" height="428">
+  <defs>
+    <g id="g1">
+      <ellipse cx="133" cy="300" rx="14" ry="14" 
+        style="fill:#ebbcce;stroke:#000000;stroke-width:2"/>
+      <polygon points="70,202 0,326 140,326" 
+        style="fill:#ebbcce;stroke:#000000;stroke-width:2"/>
+      <ellipse cx="34" cy="79" rx="20" ry="78" 
+        style="fill:#ebbcce;stroke:#000000;stroke-width:2"/>
+      <ellipse cx="139" cy="93" rx="21" ry="78" 
+        transform="rotate(38 139 93)" 
+        style="fill:#ebbcce;stroke:#000000;stroke-width:2"/>
+      <ellipse cx="68" cy="182" rx="47" ry="53" 
+        style="fill:#ebbcce;stroke:#000000;stroke-width:2"/>
+      <ellipse cx="43" cy="186" rx="10" ry="13" 
+        style="fill:#000000;stroke:#000000;stroke-width:2"/>
+      <ellipse cx="97" cy="186" rx="10" ry="13" 
+        style="fill:#000000;stroke:#000000;stroke-width:2"/>
+      <ellipse cx="71" cy="226" rx="6" ry="4" 
+        style="fill:#000000;stroke:#000000;stroke-width:2"/>
+      <ellipse cx="35" cy="89" rx="7" ry="46" 
+        style="fill:#992e57;stroke:#000000;stroke-width:2"/>
+      <ellipse cx="132" cy="102" rx="7" ry="47" 
+        transform="rotate(37 132 102)" 
+        style="fill:#992e57;stroke:#000000;stroke-width:2"/>
+      <ellipse cx="36" cy="270" rx="11" ry="14" 
+        style="fill:#ebbcce;stroke:#000000;stroke-width:2"/>
+      <ellipse cx="103" cy="269" rx="10" ry="12" 
+        style="fill:#ebbcce;stroke:#000000;stroke-width:2"/>
+      <polygon points="65,238 54,302 76,302" 
+        transform="rotate(241 65 270)" 
+        style="fill:#e17f46;stroke:#000000;stroke-width:2"/>
+      <line x1="93" y1="251" x2="116" y2="231" 
+        style="stroke:#216e2e;stroke-width:4"/>
+      <line x1="93" y1="254" x2="121" y2="237" 
+        style="stroke:#216e2e;stroke-width:4"/>
+      <line x1="95" y1="256" x2="123" y2="247" 
+        style="stroke:#216e2e;stroke-width:4"/>
+      <line x1="81" y1="255" x2="85" y2="264" 
+        style="stroke:#000000;stroke-width:1"/>
+      <line x1="76" y1="261" x2="77" y2="265" 
+        style="stroke:#000000;stroke-width:1"/>
+      <line x1="70" y1="266" x2="71" y2="269" 
+        style="stroke:#000000;stroke-width:1"/>
+    </g>
+  </defs>
+  <use x="240" y="70" xlink:href="#g1" />
+</svg>

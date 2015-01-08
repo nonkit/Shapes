@@ -1,0 +1,13 @@
+<svg width="598" height="428">
+  <defs>
+    <g id="g1">
+      <rect x="0" y="0" width="219" height="276" 
+        style="fill:#ae895b;stroke-width:0"/>
+      <rect x="27" y="31" width="165" height="222" 
+        style="fill:#ffffff;stroke-width:0"/>
+      <rect x="53" y="22" width="112" height="21" 
+        style="fill:#afafaf;stroke-width:0"/>
+    </g>
+  </defs>
+  <use x="190" y="86" xlink:href="#g1" />
+</svg>

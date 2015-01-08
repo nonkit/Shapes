@@ -1,0 +1,85 @@
+<svg width="598" height="428">
+  <defs>
+    <g id="g1">
+      <ellipse cx="68" cy="74" rx="63" ry="63" 
+        style="fill:#939393;stroke:#000000;stroke-width:2"/>
+      <rect x="31" y="71" width="129" height="156" 
+        transform="rotate(340 95 149)" 
+        style="fill:#dedede;stroke:#000000;stroke-width:2"/>
+      <polygon points="28,238 0,287 57,287" 
+        style="fill:#dedede;stroke:#000000;stroke-width:2"/>
+      <polygon points="129,237 101,286 158,286" 
+        style="fill:#dedede;stroke:#000000;stroke-width:2"/>
+      <ellipse cx="27" cy="243" rx="17" ry="17" 
+        style="fill:#dedede;stroke:#000000;stroke-width:2"/>
+      <ellipse cx="128" cy="238" rx="17" ry="17" 
+        style="fill:#dedede;stroke:#000000;stroke-width:2"/>
+      <rect x="32" y="134" width="28" height="100" 
+        transform="rotate(17 46 184)" 
+        style="fill:#dedede;stroke:#000000;stroke-width:2"/>
+      <ellipse cx="72" cy="100" rx="22" ry="22" 
+        style="fill:#dedede;stroke:#000000;stroke-width:2"/>
+      <rect x="41" y="99" width="46" height="60" 
+        transform="rotate(16 64 129)" 
+        style="fill:#dedede;stroke-width:0"/>
+      <line x1="51" y1="94" x2="33" y2="150" 
+        style="stroke:#000000;stroke-width:2"/>
+      <line x1="94" y1="105" x2="77" y2="164" 
+        style="stroke:#000000;stroke-width:2"/>
+      <line x1="34" y1="151" x2="77" y2="166" 
+        style="stroke:#000000;stroke-width:2"/>
+      <polygon points="83,236 67,260 100,260" 
+        transform="rotate(159 83 248)" 
+        style="fill:#dedede;stroke:#000000;stroke-width:2"/>
+      <polygon points="170,205 154,229 187,229" 
+        transform="rotate(159 170 217)" 
+        style="fill:#dedede;stroke:#000000;stroke-width:2"/>
+      <rect x="83" y="221" width="94" height="23" 
+        transform="rotate(340 130 232)" 
+        style="fill:#dedede;stroke-width:0"/>
+      <rect x="110" y="85" width="33" height="18" 
+        transform="rotate(340 126 94)" 
+        style="fill:#1c235e;stroke-width:0"/>
+      <rect x="119" y="110" width="33" height="18" 
+        transform="rotate(340 135 119)" 
+        style="fill:#1c235e;stroke-width:0"/>
+      <rect x="3" y="64" width="126" height="9" 
+        transform="rotate(340 66 68)" 
+        style="fill:#1c235e;stroke-width:0"/>
+      <rect x="28" y="43" width="62" height="18" 
+        transform="rotate(340 59 52)" 
+        style="fill:#1c235e;stroke-width:0"/>
+      <line x1="89" y1="259" x2="179" y2="229" 
+        style="stroke:#000000;stroke-width:2"/>
+      <ellipse cx="70" cy="106" rx="10" ry="10" 
+        style="fill:#000000;stroke:#000000;stroke-width:2"/>
+      <rect x="48" y="108" width="9" height="112" 
+        transform="rotate(17 52 164)" 
+        style="fill:#000000;stroke:#000000;stroke-width:2"/>
+      <rect x="114" y="174" width="31" height="37" 
+        transform="rotate(340 129 192)" 
+        style="fill:#dedede;stroke:#000000;stroke-width:2"/>
+      <line x1="152" y1="212" x2="155" y2="237" 
+        style="stroke:#000000;stroke-width:2"/>
+      <line x1="95" y1="232" x2="106" y2="252" 
+        style="stroke:#000000;stroke-width:2"/>
+      <line x1="171" y1="205" x2="170" y2="232" 
+        style="stroke:#000000;stroke-width:2"/>
+      <line x1="78" y1="239" x2="95" y2="255" 
+        style="stroke:#000000;stroke-width:2"/>
+      <rect x="120" y="23" width="15" height="20" 
+        transform="rotate(326 127 33)" 
+        style="fill:#000000;stroke:#000000;stroke-width:2"/>
+      <rect x="98" y="1" width="10" height="29" 
+        transform="rotate(301 103 15)" 
+        style="fill:#000000;stroke:#000000;stroke-width:2"/>
+      <rect x="11" y="57" width="13" height="20" 
+        transform="rotate(351 17 67)" 
+        style="fill:#1c235e;stroke-width:0"/>
+      <rect x="94" y="27" width="13" height="20" 
+        transform="rotate(323 100 37)" 
+        style="fill:#1c235e;stroke-width:0"/>
+    </g>
+  </defs>
+  <use x="200" y="85" xlink:href="#g1" />
+</svg>

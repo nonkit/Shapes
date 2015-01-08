@@ -1,0 +1,79 @@
+<svg width="598" height="428">
+  <defs>
+    <g id="g1">
+      <rect x="73" y="31" width="33" height="139" 
+        style="fill:#2f9d2f;stroke-width:0"/>
+      <rect x="31" y="76" width="33" height="107" 
+        style="fill:#2f9d2f;stroke-width:0"/>
+      <rect x="116" y="75" width="32" height="109" 
+        style="fill:#2f9d2f;stroke-width:0"/>
+      <ellipse cx="90" cy="33" rx="17" ry="33" 
+        style="fill:#becd5a;stroke-width:0"/>
+      <ellipse cx="132" cy="74" rx="17" ry="33" 
+        style="fill:#becd5a;stroke-width:0"/>
+      <ellipse cx="48" cy="75" rx="17" ry="33" 
+        style="fill:#becd5a;stroke-width:0"/>
+      <ellipse cx="90" cy="33" rx="12" ry="24" 
+        style="fill:#95a432;stroke-width:0"/>
+      <ellipse cx="132" cy="74" rx="12" ry="24" 
+        style="fill:#95a432;stroke-width:0"/>
+      <ellipse cx="48" cy="75" rx="12" ry="24" 
+        style="fill:#95a432;stroke-width:0"/>
+      <ellipse cx="90" cy="186" rx="90" ry="61" 
+        style="fill:#227222;stroke-width:0"/>
+      <rect x="15" y="220" width="149" height="55" 
+        style="fill:#e0d485;stroke-width:0"/>
+      <ellipse cx="15" cy="267" rx="7" ry="7" 
+        style="fill:#e0d485;stroke-width:0"/>
+      <ellipse cx="163" cy="267" rx="7" ry="7" 
+        style="fill:#e0d485;stroke-width:0"/>
+      <ellipse cx="89" cy="158" rx="12" ry="12" 
+        style="fill:#ff4747;stroke-width:0"/>
+      <ellipse cx="109" cy="168" rx="12" ry="12" 
+        style="fill:#ff4747;stroke-width:0"/>
+      <ellipse cx="68" cy="168" rx="12" ry="12" 
+        style="fill:#ff4747;stroke-width:0"/>
+      <ellipse cx="101" cy="189" rx="12" ry="12" 
+        style="fill:#ff4747;stroke-width:0"/>
+      <ellipse cx="77" cy="188" rx="12" ry="12" 
+        style="fill:#ff4747;stroke-width:0"/>
+      <rect x="393" y="31" width="33" height="139" 
+        style="fill:#2f9d2f;stroke-width:0"/>
+      <rect x="351" y="76" width="33" height="107" 
+        style="fill:#2f9d2f;stroke-width:0"/>
+      <rect x="436" y="75" width="32" height="109" 
+        style="fill:#2f9d2f;stroke-width:0"/>
+      <ellipse cx="410" cy="33" rx="17" ry="33" 
+        style="fill:#becd5a;stroke-width:0"/>
+      <ellipse cx="452" cy="74" rx="17" ry="33" 
+        style="fill:#becd5a;stroke-width:0"/>
+      <ellipse cx="368" cy="75" rx="17" ry="33" 
+        style="fill:#becd5a;stroke-width:0"/>
+      <ellipse cx="410" cy="33" rx="12" ry="24" 
+        style="fill:#95a432;stroke-width:0"/>
+      <ellipse cx="452" cy="74" rx="12" ry="24" 
+        style="fill:#95a432;stroke-width:0"/>
+      <ellipse cx="368" cy="75" rx="12" ry="24" 
+        style="fill:#95a432;stroke-width:0"/>
+      <ellipse cx="410" cy="186" rx="90" ry="61" 
+        style="fill:#227222;stroke-width:0"/>
+      <rect x="335" y="220" width="149" height="55" 
+        style="fill:#e0d485;stroke-width:0"/>
+      <ellipse cx="335" cy="267" rx="7" ry="7" 
+        style="fill:#e0d485;stroke-width:0"/>
+      <ellipse cx="483" cy="267" rx="7" ry="7" 
+        style="fill:#e0d485;stroke-width:0"/>
+      <ellipse cx="409" cy="158" rx="12" ry="12" 
+        style="fill:#ffffff;stroke-width:0"/>
+      <ellipse cx="429" cy="168" rx="12" ry="12" 
+        style="fill:#ffffff;stroke-width:0"/>
+      <ellipse cx="388" cy="168" rx="12" ry="12" 
+        style="fill:#ffffff;stroke-width:0"/>
+      <ellipse cx="421" cy="189" rx="12" ry="12" 
+        style="fill:#ffffff;stroke-width:0"/>
+      <ellipse cx="397" cy="188" rx="12" ry="12" 
+        style="fill:#ffffff;stroke-width:0"/>
+    </g>
+  </defs>
+  <use x="50" y="108" xlink:href="#g1" />
+</svg>
