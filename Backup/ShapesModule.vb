@@ -3,17 +3,19 @@ Module ShapesModule
     Sub Main()
         ' Shapes
         ' Copyright © 2012-2015 Nonki Takahashi.  The MIT License.
-        ' Version 2.01b
+        ' Version 2.02b
         ' Last update 2015-01-09
         ' Repository https://git01.codeplex.com/shapesinsmallbasic
         '
         ' History:
         '  Created from Small SVG Editor 1.99b and Shapes 1.7b.
+        '  Removed TextWindow.WriteLine for debug.
+        '  Increased colors from 16 to 24 for color palette.
         '
         ' TODO:
-        '  [] #11 Support transparent brush color
-        '  [] #10 Support New command
-        '  [ ] #8 Redesign color palette
+        '  [ ] #11 Support transparent brush color
+        '  [ ] #10 Support New command
+        '  [✓] #8 Redesign color palette
         '  [ ] #7 Support text tag (element)
         '  [ ] #6 Check illegal behavior in Silverlight environment
         '  [ ] #5 Sort subroutines
@@ -21,7 +23,7 @@ Module ShapesModule
         '  [ ] #2 Bug fix for Silverlight:  Rotated triangles move after click
         '  [ ] #1 Bug fix for Silverlight:  Lines come different place
         '
-        title = "Shapes 2.01b"
+        title = "Shapes 2.02b"
         pgmname = "Shapes.smallbasic"
         GraphicsWindow.Title = title
         debug = false
@@ -1665,8 +1667,8 @@ csactp_not_new_color:
             pltt = palette(i)
             GraphicsWindow.BrushColor = pltt("color")
             pltt("oCell") = Shapes.AddRectangle(width, height)
-            dx = Microsoft.SmallBasic.Library.Math.Remainder(i - 1, 8) * (width + 4)
-            dy = Microsoft.SmallBasic.Library.Math.Floor((i - 1) / 8) * (height + 4)
+            dx = Microsoft.SmallBasic.Library.Math.Remainder(i - 1, maxPalette / 2) * (width + 4)
+            dy = Microsoft.SmallBasic.Library.Math.Floor((i - 1) / (maxPalette / 2)) * (height + 4)
             Shapes.Move(pltt("oCell"), x + dx, y + dy)
             pltt("x") = x + dx
             pltt("y") = y + dy
@@ -1766,7 +1768,7 @@ csactp_not_new_color:
         If Text.GetLength(bcolor) = 9 Then ' for Silverlight
             bcolor = "#" + Text.GetSubText(bcolor, 4, 6)
         End If
-        maxPalette = 16 ' max cell number of palette
+        maxPalette = 24 ' max cell number of palette
         nPalette = 2 ' number of palette in use
         tPalette = 3 ' index of update target cell
         pltt = palette(1)
@@ -1919,7 +1921,6 @@ scco_obj_found:
         CS_RemovePalette()
         CS_RemoveSliders()
         Shapes.Remove(oColor)
-        'Shapes.Remove(oColor2)
         Shapes.Remove(oNewColor)
         Shapes.Remove(oRectCurrent)
         Shapes.Remove(oRect)
@@ -2682,11 +2683,9 @@ scco_obj_found:
         pw = value
     End Sub
     Sub Parse_SB()
-        TextWindow.WriteLine(filename)
         subname = "Shapes_Init"
         buf = ""
         SB_AppendSub()
-        TextWindow.WriteLine(buf)
         ptr = Text.GetIndexOf(buf, "Sub " + "Shapes_Init")
         If ptr = 0 Then
             Goto rs_exit

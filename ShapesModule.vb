@@ -3,17 +3,19 @@ Module ShapesModule
     Sub Main()
         ' Shapes
         ' Copyright © 2012-2015 Nonki Takahashi.  The MIT License.
-        ' Version 2.01b
+        ' Version 2.02b
         ' Last update 2015-01-09
         ' Repository https://git01.codeplex.com/shapesinsmallbasic
         '
         ' History:
         '  Created from Small SVG Editor 1.99b and Shapes 1.7b.
+        '  Removed TextWindow.WriteLine for debug.
+        '  Increased colors from 16 to 24 for color palette.
         '
         ' TODO:
-        '  [] #11 Support transparent brush color
-        '  [] #10 Support New command
-        '  [ ] #8 Redesign color palette
+        '  [ ] #11 Support transparent brush color
+        '  [ ] #10 Support New command
+        '  [✓] #8 Redesign color palette
         '  [ ] #7 Support text tag (element)
         '  [ ] #6 Check illegal behavior in Silverlight environment
         '  [ ] #5 Sort subroutines
@@ -21,10 +23,10 @@ Module ShapesModule
         '  [ ] #2 Bug fix for Silverlight:  Rotated triangles move after click
         '  [ ] #1 Bug fix for Silverlight:  Lines come different place
         '
-        title = "Shapes 2.01b"
+        title = "Shapes 2.02b"
         pgmname = "Shapes.smallbasic"
         GraphicsWindow.Title = title
-        debug = false
+        debug = False
         SB_Workaround()
         gw = 598
         gh = 428
@@ -48,7 +50,7 @@ Module ShapesModule
         nShapes = 0
         iMin = 1
         iMax = nShapes
-        cont = true ' continue
+        cont = True ' continue
         Mouse_Init()
         KB_Init()
         param = "down=True;move=False;up=True;" ' wait to click
@@ -74,7 +76,7 @@ Module ShapesModule
                     If selectedshape <> CType("", Primitive) Then
                         DeleteSelectedShape()
                         i = selectedshape
-                        __select = false
+                        __select = False
                         ShapeSelect() ' removes pinches
                     End If
                 ElseIf (c = CType("LEFT", Primitive)) Or (c = CType("RIGHT", Primitive)) Or (c = CType("UP", Primitive)) Or (c = CType("DOWN", Primitive)) Then
@@ -218,7 +220,7 @@ Module ShapesModule
             pnch = pinch(i)
             If (pnch("_x0") <= mxD) And (mxD <= pnch("_x1")) And (pnch("_y0") <= myD) And (myD <= pnch("_y1")) Then
                 obj = "pinch" + i
-                Goto dco_exit
+                GoTo dco_exit
             End If
         Next
         For i = nShapes To 1 Step -1
@@ -231,14 +233,14 @@ Module ShapesModule
             If (shp("_x0") <= x) And (x <= shp("_x1")) And (shp("_y0") <= y) And (y <= shp("_y1")) Then
                 If (shp("func") = CType("rect", Primitive)) Or (shp("func") = CType("line", Primitive)) Then
                     obj = "shape" + i
-                    Goto dco_exit
+                    GoTo dco_exit
                 ElseIf shp("func") = CType("ell", Primitive) Then
                     x = (x - param("cx")) / shp("width") * 2
                     y = (y - param("cy")) / shp("height") * 2
                     r = Microsoft.SmallBasic.Library.Math.SquareRoot((x * x) + (y * y))
                     If r <= 1 Then
                         obj = "shape" + i
-                        Goto dco_exit
+                        GoTo dco_exit
                     End If
                 ElseIf shp("func") = CType("tri", Primitive) Then
                     x = (x - param("cx")) / shp("width") * 2
@@ -246,7 +248,7 @@ Module ShapesModule
                     r = Microsoft.SmallBasic.Library.Math.Abs(x) + Microsoft.SmallBasic.Library.Math.Abs(y)
                     If (r <= 1) And (y <= 0) Then
                         obj = "shape" + i
-                        Goto dco_exit
+                        GoTo dco_exit
                     End If
                 End If
             End If
@@ -255,13 +257,13 @@ Module ShapesModule
             mnu = menu(i)
             If (mnu("func") <> CType("", Primitive)) And (mnu("_x0") <= mxD) And (mxD <= mnu("_x1")) And (mnu("_y0") <= myD) And (myD <= mnu("_y1")) Then
                 obj = "menu" + i
-                Goto dco_exit
+                GoTo dco_exit
             End If
         Next
 dco_exit:
         If (obj = CType("", Primitive)) And (selectedshape <> CType("", Primitive)) Then
             i = selectedshape
-            __select = false
+            __select = False
             ShapeSelect()
         End If
         i = Stack.PopValue("local")
@@ -274,7 +276,7 @@ dco_exit:
             obj = ""
             mnu = menu(i)
             func = mnu("func")
-            __select = true
+            __select = True
             ItemSelect() ' shows menu item frame
             If (selecteditem = i) And Text.IsSubText("rect|ell|tri|line", func) Then
                 If mode = CType("repeat", Primitive) Then
@@ -290,7 +292,7 @@ dco_exit:
             selecteditem = i
             If Text.IsSubText("open|save|cut|paste|rect|ell|tri|line", func) And (selectedshape <> CType("", Primitive)) Then
                 i = selectedshape
-                __select = false
+                __select = False
                 ShapeSelect() ' removes pinches if a shape selected
                 If func = CType("cut", Primitive) Then
                     selectedshape = i
@@ -328,30 +330,30 @@ dco_exit:
                     shY = 0
                     Shapes_Add()
                     i = nShapes
-                    __select = true
+                    __select = True
                     ShapeSelect()
                 End If
             ElseIf (func = CType("rect", Primitive)) Or (func = CType("ell", Primitive)) Or (func = CType("tri", Primitive)) Then
                 ' rectangle, ellipse or triangle
-                While true
+                While True
                     WaitToClick() ' to get mxD, myD
                     DetectClickedObject()
                     If Text.StartsWith(obj, "menu") Then
-                        Goto dm_exit ' cancel to register shape
+                        GoTo dm_exit ' cancel to register shape
                     End If
                     obj = ""
                     mxM = mxD
                     myM = myD
                     angle = 0
                     WaitToReleaseS() ' to get mxU, myU
-                    resize = false
+                    resize = False
                     nShapes = nShapes + 1
                     i = nShapes ' to set shape[nShapes]
                     RegisterShapeData()
                     If (w = 0) And (h = 0) Then
                         shape(i) = ""
                         nShapes = nShapes - 1
-                        Goto dm_exit ' cansel to register zero sized shape
+                        GoTo dm_exit ' cansel to register zero sized shape
                     End If
                     GraphicsWindow.BrushColor = bcolor
                     GraphicsWindow.PenWidth = pwidth
@@ -369,15 +371,15 @@ dco_exit:
                     Microsoft.SmallBasic.Library.Shapes.Move(shp("obj"), xmin, ymin)
                     shape(nShapes) = shp
                     If mode = CType("single", Primitive) Then
-                        Goto dm_exit
+                        GoTo dm_exit
                     End If
                 End While
             ElseIf func = CType("line", Primitive) Then
-                While true
+                While True
                     WaitToClick() ' to get mxD, myD
                     DetectClickedObject()
                     If Text.StartsWith(obj, "menu") Then
-                        Goto dm_exit ' cancel to register line
+                        GoTo dm_exit ' cancel to register line
                     End If
                     obj = ""
                     mxM = mxD
@@ -389,7 +391,7 @@ dco_exit:
                     If (x1 = x2) And (y1 = y2) Then
                         shape(i) = ""
                         nShapes = nShapes - 1
-                        Goto dm_exit ' cansel to register zero sized line
+                        GoTo dm_exit ' cansel to register zero sized line
                     End If
                     GraphicsWindow.BrushColor = bcolor
                     GraphicsWindow.PenWidth = pwidth
@@ -401,7 +403,7 @@ dco_exit:
                     Microsoft.SmallBasic.Library.Shapes.Move(shp("obj"), xmin, ymin)
                     shape(nShapes) = shp
                     If mode = CType("single", Primitive) Then
-                        Goto dm_exit
+                        GoTo dm_exit
                     End If
                 End While
             ElseIf func = CType("pw", Primitive) Then
@@ -446,12 +448,12 @@ dco_exit:
                 End If
             ElseIf (func = CType("menubar", Primitive)) And (selectedshape <> CType("", Primitive)) Then
                 i = selectedshape
-                __select = false
+                __select = False
                 ShapeSelect()
             End If
             If (selectedshape <> CType("", Primitive)) And ((func = CType("pw", Primitive)) Or (func = CType("pc", Primitive)) Or (func = CType("bc", Primitive))) Then
                 i = selectedshape
-                __select = false
+                __select = False
                 ShapeSelect()
                 shp = shape(i)
                 If func = CType("pw", Primitive) Then
@@ -469,12 +471,12 @@ dco_exit:
                 shX = 0
                 shY = 0
                 Shapes_Add()
-                __select = true
+                __select = True
                 ShapeSelect()
             End If
 dm_exit:
             i = selecteditem
-            __select = false
+            __select = False
             ItemSelect() ' removes menu item frame
             If Text.IsSubText("rect|ell|tri|line", func) Then
                 Microsoft.SmallBasic.Library.Shapes.HideShape(repeat(func))
@@ -484,7 +486,7 @@ dm_exit:
     Sub DoObject()
         ' param obj - clicked object
         While obj <> CType("", Primitive)
-            fromMenu = false
+            fromMenu = False
             DoMenu()
             If obj <> CType("", Primitive) Then
                 DoShape()
@@ -507,9 +509,9 @@ dm_exit:
                 Microsoft.SmallBasic.Library.Shapes.Rotate(shp("obj"), angle)
                 shp("angle") = Microsoft.SmallBasic.Library.Math.Floor(angle)
                 shape(i) = shp
-                __select = false
+                __select = False
                 ShapeSelect() ' remove pinches
-                __select = true
+                __select = True
                 ShapeSelect() ' show pinches
             Else
                 shp = shape(selectedshape)
@@ -518,7 +520,7 @@ dm_exit:
                 func = shp("func")
                 WaitToReleaseS() ' to get mxU, myU
                 i = selectedshape
-                __select = false
+                __select = False
                 ShapeSelect() ' remove pinches
                 ' selectedshape is broken in ShapeSelect() so use i instead
                 RegisterShapeMetrics() ' re-size shape[i]
@@ -529,7 +531,7 @@ dm_exit:
                 shX = 0
                 shY = 0
                 Shapes_Add()
-                __select = true
+                __select = True
                 ShapeSelect() ' show pinches
             End If
         End If
@@ -538,15 +540,15 @@ dm_exit:
         If Text.StartsWith(obj, "shape") Then
             If selectedshape <> CType("", Primitive) Then ' if other shape selected
                 i = selectedshape
-                __select = false
+                __select = False
                 ShapeSelect() ' removes pinches
             End If
             i = Text.GetSubTextToEnd(obj, 6) ' shape index
-            __select = true
+            __select = True
             ShapeSelect() ' shows pinches
             Mouse_SetHandler()
             WaitToReleaseM() ' for moving a shape
-            clicked = false
+            clicked = False
             obj = ""
         End If
     End Sub
@@ -569,7 +571,7 @@ dm_exit:
         cyMenu = 6
         sizeMenu = 40
         nMenu = 13
-        grid = false
+        grid = False
         GraphicsWindow.BrushColor = "#EEEEEE"
         GraphicsWindow.FillRectangle(0, 0, gw, 20 + sizeMenu)
         pw = "1=2;2=4;3=8;4=16;5=0;6=1;" ' pen width
@@ -610,7 +612,7 @@ dm_exit:
         size = mnu("_x1") - x
         GraphicsWindow.PenColor = "Black"
         GraphicsWindow.PenWidth = 2
-        GraphicsWindow.FontBold = false
+        GraphicsWindow.FontBold = False
         GraphicsWindow.FontSize = 8
         url = "http://www.nonkit.com/smallbasic.files/"
         If i = 1 Then
@@ -735,7 +737,7 @@ dm_exit:
             oItem(i) = Microsoft.SmallBasic.Library.Shapes.AddText(itemname(i))
             Microsoft.SmallBasic.Library.Shapes.Move(oItem(i), x + margin, y + size)
         End If
-        GraphicsWindow.FontBold = true
+        GraphicsWindow.FontBold = True
         GraphicsWindow.FontSize = 12
     End Sub
     Sub DumpShape()
@@ -1216,7 +1218,7 @@ dm_exit:
         ' return mxD, myD - clicked point
         param = "down=True;move=False;up=False;" ' wait to click
         Mouse_SetHandler()
-        While clicked = CType(false, Primitive)
+        While clicked = CType(False, Primitive)
             Program.Delay(100)
         End While
     End Sub
@@ -1236,8 +1238,8 @@ dm_exit:
         shAngle = shp("angle")
         mxM = mxD
         myM = myD
-        moved = true
-        While released = CType(false, Primitive)
+        moved = True
+        While released = CType(False, Primitive)
             If moved Then
                 param = "move=False;" ' while moving a shape
                 Mouse_SetHandler()
@@ -1308,7 +1310,7 @@ dm_exit:
             x3 = shp("x3")
             y3 = shp("y3")
         End If
-        moved = true
+        moved = True
         If oFrame(func) <> CType("", Primitive) Then
             Microsoft.SmallBasic.Library.Shapes.Remove(oFrame(func))
         End If
@@ -1321,7 +1323,7 @@ dm_exit:
         End If
         Microsoft.SmallBasic.Library.Shapes.SetOpacity(oFrame(func), 0)
         Microsoft.SmallBasic.Library.Shapes.Move(oFrame(func), _x, _y)
-        While released = CType(false, Primitive)
+        While released = CType(False, Primitive)
             If moved Then
                 param = "move=False;" ' while sizing a shape
                 Mouse_SetHandler()
@@ -1360,8 +1362,8 @@ dm_exit:
         GraphicsWindow.BrushColor = "White"
         param = "down=False;move=True;up=True;" ' for sizing a shape / wait to release
         Mouse_SetHandler()
-        moved = true
-        While released = CType(false, Primitive)
+        moved = True
+        While released = CType(False, Primitive)
             If moved Then
                 param = "move=False;" ' while sizing a shape
                 Mouse_SetHandler()
@@ -1544,7 +1546,7 @@ dm_exit:
         For i = 1 To nPalette
             pltt = palette(i)
             If color = pltt("color") Then
-                Goto csactp_not_new_color
+                GoTo csactp_not_new_color
             End If
         Next
         pltt = palette(tPalette)
@@ -1665,8 +1667,8 @@ csactp_not_new_color:
             pltt = palette(i)
             GraphicsWindow.BrushColor = pltt("color")
             pltt("oCell") = Microsoft.SmallBasic.Library.Shapes.AddRectangle(width, height)
-            dx = Microsoft.SmallBasic.Library.Math.Remainder(i - 1, 8) * (width + 4)
-            dy = Microsoft.SmallBasic.Library.Math.Floor((i - 1) / 8) * (height + 4)
+            dx = Microsoft.SmallBasic.Library.Math.Remainder(i - 1, maxPalette / 2) * (width + 4)
+            dy = Microsoft.SmallBasic.Library.Math.Floor((i - 1) / (maxPalette / 2)) * (height + 4)
             Microsoft.SmallBasic.Library.Shapes.Move(pltt("oCell"), x + dx, y + dy)
             pltt("x") = x + dx
             pltt("y") = y + dy
@@ -1766,7 +1768,7 @@ csactp_not_new_color:
         If Text.GetLength(bcolor) = 9 Then ' for Silverlight
             bcolor = "#" + Text.GetSubText(bcolor, 4, 6)
         End If
-        maxPalette = 16 ' max cell number of palette
+        maxPalette = 24 ' max cell number of palette
         nPalette = 2 ' number of palette in use
         tPalette = 3 ' index of update target cell
         pltt = palette(1)
@@ -1810,7 +1812,7 @@ csactp_not_new_color:
             x3 = sldr("x3")
             y3 = sldr("y3")
             If (x2 <= mxD) And (mxD <= x3) And (y2 <= myD) And (myD <= y3) Then
-                Goto scco_obj_found
+                GoTo scco_obj_found
             End If
         Next
         For iPalette = 1 To nPalette
@@ -1821,7 +1823,7 @@ csactp_not_new_color:
             x3 = pltt("x") + pltt("width")
             y3 = pltt("y") + pltt("height")
             If (x2 <= mxD) And (mxD <= x3) And (y2 <= myD) And (myD <= y3) Then
-                Goto scco_obj_found
+                GoTo scco_obj_found
             End If
         Next
         obj = ""
@@ -1899,14 +1901,14 @@ scco_obj_found:
         width = Stack.PopValue("local")
         y = Stack.PopValue("local")
         x = Stack.PopValue("local")
-        cont = true ' continue
+        cont = True ' continue
         param = "down=True;move=False;up=False;" ' wait click
         Mouse_SetHandler()
         While cont
             If clicked Then
                 CS_SearchClickedObject()
                 CS_DoObject()
-                clicked = false
+                clicked = False
             Else
                 Program.Delay(100)
             End If
@@ -1919,7 +1921,6 @@ scco_obj_found:
         CS_RemovePalette()
         CS_RemoveSliders()
         Microsoft.SmallBasic.Library.Shapes.Remove(oColor)
-        'Microsoft.SmallBasic.Library.Shapes.Remove(oColor2)
         Microsoft.SmallBasic.Library.Shapes.Remove(oNewColor)
         Microsoft.SmallBasic.Library.Shapes.Remove(oRectCurrent)
         Microsoft.SmallBasic.Library.Shapes.Remove(oRect)
@@ -1930,11 +1931,11 @@ scco_obj_found:
     End Sub
     Sub CS_OnButtonClicked()
         ' Color Selector | Event handler on button clicked
-        cont = false
+        cont = False
         If Controls.LastClickedButton = oCancel Then
-            cancel = true
+            cancel = True
         Else
-            cancel = false
+            cancel = False
         End If
     End Sub
     Sub File_GetAbsPath()
@@ -2038,8 +2039,8 @@ scco_obj_found:
         AddHandler Controls.ButtonClicked, AddressOf File_OnButtonClicked
         AddHandler Controls.TextTyped, AddressOf File_OnTextTyped
         subname = "Shapes_Init"
-        typed = false
-        cont = true ' continue
+        typed = False
+        cont = True ' continue
         While cont
             If typed Then
                 curDir = Program.Directory
@@ -2049,7 +2050,7 @@ scco_obj_found:
                 buf = ""
                 buf = File.ReadContents(filename)
                 Controls.SetTextBoxText(oText, buf)
-                typed = false
+                typed = False
             Else
                 Program.Delay(200)
             End If
@@ -2095,7 +2096,7 @@ scco_obj_found:
     Sub File_OnTextTyped()
         ' File | Textbox event handler
         If Controls.LastTypedTextBox = oFilename Then
-            typed = true
+            typed = True
         End If
     End Sub
     Sub File_Save()
@@ -2107,11 +2108,11 @@ scco_obj_found:
         oSave = Controls.AddButton("Save", 488, gh - 34)
         Microsoft.SmallBasic.Library.Shapes.SetText(oMsg, "You can also click above, push Ctrl+A, Ctrl+C to copy to clipboard")
         AddHandler Controls.ButtonClicked, AddressOf File_OnButtonClicked
-        done = false
+        done = False
         lastExt = lowerExt
         filename = ""
         While __Not(done)
-            cont = true ' continue
+            cont = True ' continue
             While cont
                 If typed Then
                     curDir = Program.Directory
@@ -2129,7 +2130,7 @@ scco_obj_found:
                         Controls.SetTextBoxText(oText, buf)
                         lastExt = lowerExt
                     End If
-                    typed = false
+                    typed = False
                 Else
                     Program.Delay(500)
                 End If
@@ -2138,7 +2139,7 @@ scco_obj_found:
             If (Controls.LastClickedButton = oSave) And (filename <> CType("", Primitive)) Then
                 dummy = "" ' for Silverlight
                 dummy = File.ReadContents(filename)
-                yes = true
+                yes = True
                 If dummy <> CType("", Primitive) Then
                     caution = "'" + basename + "." + ext + "' already exists." + CR + LF + "Do you want to replace it?"
                     GraphicsWindow.BrushColor = POPUPCOLOR
@@ -2150,13 +2151,13 @@ scco_obj_found:
                     Microsoft.SmallBasic.Library.Shapes.Move(oCaution, 150, yCaution)
                     oYes = Controls.AddButton("Yes", 360, yCaution + 50)
                     oNo = Controls.AddButton("No", 400, yCaution + 50)
-                    cont = true ' continue
+                    cont = True ' continue
                     AddHandler Controls.ButtonClicked, AddressOf File_OnButtonClicked
                     While cont
                         Program.Delay(500)
                     End While
                     If Controls.LastClickedButton = oNo Then
-                        yes = false
+                        yes = False
                     End If
                     Controls.Remove(oNo)
                     Controls.Remove(oYes)
@@ -2165,10 +2166,10 @@ scco_obj_found:
                 End If
                 If yes Then
                     File.WriteContents(filename, buf)
-                    done = true ' saved
+                    done = True ' saved
                 End If
             Else
-                done = true ' cancelled
+                done = True ' cancelled
             End If
         End While
         Controls.Remove(oSave)
@@ -2177,7 +2178,7 @@ scco_obj_found:
     End Sub
     Sub File_OnButtonClicked()
         ' File | Button event handler
-        cont = false
+        cont = False
     End Sub
     Sub KB_FlushFIFO()
         ' Keyborad | Flush keyboard buffer (FIFO)
@@ -2276,9 +2277,9 @@ scco_obj_found:
     End Sub
     Sub Mouse_Init()
         ' Mouse | Initialize for common event handler
-        clicked = false
-        moved = false
-        released = false
+        clicked = False
+        moved = False
+        released = False
         If debug Then
             Timer.Interval = 200
             AddHandler Timer.Tick, AddressOf Mouse_OnTick
@@ -2294,26 +2295,26 @@ scco_obj_found:
         ' return released - "False" if set MouseUp
         ' return dmu - which handlers are set for debug
         If param("up") Then
-            released = false
+            released = False
             AddHandler GraphicsWindow.MouseUp, AddressOf Mouse_OnUp
             handler("up") = "U"
-        ElseIf param("up") = CType(false, Primitive) Then
+        ElseIf param("up") = CType(False, Primitive) Then
             AddHandler GraphicsWindow.MouseUp, AddressOf Mouse_DoNothing
             handler("up") = ""
         End If
         If param("down") Then
-            clicked = false
+            clicked = False
             AddHandler GraphicsWindow.MouseDown, AddressOf Mouse_OnDown
             handler("down") = "D"
-        ElseIf param("down") = CType(false, Primitive) Then
+        ElseIf param("down") = CType(False, Primitive) Then
             AddHandler GraphicsWindow.MouseDown, AddressOf Mouse_DoNothing
             handler("down") = ""
         End If
         If param("move") Then
-            moved = false
+            moved = False
             AddHandler GraphicsWindow.MouseMove, AddressOf Mouse_OnMove
             handler("move") = "M"
-        ElseIf param("move") = CType(false, Primitive) Then
+        ElseIf param("move") = CType(False, Primitive) Then
             AddHandler GraphicsWindow.MouseMove, AddressOf Mouse_DoNothing
             handler("move") = ""
         End If
@@ -2327,8 +2328,8 @@ scco_obj_found:
         ' return mxD, myD - position on mouse down
         mxD = Microsoft.SmallBasic.Library.Math.Floor(GraphicsWindow.MouseX)
         myD = Microsoft.SmallBasic.Library.Math.Floor(GraphicsWindow.MouseY)
-        clicked = true
-        released = false
+        clicked = True
+        released = False
         If debug Then
             smrc = " clicked " + mxD + "," + myD
         End If
@@ -2341,7 +2342,7 @@ scco_obj_found:
         ' return mxM, myM - position on mouse move
         mxM = Microsoft.SmallBasic.Library.Math.Floor(GraphicsWindow.MouseX)
         myM = Microsoft.SmallBasic.Library.Math.Floor(GraphicsWindow.MouseY)
-        moved = true
+        moved = True
         If debug Then
             smrc = " moved " + mxM + "," + myM
         End If
@@ -2366,7 +2367,7 @@ scco_obj_found:
         ' return mxU, myU - position on mouse up
         mxU = Microsoft.SmallBasic.Library.Math.Floor(GraphicsWindow.MouseX)
         myU = Microsoft.SmallBasic.Library.Math.Floor(GraphicsWindow.MouseY)
-        released = true
+        released = True
         If debug Then
             smrc = " released " + mxU + "," + myU
         End If
@@ -2385,15 +2386,15 @@ scco_obj_found:
         ' param buf - SVG buffer
         ' param p - pointer to SVG buffer
         ' return match - "True" if match
-        match = false
+        match = False
         If Text.StartsWith(Text.GetSubTextToEnd(buf, p), LT + "defs>") Then
             Stack.PushValue("local", p)
             p = p + 6
             Parse_Space()
-            match = false
+            match = False
             If Text.StartsWith(Text.GetSubTextToEnd(buf, p), LT + "g id=" + WQ + "g1" + WQ + ">") Then
                 p = p + 11
-                match = true
+                match = True
             End If
             _p = Stack.PopValue("local")
             If __Not(match) Then
@@ -2406,7 +2407,7 @@ scco_obj_found:
         ' param p - pointer to SVG buffer
         ' return match - "True" if match
         ' return shp - shape entry
-        match = false
+        match = False
         If Text.StartsWith(Text.GetSubTextToEnd(buf, p), LT + "ellipse") Then
             param = "tag=ellipse;"
             Parse_FindTag() ' p is updated
@@ -2427,7 +2428,7 @@ scco_obj_found:
             shp("pw") = pw
             shp("pc") = pc
             shp("bc") = bc
-            match = true
+            match = True
         End If
     End Sub
     Sub Parse_FindTag()
@@ -2439,9 +2440,9 @@ scco_obj_found:
         ' return tag - found tag
         pSave = p
         tag = ""
-        findNext = true
+        findNext = True
         While findNext
-            findNext = false ' tag may be not found
+            findNext = False ' tag may be not found
             pTag = Text.GetIndexOf(Text.GetSubTextToEnd(buf, p), LT + param("tag"))
             If 0 < pTag Then
                 lTag = Text.GetLength(param("tag")) + 1
@@ -2454,16 +2455,16 @@ scco_obj_found:
                 If param("class") = CType("", Primitive) Then
                     len = len + lTag
                     tag = Text.GetSubText(buf, pTag, len)
-                    findNext = false ' found the tag
+                    findNext = False ' found the tag
                 ElseIf 0 < len Then
-                    findNext = true ' tag may have different class
+                    findNext = True ' tag may have different class
                     len = len + lTag
                     attr = "class=" + qt + param("class") + qt
                     pAttr = pTag + lTag + 1
                     lAttr = Text.GetLength(attr)
                     If Text.GetSubText(buf, pAttr, lAttr) = attr Then
                         tag = Text.GetSubText(buf, pTag, len)
-                        findNext = false ' found the tag
+                        findNext = False ' found the tag
                     End If
                 End If
                 p = pTag + len
@@ -2551,7 +2552,7 @@ scco_obj_found:
                 width = attr("width")
                 height = attr("height")
                 p = p + len
-                match = true
+                match = True
             End If
         End If
     End Sub
@@ -2560,7 +2561,7 @@ scco_obj_found:
         ' param p - pointer to SVG buffer
         ' return match - "True" if match
         ' return shp - shape entry
-        match = false
+        match = False
         If Text.StartsWith(Text.GetSubTextToEnd(buf, p), LT + "line") Then
             param = "tag=line;"
             Parse_FindTag() ' p is updated
@@ -2580,7 +2581,7 @@ scco_obj_found:
             shp("y2") = py(2) - y
             shp("pw") = pw
             shp("pc") = pc
-            match = true
+            match = True
         End If
     End Sub
     Sub Parse_Points()
@@ -2641,7 +2642,7 @@ scco_obj_found:
         ' param p - pointer to SVG buffer
         ' return match - "True" if match
         ' return shp - shape entry
-        match = false
+        match = False
         If Text.StartsWith(Text.GetSubTextToEnd(buf, p), LT + "polygon") Then
             param = "tag=polygon;"
             Parse_FindTag() ' p is updated
@@ -2666,7 +2667,7 @@ scco_obj_found:
             shp("pw") = pw
             shp("pc") = pc
             shp("bc") = bc
-            match = true
+            match = True
         End If
     End Sub
     Sub Parse_SetStyle()
@@ -2682,19 +2683,17 @@ scco_obj_found:
         pw = value
     End Sub
     Sub Parse_SB()
-        TextWindow.WriteLine(filename)
         subname = "Shapes_Init"
         buf = ""
         SB_AppendSub()
-        TextWindow.WriteLine(buf)
         ptr = Text.GetIndexOf(buf, "Sub " + "Shapes_Init")
         If ptr = 0 Then
-            Goto rs_exit
+            GoTo rs_exit
         End If
         ' Parse "shX = ..."
         _ptr = Text.GetIndexOf(Text.GetSubTextToEnd(buf, ptr), "shX = ")
         If _ptr = 0 Then
-            Goto rs_exit
+            GoTo rs_exit
         End If
         shX = ""
         ptr = ptr + _ptr + 5
@@ -2707,7 +2706,7 @@ scco_obj_found:
         ' Parse "shY = ..."
         _ptr = Text.GetIndexOf(Text.GetSubTextToEnd(buf, ptr), "shY = ")
         If _ptr = 0 Then
-            Goto rs_exit
+            GoTo rs_exit
         End If
         shY = ""
         ptr = ptr + _ptr + 5
@@ -2718,24 +2717,24 @@ scco_obj_found:
             c = Text.GetSubText(buf, ptr, 1)
         End While
         ' Parse "shape[i] = ..."
-        While true
+        While True
             _ptr = Text.GetIndexOf(Text.GetSubTextToEnd(buf, ptr), "shape[")
             If _ptr = 0 Then
-                Goto rs_exit
+                GoTo rs_exit
             End If
             ptr = ptr + _ptr + 5
             _ptr = Text.GetIndexOf(Text.GetSubTextToEnd(buf, ptr), "] = " + WQ)
             If _ptr = 0 Then
-                Goto rs_exit
+                GoTo rs_exit
             End If
             i = Text.GetSubText(buf, ptr, _ptr - 1)
             If (i * 1) <> (i + 0) Then ' i is not number 
-                Goto rs_exit
+                GoTo rs_exit
             End If
             ptr = ptr + _ptr + 4
             _ptr = Text.GetIndexOf(Text.GetSubTextToEnd(buf, ptr), WQ)
             If _ptr = 0 Then
-                Goto rs_exit
+                GoTo rs_exit
             End If
             shape(nShapes + i) = Text.GetSubText(buf, ptr, _ptr - 1)
             ptr = ptr + _ptr
@@ -2776,13 +2775,13 @@ rs_exit:
         ' param pTag - pointer to tag
         ' param tag - tag
         ' return pTag - updated pointer to tag
-        isSpace = true
+        isSpace = True
         While isSpace
             __char = Text.GetSubText(tag, pTag, 1)
             If Text.IsSubText(" " + CR + LF, __char) Then
                 pTag = pTag + 1
             Else
-                isSpace = false
+                isSpace = False
             End If
         End While
     End Sub
@@ -2790,13 +2789,13 @@ rs_exit:
         ' param p - pointer to buffer
         ' param buf - buffer
         ' return p - updated pointer to buffer
-        isSpace = true
+        isSpace = True
         While isSpace
             __char = Text.GetSubText(buf, p, 1)
             If Text.IsSubText(" " + CR + LF, __char) Then
                 p = p + 1
             Else
-                isSpace = false
+                isSpace = False
             End If
         End While
     End Sub
@@ -2846,7 +2845,7 @@ rs_exit:
         ' param p - pointer to SVG buffer
         ' return match - "True" if match
         ' return shp - shape entry
-        match = false
+        match = False
         If Text.StartsWith(Text.GetSubTextToEnd(buf, p), LT + "rect") Then
             param = "tag=rect;"
             Parse_FindTag() ' p is updated
@@ -2867,7 +2866,7 @@ rs_exit:
             shp("pw") = pw
             shp("pc") = pc
             shp("bc") = bc
-            match = true
+            match = True
         End If
     End Sub
     Sub Parse_Use()
@@ -2932,20 +2931,20 @@ rs_exit:
         _buf = "" ' for Slilverlight
         _buf = File.ReadContents(filename)
         ptr = 1
-        notFound = true
+        notFound = True
         While notFound
             _ptr = Text.GetIndexOf(Text.GetSubTextToEnd(_buf, ptr), "Sub")
             If _ptr = 0 Then
                 _buf = ""
-                Goto sbas_exit
+                GoTo sbas_exit
             End If
             ptrSub = ptr + _ptr - 1
             ptr = ptrSub + 3
             While Text.GetSubText(_buf, ptr, 1) = CType(" ", Primitive)
                 ptr = ptr + 1
             End While
-            If (Text.GetSubText(_buf, ptr, len) = subname) And (Text.IsSubText(TCHAR, Text.GetSubText(_buf, ptr + len, 1)) = CType(false, Primitive)) Then
-                notFound = false
+            If (Text.GetSubText(_buf, ptr, len) = subname) And (Text.IsSubText(TCHAR, Text.GetSubText(_buf, ptr + len, 1)) = CType(False, Primitive)) Then
+                notFound = False
             End If
         End While
         _ptre = _ptr - 1
@@ -2954,7 +2953,7 @@ rs_exit:
             _ptr = Text.GetIndexOf(Text.GetSubTextToEnd(_buf, ptr), "EndSub")
             If _ptr = 0 Then
                 buf = ""
-                Goto sbas_exit
+                GoTo sbas_exit
             End If
             _ptre = ptr + _ptr - 3
             While (1 <= _ptre) And (Text.GetSubText(_buf, _ptre, 2) <> (CR + LF))
@@ -2997,10 +2996,10 @@ sbas_exit:
         ' returns silverlight - "True" if in remote
         color = GraphicsWindow.GetPixel(0, 0)
         If Text.GetLength(color) > 7 Then
-            silverlight = true
+            silverlight = True
             msWait = 300
         Else
-            silverlight = false
+            silverlight = False
         End If
     End Sub
     Sub Shapes_Init()
@@ -3292,7 +3291,7 @@ sbas_exit:
         ' param iSlider
         param = "down=False;move=True;up=True;" ' for slider moving / wait to release
         Mouse_SetHandler()
-        While released = CType(false, Primitive)
+        While released = CType(False, Primitive)
             If moved Then
                 param = "move=False;" ' while slider moving
                 Mouse_SetHandler()
