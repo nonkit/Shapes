@@ -3,27 +3,25 @@ Module ShapesModule
     Sub Main()
         ' Shapes
         ' Copyright © 2012-2015 Nonki Takahashi.  The MIT License.
-        ' Version 2.0b
-        ' Last update 2015-01-08
+        ' Version 2.01b
+        ' Last update 2015-01-09
         ' Repository https://git01.codeplex.com/shapesinsmallbasic
         '
         ' History:
-        '  - Created from Small SVG Editor 1.99b and Shapes 1.7b.
+        '  Created from Small SVG Editor 1.99b and Shapes 1.7b.
         '
         ' TODO:
-        '  [] Supprt transparent brush color
-        '  [] Support New command
-        '  [✓] #17 Support relative path input
-        '  [ ] #14 Redesign color palette
-        '  [ ] #10 Support text tag (element)
-        '  [ ] #9 Check illegal behavior in Silverlight environment
-        '  [ ] #8 Sort subroutines
-        '  [✓] #7 Support both .sb and .svg format in ReadShapes/WriteShapes
+        '  [] #11 Support transparent brush color
+        '  [] #10 Support New command
+        '  [ ] #8 Redesign color palette
+        '  [ ] #7 Support text tag (element)
+        '  [ ] #6 Check illegal behavior in Silverlight environment
+        '  [ ] #5 Sort subroutines
         '  [ ] #3 Bug fix for Silverlight:  Lines move after click
-        '  [ ] #3 Bug fix for Silverlight:  Rotated triangles move after click
-        '  [ ] #2 Bug fix for Silverlight:  Lines come different place
+        '  [ ] #2 Bug fix for Silverlight:  Rotated triangles move after click
+        '  [ ] #1 Bug fix for Silverlight:  Lines come different place
         '
-        title = "Shapes 2.0b"
+        title = "Shapes 2.01b"
         pgmname = "Shapes.smallbasic"
         GraphicsWindow.Title = title
         debug = false

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B9636A78-4628-4447-B710-8CA0F70AF018}</ProjectGuid>
+    <ProjectGuid>{421BA982-9809-4CEB-AA1D-165F7ED9F60E}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <StartupObject>Shapes.ShapesModule</StartupObject>
     <AssemblyName>Shapes</AssemblyName>

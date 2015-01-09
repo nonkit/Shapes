@@ -7,5 +7,5 @@ Following two files are runtime executables.
 - SmallBasicLibrary.dll
 - Shapes.exe
 
-Following file is the source code.
+Following file is the source code. This file is read from Shapes.exe at run time.
 - Shpaes.smallbasic
