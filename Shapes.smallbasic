@@ -1,18 +1,16 @@
 ' Shapes
 ' Copyright © 2012-2015 Nonki Takahashi.  The MIT License.
-' Version 2.02b
-' Last update 2015-01-09
+' Version 2.1b
+' Last update 2015-02-04
 ' Repository https://git01.codeplex.com/shapesinsmallbasic
 '
-' History:
-'  Created from Small SVG Editor 1.99b and Shapes 1.7b.
-'  Removed TextWindow.WriteLine for debug.
-'  Increased colors from 16 to 24 for color palette.
-'
 ' TODO:
+'  [✓] #16 Bug fix: Pen color missing after pw=0
+'  [✓] #15 Bug fix: Shapes.smallbasic overwritten as output
+'  [ ] #13 Show file name in title
+'  [ ] #12 Support PowerPoint VBA format output
 '  [ ] #11 Support transparent brush color
-'  [ ] #10 Support New command
-'  [✓] #8 Redesign color palette
+'  [✓] #10 Support New command
 '  [ ] #7 Support text tag (element)
 '  [ ] #6 Check illegal behavior in Silverlight environment
 '  [ ] #5 Sort subroutines
@@ -20,10 +18,11 @@
 '  [ ] #2 Bug fix for Silverlight:  Rotated triangles move after click
 '  [ ] #1 Bug fix for Silverlight:  Lines come different place
 '
-title = "Shapes 2.02b"
+title = "Shapes 2.1b"
 pgmname = "Shapes.smallbasic"
 GraphicsWindow.Title = title
 debug = "False"
+Not = "False=True;True=False;"
 SB_Workaround()
 gw = 598
 gh = 428
@@ -52,7 +51,7 @@ Mouse_Init()
 KB_Init()
 param = "down=True;move=False;up=True;"     ' wait to click
 Mouse_SetHandler()
-While cont
+While "True"
   If clicked Then         ' mouse clicked
     DetectClickedObject()
     DoObject()
@@ -69,6 +68,8 @@ While cont
     ElseIf c = "^v" Then
       obj = "menu" + ipaste
       DoMenu()
+    ElseIf c = "^n" Then
+      New()
     ElseIf c = "DEL" Then
       If selectedshape <> "" Then
         DeleteSelectedShape()
@@ -272,8 +273,10 @@ Sub DoMenu                        ' if a menu item clicked do the funciton
     obj = ""
     mnu = menu[i]
     func = mnu["func"]
-    select = "True"
-    ItemSelect()                  ' shows menu item frame
+    If i <= nMenu Then
+      select = "True"
+      ItemSelect()                  ' shows menu item frame
+    EndIF
     If selecteditem = i And Text.IsSubText("rect|ell|tri|line", func) Then
       If mode = "repeat" Then
         mode = "single"
@@ -294,7 +297,7 @@ Sub DoMenu                        ' if a menu item clicked do the funciton
         selectedshape = i
       EndIf
     EndIf
-    If func = "open" Then         ' open shapes from file
+    If func = "open" Then     ' open shapes from file
       ReadShapes()
     ElseIf func = "save" Then     ' save shapes to file
       WriteShapes()
@@ -454,6 +457,11 @@ Sub DoMenu                        ' if a menu item clicked do the funciton
       shp = shape[i]
       If func = "pw" Then
         shp["pw"] = pwidth
+        If pwidth = 0 And shp["pc"] <> "" Then
+          shp["pc"] = ""
+        ElseIf 0 < pwidth And shp["pc"] = "" Then
+          shp["pc"] = pcolor
+        EndIf
       ElseIf func = "pc" Then
         shp["pc"] = pcolor
       ElseIf func = "bc" Then
@@ -750,6 +758,7 @@ Sub DumpShape
   EndFor
 EndSub
 Sub GenerateSB
+  Stack.PushValue("local", filename)
   buf = "' "
   buf = buf + Clock.Year + "-"
   month = Clock.month
@@ -764,12 +773,12 @@ Sub GenerateSB
   buf = buf + day + " " + Clock.Time + " Shapes generated"
   buf = buf + " by " + title + "." + CR + LF
   buf = buf + "'" + CR + LF
-  buf = buf + "' initialize shapes" + CR + LF
   buf = buf + "SB_Workaround()" + CR + LF
   buf = buf + "gw = 598" + CR + LF
   buf = buf + "gh = 428" + CR + LF
   buf = buf + "GraphicsWindow.Width = gw" + CR + LF
   buf = buf + "GraphicsWindow.Height = gh" + CR + LF
+  buf = buf + "' initialize shapes" + CR + LF
   buf = buf + "Shapes_Init()" + CR + LF
   buf = buf + "' add shapes" + CR + LF
   buf = buf + "scale = 1" + CR + LF
@@ -875,6 +884,7 @@ Sub GenerateSB
   subname = "Shapes_Rotate"
   SB_AppendSub()
   buf = buf + CR + LF
+  filename = Stack.PopValue("local")
 EndSub
 Sub GenerateSVG
   sp[4] = "    "
@@ -1043,14 +1053,16 @@ Sub NormalizePos
 EndSub
 Sub ReadShapes
   File_Open()
-  File_GetBasename()
-  lowerExt = Text.ConvertToLowerCase(ext)
-  If lowerExt = "svg" Then
-    Parse_SVG()
-  ElseIf (lowerExt = "sb") Or (lowerExt = "smallbasic") Then
-    Parse_SB()
+  If buf <> "" Then
+    File_GetBasename()
+    lowerExt = Text.ConvertToLowerCase(ext)
+    If lowerExt = "svg" Then
+      Parse_SVG()
+    ElseIf (lowerExt = "sb") Or (lowerExt = "smallbasic") Then
+      Parse_SB()
+    EndIf
+    Shapes_Add()
   EndIf
-  Shapes_Add()
 EndSub
 Sub RegisterShapeData
   ' param i - index of shapes
@@ -1214,7 +1226,7 @@ Sub WaitToClick
   ' return mxD, myD - clicked point
   param = "down=True;move=False;up=False;"     ' wait to click
   Mouse_SetHandler()
-  While clicked = "False"
+  While Not[clicked]
     Program.Delay(100)
   EndWhile
 EndSub
@@ -1235,7 +1247,7 @@ Sub WaitToReleaseM ' for moving a shape
   mxM = mxD
   myM = myD
   moved = "True"
-  While released = "False"
+  While Not[released]
     If moved Then
       param = "move=False;"   ' while moving a shape
       Mouse_SetHandler()
@@ -1319,7 +1331,7 @@ Sub WaitToReleaseR ' for rotating a shape
   EndIf
   Shapes.SetOpacity(oFrame[func], 0)
   Shapes.Move(oFrame[func], _x, _y)
-  While released = "False"
+  While Not[released]
     If moved Then
       param = "move=False;"       ' while sizing a shape
       Mouse_SetHandler()
@@ -1359,7 +1371,7 @@ Sub WaitToReleaseS  ' for sizing a shape
   param = "down=False;move=True;up=True;"   ' for sizing a shape / wait to release
   Mouse_SetHandler()
   moved = "True"
-  While released = "False"
+  While Not[released]
     If moved Then
       param = "move=False;"   ' while sizing a shape
       Mouse_SetHandler()
@@ -1412,6 +1424,25 @@ Sub WriteShapes
   EndIf
   File_Save()
   i = Stack.PopValue("local")
+EndSub
+Sub New
+  If 0 < nShapes Then
+    caution = "Are you sure to clear all shapes?"
+    Dialog_YesNo()
+    If yes Then
+      If selectedshape <> "" Then
+        i = selectedshape
+        select = "False"
+        ShapeSelect()             ' removes pinches if a shape selected
+      EndIf
+      iMin = 1
+      iMax = nShapes
+      Shapes_Remove()
+      shape = ""
+      nShapes = 0
+      iMax = nShapes
+    EndIf
+  EndIf
 EndSub
 Sub Color_ColorToRGB
   ' Color | Convert Color to RGB
@@ -1934,6 +1965,32 @@ Sub CS_OnButtonClicked
     cancel = "False"
   EndIf
 EndSub
+Sub Dialog_YesNo
+  ' param caution - message
+  ' return yes - if [Yes] pushed
+  yes = "True"
+  GraphicsWindow.BrushColor = POPUPCOLOR
+  oMsgBox = Shapes.AddRectangle(gw, gh)
+  Shapes.SetOpacity(oMsgBox, 64)
+  GraphicsWindow.BrushColor = CAPTIONCOLOR
+  oCaution = Shapes.AddText(caution)
+  yCaution = (gh - 80) / 2
+  Shapes.Move(oCaution, 150, yCaution)
+  oYes = Controls.AddButton("Yes", 360, yCaution + 50)
+  oNo = Controls.AddButton("No", 400, yCaution + 50)
+  cont = "True"         ' continue
+  Controls.ButtonClicked = File_OnButtonClicked
+  While cont
+    Program.Delay(500)
+  EndWhile
+  If Controls.LastClickedButton = oNo Then
+    yes = "False"
+  EndIf
+  Controls.Remove(oNo)
+  Controls.Remove(oYes)
+  Shapes.Remove(oCaution)
+  Shapes.Remove(oMsgBox)
+EndSub
 Sub File_GetAbsPath
   ' param curDir - current directory
   ' param relPath - relative path
@@ -2029,6 +2086,8 @@ Sub File_Open
   ' return buf
   ' return filename
   Stack.PushValue("local", cont)
+  relPath = ""
+  filename = ""
   File_OpenDialog()
   oOpen = Controls.AddButton("Open", 486, gh - 34)
   Shapes.SetText(oMsg, "You can also click above, push Ctrl+V to paste from clipboard")
@@ -2036,32 +2095,42 @@ Sub File_Open
   Controls.TextTyped = File_OnTextTyped
   subname = "Shapes_Init"
   typed = "False"
-  cont = "True"         ' continue
-  While cont
-    If typed Then
-      curDir = Program.Directory
-      relPath = Controls.GetTextBoxText(oFilename)
-      File_GetAbsPath()
-      filename = absPath
-      buf = ""
-      buf = File.ReadContents(filename)
-      Controls.SetTextBoxText(oText, buf)
-      typed = "False"
+  done = "False"
+  While Not[done]
+    cont = "True"         ' continue
+    While cont
+      If typed Then
+        curDir = Program.Directory
+        relPath = Controls.GetTextBoxText(oFilename)
+        File_GetAbsPath()
+        filename = absPath
+        buf = ""
+        buf = File.ReadContents(filename)
+        Controls.SetTextBoxText(oText, buf)
+        typed = "False"
+      Else
+        Program.Delay(200)
+      EndIf
+    EndWhile
+    If Controls.LastClickedButton = oOpen Then
+      buf = Controls.GetTextBoxText(oText)
+      If buf <> "" Then
+        done = "True"
+      EndIf
     Else
-      Program.Delay(200)
+      buf = ""
+      relPath = ""
+      filename = ""
+      done = "True"
     EndIf
   EndWhile
-  If Controls.LastClickedButton = oOpen Then
-    buf = Controls.GetTextBoxText(oText)
-  Else
-    buf = ""
-  EndIf
   Controls.Remove(oOpen)
   File_CloseDialog()
   cont = Stack.PopValue("local")
 EndSub
 Sub File_OpenDialog
   ' File | Open dialog and common parts for Open/Save
+  ' param relPath
   ' return oPopup
   ' return oCaption
   ' return oFilename
@@ -2080,6 +2149,7 @@ Sub File_OpenDialog
   oFilename = Controls.AddTextBox(LEFTX + 80, TOPY)
   Shapes.SetOpacity(oFilename, OPACITY)
   Controls.SetSize(oFilename, 300, 24)
+  Controls.SetTextBoxText(oFilename, relPath)
   oText = Controls.AddMultiLineTextBox(LEFTX, TOPY + 30)
   Controls.SetSize(oText, gw - 20, gh - 84)
   Shapes.SetOpacity(oText, OPACITY)
@@ -2089,24 +2159,19 @@ Sub File_OpenDialog
   GraphicsWindow.BrushColor = TEXTCOLOR
   oCancel = Controls.AddButton("Cancel", 535, gh - 34)
 EndSub
-Sub File_OnTextTyped
-  ' File | Textbox event handler
-  If Controls.LastTypedTextBox = oFilename Then
-    typed = "True"
-  EndIf
-EndSub
 Sub File_Save
   ' File | Show output code to save
   ' param buf - program buffer
+  ' param filename
   Stack.PushValue("local", cont)
   File_OpenDialog()
   Controls.SetTextBoxText(oText, buf)
   oSave = Controls.AddButton("Save", 488, gh - 34)
   Shapes.SetText(oMsg, "You can also click above, push Ctrl+A, Ctrl+C to copy to clipboard")
   Controls.ButtonClicked = File_OnButtonClicked
+  Controls.TextTyped = File_OnTextTyped
   done = "False"
   lastExt = lowerExt
-  filename = ""
   While Not[done]
     cont = "True"         ' continue
     While cont
@@ -2138,34 +2203,14 @@ Sub File_Save
       yes = "True"
       If dummy <> "" Then
         caution = "'" + basename + "." +  ext + "' already exists." + CR + LF + "Do you want to replace it?"
-        GraphicsWindow.BrushColor = POPUPCOLOR
-        oMsgBox = Shapes.AddRectangle(gw, gh)
-        Shapes.SetOpacity(oMsgBox, 64)
-        GraphicsWindow.BrushColor = CAPTIONCOLOR
-        oCaution = Shapes.AddText(caution)
-        yCaution = (gh - 80) / 2
-        Shapes.Move(oCaution, 150, yCaution)
-        oYes = Controls.AddButton("Yes", 360, yCaution + 50)
-        oNo = Controls.AddButton("No", 400, yCaution + 50)
-        cont = "True"         ' continue
-        Controls.ButtonClicked = File_OnButtonClicked
-        While cont
-          Program.Delay(500)
-        EndWhile
-        If Controls.LastClickedButton = oNo Then
-          yes = "False"
-        EndIf
-        Controls.Remove(oNo)
-        Controls.Remove(oYes)
-        Shapes.Remove(oCaution)
-        Shapes.Remove(oMsgBox)
+        Dialog_YesNo()
       EndIf
       If yes Then
         File.WriteContents(filename, buf)
         done = "True" ' saved
       EndIf
-    Else
-      done = "True"   ' cancelled
+    ElseIf Controls.LastClickedButton = oCancel Then
+      done = "True"   ' canceled
     EndIf
   EndWhile
   Controls.Remove(oSave)
@@ -2175,6 +2220,12 @@ EndSub
 Sub File_OnButtonClicked
   ' File | Button event handler
   cont = "False"
+EndSub
+Sub File_OnTextTyped
+  ' File | Textbox event handler
+  If Controls.LastTypedTextBox = oFilename Then
+    typed = "True"
+  EndIf
 EndSub
 Sub KB_FlushFIFO
   ' Keyborad | Flush keyboard buffer (FIFO)
@@ -2294,7 +2345,7 @@ Sub Mouse_SetHandler
     released = "False"
     GraphicsWindow.MouseUp = Mouse_OnUp
     handler["up"] = "U"
-  ElseIf param["up"] = "False" Then
+  ElseIf Not[param["up"]] Then
     GraphicsWindow.MouseUp = Mouse_DoNothing
     handler["up"] = ""
   EndIf
@@ -2302,7 +2353,7 @@ Sub Mouse_SetHandler
     clicked = "False"
     GraphicsWindow.MouseDown = Mouse_OnDown
     handler["down"] = "D"
-  ElseIf param["down"] = "False" Then
+  ElseIf Not[param["down"]] Then
     GraphicsWindow.MouseDown = Mouse_DoNothing
     handler["down"] = ""
   EndIf
@@ -2310,7 +2361,7 @@ Sub Mouse_SetHandler
     moved = "False"
     GraphicsWindow.MouseMove = Mouse_OnMove
     handler["move"] = "M"
-  ElseIf param["move"] = "False" Then
+  ElseIf Not[param["move"]] Then
     GraphicsWindow.MouseMove = Mouse_DoNothing
     handler["move"] = ""
   EndIf
@@ -3186,6 +3237,7 @@ Sub Shapes_Rotate
   ' Shapes | Rotate shapes
   ' param iMin, iMax - shapes indices to rotate
   ' param shape - array of shapes
+  ' param cx, cy - rotation center
   ' param scale - to zoom
   ' param angle - to rotate
   Stack.PushValue("local", i)
@@ -3193,8 +3245,18 @@ Sub Shapes_Rotate
   Stack.PushValue("local", y)
   s = scale
   param["angle"] = angle
-  param["cx"] = shWidth / 2
-  param["cy"] = shHeight / 2
+  If cx <> "" Then
+    param["cx"] = cx
+  Else
+    cx = ""   ' to avoid syntax error
+    param["cx"] = shWidth / 2
+  EndIf
+  If cy <> "" Then
+    param["cy"] = cy
+  Else
+    cy = ""   ' to avoid syntax error
+    param["cy"] = shHeight / 2
+  EndIf
   For i = iMin To iMax
     shp = shape[i]
     param["x"] = shp["x"]
@@ -3287,7 +3349,7 @@ Sub Slider_WaitToRelease
   ' param iSlider
   param = "down=False;move=True;up=True;"  ' for slider moving / wait to release
   Mouse_SetHandler()
-  While released = "False"
+  While Not[released]
     If moved Then
       param = "move=False;"  ' while slider moving
       Mouse_SetHandler()
@@ -3346,3 +3408,4 @@ Sub Slider_SetLevel
   slider[iSlider] = sldr
   width = Stack.PopValue("local")
 EndSub
+  

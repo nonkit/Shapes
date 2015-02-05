@@ -1,0 +1,381 @@
+' 2012/09/10 12:52:43 Generated
+' by Shapes Editor 0.6
+'
+' initialize shapes
+Shapes_Init()
+' add shapes
+scale = 1
+Shapes_Add()
+angle = 0
+' Blink start
+While "True"
+  Program.Delay(2900)
+  Shapes.HideShape(shape[146]["obj"])
+  Shapes.HideShape(shape[147]["obj"])
+  Program.Delay(100)
+  Shapes.ShowShape(shape[146]["obj"])
+  Shapes.ShowShape(shape[147]["obj"])
+EndWhile
+
+Sub Shapes_Init
+  ' return shX, shY - current position of shapes
+  ' return shape - array of shapes
+  shX = 0 ' x offset
+  shY = 0 ' y offset
+  shape[1] = "obj=oLeg1;width=70;height=160;func=rect;x=221;y=255;bc=#AAAAAA;pw=0;"
+  shape[2] = "obj=oLeg2;width=70;height=160;func=rect;x=348;y=255;bc=#AAAAAA;pw=0;"
+  shape[3] = "obj=oTail270;func=ell;x=314;y=195;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[4] = "obj=oTail271;func=ell;x=317;y=194;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[5] = "obj=oTail272;func=ell;x=320;y=194;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[6] = "obj=oTail273;func=ell;x=322;y=194;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[7] = "obj=oTail274;func=ell;x=325;y=194;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[8] = "obj=oTail275;func=ell;x=328;y=194;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[9] = "obj=oTail276;func=ell;x=330;y=194;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[10] = "obj=oTail277;func=ell;x=333;y=193;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[11] = "obj=oTail278;func=ell;x=335;y=193;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[12] = "obj=oTail279;func=ell;x=338;y=193;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[13] = "obj=oTail280;func=ell;x=341;y=192;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[14] = "obj=oTail281;func=ell;x=343;y=192;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[15] = "obj=oTail282;func=ell;x=346;y=191;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[16] = "obj=oTail283;func=ell;x=348;y=191;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[17] = "obj=oTail284;func=ell;x=351;y=190;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[18] = "obj=oTail285;func=ell;x=353;y=189;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[19] = "obj=oTail286;func=ell;x=356;y=189;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[20] = "obj=oTail287;func=ell;x=358;y=188;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[21] = "obj=oTail288;func=ell;x=361;y=187;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[22] = "obj=oTail289;func=ell;x=363;y=186;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[23] = "obj=oTail290;func=ell;x=366;y=185;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[24] = "obj=oTail291;func=ell;x=368;y=185;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[25] = "obj=oTail292;func=ell;x=371;y=184;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[26] = "obj=oTail293;func=ell;x=373;y=183;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[27] = "obj=oTail294;func=ell;x=376;y=182;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[28] = "obj=oTail295;func=ell;x=378;y=180;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[29] = "obj=oTail296;func=ell;x=380;y=179;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[30] = "obj=oTail297;func=ell;x=383;y=178;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[31] = "obj=oTail298;func=ell;x=385;y=177;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[32] = "obj=oTail299;func=ell;x=387;y=176;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[33] = "obj=oTail300;func=ell;x=389;y=174;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[34] = "obj=oTail301;func=ell;x=392;y=173;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[35] = "obj=oTail302;func=ell;x=394;y=172;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[36] = "obj=oTail303;func=ell;x=396;y=170;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[37] = "obj=oTail304;func=ell;x=398;y=169;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[38] = "obj=oTail305;func=ell;x=401;y=167;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[39] = "obj=oTail306;func=ell;x=403;y=166;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[40] = "obj=oTail307;func=ell;x=405;y=164;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[41] = "obj=oTail308;func=ell;x=407;y=163;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[42] = "obj=oTail309;func=ell;x=409;y=161;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[43] = "obj=oTail310;func=ell;x=411;y=159;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[44] = "obj=oTail311;func=ell;x=413;y=158;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[45] = "obj=oTail312;func=ell;x=415;y=156;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[46] = "obj=oTail313;func=ell;x=417;y=154;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[47] = "obj=oTail314;func=ell;x=419;y=152;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[48] = "obj=oTail315;func=ell;x=421;y=151;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[49] = "obj=oTail316;func=ell;x=422;y=149;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[50] = "obj=oTail317;func=ell;x=424;y=147;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[51] = "obj=oTail318;func=ell;x=426;y=145;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[52] = "obj=oTail319;func=ell;x=428;y=143;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[53] = "obj=oTail320;func=ell;x=429;y=141;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[54] = "obj=oTail321;func=ell;x=431;y=139;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[55] = "obj=oTail322;func=ell;x=433;y=137;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[56] = "obj=oTail323;func=ell;x=434;y=135;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[57] = "obj=oTail324;func=ell;x=436;y=133;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[58] = "obj=oTail325;func=ell;x=437;y=131;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[59] = "obj=oTail326;func=ell;x=439;y=128;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[60] = "obj=oTail327;func=ell;x=440;y=126;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[61] = "obj=oTail328;func=ell;x=442;y=124;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[62] = "obj=oTail329;func=ell;x=443;y=122;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[63] = "obj=oTail330;func=ell;x=444;y=120;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[64] = "obj=oTail331;func=ell;x=446;y=117;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[65] = "obj=oTail332;func=ell;x=447;y=115;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[66] = "obj=oTail333;func=ell;x=448;y=113;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[67] = "obj=oTail334;func=ell;x=449;y=110;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[68] = "obj=oTail335;func=ell;x=450;y=108;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[69] = "obj=oTail336;func=ell;x=452;y=106;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[70] = "obj=oTail337;func=ell;x=453;y=103;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[71] = "obj=oTail338;func=ell;x=454;y=101;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[72] = "obj=oTail339;func=ell;x=455;y=98;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[73] = "obj=oTail340;func=ell;x=455;y=96;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[74] = "obj=oTail341;func=ell;x=456;y=93;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[75] = "obj=oTail342;func=ell;x=457;y=91;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[76] = "obj=oTail343;func=ell;x=458;y=88;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[77] = "obj=oTail344;func=ell;x=459;y=86;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[78] = "obj=oTail345;func=ell;x=459;y=83;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[79] = "obj=oTail346;func=ell;x=460;y=81;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[80] = "obj=oTail347;func=ell;x=461;y=78;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[81] = "obj=oTail348;func=ell;x=461;y=76;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[82] = "obj=oTail349;func=ell;x=462;y=73;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[83] = "obj=oTail350;func=ell;x=462;y=71;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[84] = "obj=oTail351;func=ell;x=463;y=68;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[85] = "obj=oTail352;func=ell;x=463;y=65;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[86] = "obj=oTail353;func=ell;x=463;y=63;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[87] = "obj=oTail354;func=ell;x=464;y=60;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[88] = "obj=oTail355;func=ell;x=464;y=58;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[89] = "obj=oTail356;func=ell;x=464;y=55;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[90] = "obj=oTail357;func=ell;x=464;y=52;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[91] = "obj=oTail358;func=ell;x=464;y=50;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[92] = "obj=oTail359;func=ell;x=464;y=47;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[93] = "obj=oTail360;func=ell;x=465;y=45;width=10;height=10;bc=#AAAAAA;pw=0;"
+  shape[94] = "obj=oBody;width=300;height=300;func=ell;x=170;y=50;bc=#AAAAAA;pw=0;"
+  shape[95] = "obj=oEar1;width=150;height=200;func=ell;x=58;y=95;bc=#BBBBBB;pw=0;"
+  shape[96] = "obj=oEar2;width=150;height=200;func=ell;x=391;y=95;bc=#BBBBBB;pw=0;"
+  shape[97] = "obj=oHead;width=250;height=250;func=ell;x=175;y=45;bc=#BBBBBB;pw=0;"
+  shape[98] = "obj=oNose315;func=ell;x=238;y=358;width=50;height=50;bc=#BBBBBB;pw=0;"
+  shape[99] = "obj=oNose316;func=ell;x=239;y=356;width=50;height=50;bc=#BBBBBB;pw=0;"
+  shape[100] = "obj=oNose317;func=ell;x=241;y=355;width=50;height=50;bc=#BBBBBB;pw=0;"
+  shape[101] = "obj=oNose318;func=ell;x=242;y=353;width=50;height=50;bc=#BBBBBB;pw=0;"
+  shape[102] = "obj=oNose319;func=ell;x=244;y=352;width=50;height=50;bc=#BBBBBB;pw=0;"
+  shape[103] = "obj=oNose320;func=ell;x=245;y=350;width=50;height=50;bc=#BBBBBB;pw=0;"
+  shape[104] = "obj=oNose321;func=ell;x=247;y=348;width=50;height=50;bc=#BBBBBB;pw=0;"
+  shape[105] = "obj=oNose322;func=ell;x=248;y=346;width=50;height=50;bc=#BBBBBB;pw=0;"
+  shape[106] = "obj=oNose323;func=ell;x=249;y=345;width=50;height=50;bc=#BBBBBB;pw=0;"
+  shape[107] = "obj=oNose324;func=ell;x=251;y=343;width=50;height=50;bc=#BBBBBB;pw=0;"
+  shape[108] = "obj=oNose325;func=ell;x=252;y=341;width=50;height=50;bc=#BBBBBB;pw=0;"
+  shape[109] = "obj=oNose326;func=ell;x=253;y=339;width=50;height=50;bc=#BBBBBB;pw=0;"
+  shape[110] = "obj=oNose327;func=ell;x=254;y=338;width=50;height=50;bc=#BBBBBB;pw=0;"
+  shape[111] = "obj=oNose328;func=ell;x=256;y=336;width=50;height=50;bc=#BBBBBB;pw=0;"
+  shape[112] = "obj=oNose329;func=ell;x=257;y=334;width=50;height=50;bc=#BBBBBB;pw=0;"
+  shape[113] = "obj=oNose330;func=ell;x=258;y=332;width=50;height=50;bc=#BBBBBB;pw=0;"
+  shape[114] = "obj=oNose331;func=ell;x=259;y=330;width=50;height=50;bc=#BBBBBB;pw=0;"
+  shape[115] = "obj=oNose332;func=ell;x=260;y=328;width=50;height=50;bc=#BBBBBB;pw=0;"
+  shape[116] = "obj=oNose333;func=ell;x=261;y=326;width=50;height=50;bc=#BBBBBB;pw=0;"
+  shape[117] = "obj=oNose334;func=ell;x=262;y=324;width=50;height=50;bc=#BBBBBB;pw=0;"
+  shape[118] = "obj=oNose335;func=ell;x=263;y=322;width=50;height=50;bc=#BBBBBB;pw=0;"
+  shape[119] = "obj=oNose336;func=ell;x=264;y=320;width=50;height=50;bc=#BBBBBB;pw=0;"
+  shape[120] = "obj=oNose337;func=ell;x=265;y=318;width=50;height=50;bc=#BBBBBB;pw=0;"
+  shape[121] = "obj=oNose338;func=ell;x=265;y=316;width=50;height=50;bc=#BBBBBB;pw=0;"
+  shape[122] = "obj=oNose339;func=ell;x=266;y=314;width=50;height=50;bc=#BBBBBB;pw=0;"
+  shape[123] = "obj=oNose340;func=ell;x=267;y=312;width=50;height=50;bc=#BBBBBB;pw=0;"
+  shape[124] = "obj=oNose341;func=ell;x=268;y=310;width=50;height=50;bc=#BBBBBB;pw=0;"
+  shape[125] = "obj=oNose342;func=ell;x=268;y=308;width=50;height=50;bc=#BBBBBB;pw=0;"
+  shape[126] = "obj=oNose343;func=ell;x=269;y=306;width=50;height=50;bc=#BBBBBB;pw=0;"
+  shape[127] = "obj=oNose344;func=ell;x=270;y=304;width=50;height=50;bc=#BBBBBB;pw=0;"
+  shape[128] = "obj=oNose345;func=ell;x=270;y=302;width=50;height=50;bc=#BBBBBB;pw=0;"
+  shape[129] = "obj=oNose346;func=ell;x=271;y=300;width=50;height=50;bc=#BBBBBB;pw=0;"
+  shape[130] = "obj=oNose347;func=ell;x=271;y=298;width=50;height=50;bc=#BBBBBB;pw=0;"
+  shape[131] = "obj=oNose348;func=ell;x=272;y=295;width=50;height=50;bc=#BBBBBB;pw=0;"
+  shape[132] = "obj=oNose349;func=ell;x=272;y=293;width=50;height=50;bc=#BBBBBB;pw=0;"
+  shape[133] = "obj=oNose350;func=ell;x=273;y=291;width=50;height=50;bc=#BBBBBB;pw=0;"
+  shape[134] = "obj=oNose351;func=ell;x=273;y=289;width=50;height=50;bc=#BBBBBB;pw=0;"
+  shape[135] = "obj=oNose352;func=ell;x=273;y=287;width=50;height=50;bc=#BBBBBB;pw=0;"
+  shape[136] = "obj=oNose353;func=ell;x=274;y=285;width=50;height=50;bc=#BBBBBB;pw=0;"
+  shape[137] = "obj=oNose354;func=ell;x=274;y=283;width=50;height=50;bc=#BBBBBB;pw=0;"
+  shape[138] = "obj=oNose355;func=ell;x=274;y=280;width=50;height=50;bc=#BBBBBB;pw=0;"
+  shape[139] = "obj=oNose356;func=ell;x=274;y=278;width=50;height=50;bc=#BBBBBB;pw=0;"
+  shape[140] = "obj=oNose357;func=ell;x=274;y=276;width=50;height=50;bc=#BBBBBB;pw=0;"
+  shape[141] = "obj=oNose358;func=ell;x=274;y=274;width=50;height=50;bc=#BBBBBB;pw=0;"
+  shape[142] = "obj=oNose359;func=ell;x=274;y=272;width=50;height=50;bc=#BBBBBB;pw=0;"
+  shape[143] = "obj=oNose360;func=ell;x=275;y=270;width=50;height=50;bc=#BBBBBB;pw=0;"
+  shape[144] = "obj=oClosedEye1;width=20;height=3;func=rect;x=235;y=200;bc=Black;pw=0;"
+  shape[145] = "obj=oClosedEye2;width=20;height=3;func=rect;x=344;y=200;bc=Black;pw=0;"
+  shape[146] = "obj=oEye1;width=20;height=20;func=ell;x=235;y=191;bc=Black;pw=0;"
+  shape[147] = "obj=oEye2;width=20;height=20;func=ell;x=344;y=191;bc=Black;pw=0;"
+EndSub
+
+Sub Shapes_Add
+  ' param shape - array of shapes
+  ' param scale
+  ' return shWidth, shHeight - total size of shapes
+  ' return shAngle - current angle of shapes
+  Stack.PushValue("local", i)
+  Stack.PushValue("local", x)
+  Stack.PushValue("local", y)
+  Shapes_CalcWidthAndHeight()
+  s = scale
+  For i = 1 To nShapes
+    GraphicsWindow.PenWidth = shape[i]["pw"] * s
+    If shape[i]["pw"] > 0 Then
+      GraphicsWindow.PenColor = shape[i]["pc"]
+    EndIf
+    If shape[i]["func"] = "rect" Then
+      GraphicsWindow.BrushColor = shape[i]["bc"]
+      x = shape[i]["x"]
+      y = shape[i]["y"]
+      width = shape[i]["width"]
+      height = shape[i]["height"]
+      shape[i]["obj"] = Shapes.AddRectangle(width * s, height * s)
+      Shapes.Move(shape[i]["obj"], shX + x * s, shY + y * s)
+    ElseIf shape[i]["func"] = "ell" Then
+      GraphicsWindow.BrushColor = shape[i]["bc"]
+      x = shape[i]["x"]
+      y = shape[i]["y"]
+      width = shape[i]["width"]
+      height = shape[i]["height"]
+      shape[i]["obj"] = Shapes.AddEllipse(width * s, height * s)
+      Shapes.Move(shape[i]["obj"], shX + x * s, shY + y * s)
+    ElseIf shape[i]["func"] = "tri" Then
+      GraphicsWindow.BrushColor = shape[i]["bc"]
+      x = shape[i]["x"]
+      y = shape[i]["y"]
+      x1 = shape[i]["x1"]
+      y1 = shape[i]["y1"]
+      x2 = shape[i]["x2"]
+      y2 = shape[i]["y2"]
+      x3 = shape[i]["x3"]
+      y3 = shape[i]["y3"]
+      shape[i]["obj"] = Shapes.AddTriangle(x1 * s, y1 * s, x2 * s, y2 * s, x3 * s, y3 * s)
+      Shapes.Move(shape[i]["obj"], shX + x * s, shY + y * s)
+    ElseIf shape[i]["func"] = "line" Then
+      x = shape[i]["x"]
+      y = shape[i]["y"]
+      x1 = shape[i]["x1"]
+      y1 = shape[i]["y1"]
+      x2 = shape[i]["x2"]
+      y2 = shape[i]["y2"]
+      shape[i]["obj"] = Shapes.AddLine(x1 * s, y1 * s, x2 * s, y2 * s)
+      Shapes.Move(shape[i]["obj"], shX + x * s, shY + y * s)
+    EndIf
+  EndFor
+  shAngle = 0
+  y = Stack.PopValue("local")
+  x = Stack.PopValue("local")
+  i = Stack.PopValue("local")
+EndSub
+
+Sub Shapes_CalcWidthAndHeight
+  ' return nShapes - number of shapes
+  ' return shWidth, shHeight - total size of shapes
+  nShapes = Array.GetItemCount(shape)
+  For i = 1 To nShapes
+    If shape[i]["func"] = "tri" Or shape[i]["func"] = "line" Then
+      xmin = shape[i]["x1"]
+      xmax = shape[i]["x1"]
+      ymin = shape[i]["y1"]
+      ymax = shape[i]["y1"]
+      If shape[i]["x2"] < xmin Then
+        xmin = shape[i]["x2"]
+      EndIf
+      If xmax < shape[i]["x2"] Then
+        xmax = shape[i]["x2"]
+      EndIf
+      If shape[i]["y2"] < ymin Then
+        ymin = shape[i]["y2"]
+      EndIf
+      If ymax < shape[i]["y2"] Then
+        ymax = shape[i]["y2"]
+      EndIf
+      If shape[i]["func"] = "tri" Then
+        If shape[i]["x3"] < xmin Then
+          xmin = shape[i]["x3"]
+        EndIf
+        If xmax < shape[i]["x3"] Then
+          xmax = shape[i]["x3"]
+        EndIf
+        If shape[i]["y3"] < ymin Then
+          ymin = shape[i]["y3"]
+        EndIf
+        If ymax < shape[i]["y3"] Then
+          ymax = shape[i]["y3"]
+        EndIf
+      EndIf
+      shape[i]["width"] = xmax - xmin
+      shape[i]["height"] = ymax - ymin
+    EndIf
+    If i = 1 Then
+      shWidth = shape[i]["x"] + shape[i]["width"]
+      shHeight = shape[i]["y"] + shape[i]["height"]
+    Else
+      If shWidth < shape[i]["x"] + shape[i]["width"] Then
+        shWidth = shape[i]["x"] + shape[i]["width"]
+      EndIf
+      If shHeight < shape[i]["y"] + shape[i]["height"] Then
+        shHeight = shape[i]["y"] + shape[i]["height"]
+      EndIf
+    EndIf
+  EndFor
+EndSub
+
+Sub Shapes_CalcRotatePos
+  ' param x, y - position of a shape
+  ' param width, height - size of a shape
+  ' param cx, cy - center of shapes
+  ' param shAngle - rotate angle
+  ' return x, y - rotated position of a shape
+  _cx = x + width / 2
+  _cy = y + height / 2
+  x = _cx - cx
+  y = _cy - cy
+  Math_CartesianToPolar()
+  a = a + shAngle
+  x = r * Math.Cos(a * Math.Pi / 180)
+  y = r * Math.Sin(a * Math.Pi / 180)
+  _cx = x + cx
+  _cy = y + cy
+  x = _cx - width / 2
+  y = _cy - height / 2
+EndSub
+
+Sub Shapes_Move
+  ' param shape - array of shapes
+  ' param scale
+  ' param x, y - position to move
+  ' return shX, shY - new position of shapes
+  Stack.PushValue("local", i)
+  Stack.PushValue("local", x)
+  Stack.PushValue("local", y)
+  shX = x
+  shY = y
+  For i = 1 To nShapes
+    _x = shape[i]["x"]
+    _y = shape[i]["y"]
+    width = shape[i]["width"]
+    height = shape[i]["height"]
+    Shapes_CalcRotatePos()
+    Shapes.Move(shape[i]["obj"], shX + _x * s, shY + _y * s)
+  EndFor
+  y = Stack.PopValue("local")
+  x = Stack.PopValue("local")
+  i = Stack.PopValue("local")
+EndSub
+
+Sub Shapes_Remove
+  ' param shape - array of shapes
+  Stack.PushValue("local", i)
+  For i = 1 To nShapes
+    Shapes.Remove(shape[i]["obj"])
+  EndFor
+  i = Stack.PopValue("local")
+EndSub
+
+Sub Shapes_Rotate
+  ' param shape - array of shapes
+  ' param scale
+  ' param angle
+  Stack.PushValue("local", i)
+  Stack.PushValue("local", x)
+  Stack.PushValue("local", y)
+  s = scale
+  shAngle = angle
+  cx = shWidth / 2
+  cy = shHeight / 2
+  For i = 1 To nShapes
+    x = shape[i]["x"]
+    y = shape[i]["y"]
+    width = shape[i]["width"]
+    height = shape[i]["height"]
+    Shapes_CalcRotatePos()
+    Shapes.Move(shape[i]["obj"], shX + x * s, shY + y * s)
+    Shapes.Rotate(shape[i]["obj"], shAngle)
+  EndFor
+  y = Stack.PopValue("local")
+  x = Stack.PopValue("local")
+  i = Stack.PopValue("local")
+EndSub
+
+Sub Math_CartesianToPolar
+  ' param x, y - cartesian coordinate
+  ' return r, a - polar coordinate
+  r = Math.SquareRoot(x * x + y * y)
+  If x = 0 And y > 0 Then
+    a = 90 ' [degree]
+  ElseIf x = 0 And y < 0 Then
+    a = -90
+  Else
+    a = Math.ArcTan(y / x) * 180 / Math.Pi
+  EndIf
+  If x < 0 Then
+    a = a + 180
+  ElseIf x > 0 And y < 0 Then
+    a = a + 360
+  EndIf
+EndSub
+    

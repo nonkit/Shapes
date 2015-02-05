@@ -1,0 +1,251 @@
+<svg width="598" height="428">
+  <defs>
+    <g id="g1">
+      <ellipse cx="386" cy="355" rx="30" ry="11" 
+        style="fill:#999900;stroke:#000000;stroke-width:6"/>
+      <ellipse cx="385" cy="288" rx="30" ry="11" 
+        style="fill:#999900;stroke:#000000;stroke-width:6"/>
+      <ellipse cx="315" cy="285" rx="30" ry="11" 
+        style="fill:#999900;stroke:#000000;stroke-width:6"/>
+      <ellipse cx="317" cy="355" rx="30" ry="11" 
+        style="fill:#999900;stroke:#000000;stroke-width:6"/>
+      <ellipse cx="347" cy="366" rx="8" ry="18" 
+        style="fill:#999900;stroke:#000000;stroke-width:6"/>
+      <ellipse cx="350" cy="244" rx="38" ry="27" 
+        style="fill:#339900;stroke:#000000;stroke-width:6"/>
+      <ellipse cx="349" cy="316" rx="52" ry="52" 
+        style="fill:#335323;stroke:#000000;stroke-width:6"/>
+      <rect x="337" y="296" width="23.50" height="43" 
+        transform="rotate(90 349 317)" 
+        style="fill:#afec00;stroke-width:0"/>
+      <polygon points="349,298 327,306 370,306" 
+        style="fill:#afec00;stroke-width:0"/>
+      <polygon points="348,327 326,335 369,335" 
+        transform="rotate(180 348 332)" 
+        style="fill:#afec00;stroke-width:0"/>
+      <line x1="349" y1="299" x2="371" y2="306" 
+        style="stroke:#338f05;stroke-width:6"/>
+      <line x1="371" y1="306" x2="370" y2="328" 
+        style="stroke:#338f05;stroke-width:6"/>
+      <line x1="370" y1="328" x2="349" y2="336" 
+        style="stroke:#338f05;stroke-width:6"/>
+      <line x1="349" y1="336" x2="327" y2="328" 
+        style="stroke:#338f05;stroke-width:6"/>
+      <line x1="327" y1="328" x2="328" y2="306" 
+        style="stroke:#338f05;stroke-width:6"/>
+      <line x1="328" y1="306" x2="349" y2="299" 
+        style="stroke:#338f05;stroke-width:6"/>
+      <ellipse cx="349" cy="299" rx="3" ry="3" 
+        style="fill:#338f05;stroke-width:0"/>
+      <ellipse cx="371" cy="306" rx="3" ry="3" 
+        style="fill:#338f05;stroke-width:0"/>
+      <ellipse cx="370" cy="328" rx="3" ry="3" 
+        style="fill:#338f05;stroke-width:0"/>
+      <ellipse cx="349" cy="336" rx="3" ry="3" 
+        style="fill:#338f05;stroke-width:0"/>
+      <ellipse cx="327" cy="328" rx="3" ry="3" 
+        style="fill:#338f05;stroke-width:0"/>
+      <ellipse cx="328" cy="306" rx="3" ry="3" 
+        style="fill:#338f05;stroke-width:0"/>
+      <rect x="361" y="271" width="15.50" height="30" 
+        transform="rotate(90 369 286)" 
+        style="fill:#afec00;stroke-width:0"/>
+      <polygon points="369,274 353,278 383,278" 
+        style="fill:#afec00;stroke-width:0"/>
+      <polygon points="369,291 353,295 383,295" 
+        transform="rotate(180 369 294)" 
+        style="fill:#afec00;stroke-width:0"/>
+      <line x1="369" y1="275" x2="384" y2="279" 
+        style="stroke:#338f05;stroke-width:6"/>
+      <line x1="384" y1="279" x2="384" y2="292" 
+        style="stroke:#338f05;stroke-width:6"/>
+      <line x1="384" y1="292" x2="369" y2="296" 
+        style="stroke:#338f05;stroke-width:6"/>
+      <line x1="369" y1="296" x2="354" y2="292" 
+        style="stroke:#338f05;stroke-width:6"/>
+      <line x1="354" y1="292" x2="354" y2="279" 
+        style="stroke:#338f05;stroke-width:6"/>
+      <line x1="354" y1="279" x2="369" y2="275" 
+        style="stroke:#338f05;stroke-width:6"/>
+      <ellipse cx="369" cy="275" rx="3" ry="3" 
+        style="fill:#338f05;stroke-width:0"/>
+      <ellipse cx="384" cy="279" rx="3" ry="3" 
+        style="fill:#338f05;stroke-width:0"/>
+      <ellipse cx="384" cy="292" rx="3" ry="3" 
+        style="fill:#338f05;stroke-width:0"/>
+      <ellipse cx="369" cy="296" rx="3" ry="3" 
+        style="fill:#338f05;stroke-width:0"/>
+      <ellipse cx="354" cy="292" rx="3" ry="3" 
+        style="fill:#338f05;stroke-width:0"/>
+      <ellipse cx="354" cy="279" rx="3" ry="3" 
+        style="fill:#338f05;stroke-width:0"/>
+      <rect x="319" y="273" width="15.50" height="27" 
+        transform="rotate(90 327 286)" 
+        style="fill:#afec00;stroke-width:0"/>
+      <polygon points="327,275 313,279 340,279" 
+        style="fill:#afec00;stroke-width:0"/>
+      <polygon points="326,292 312,296 339,296" 
+        transform="rotate(180 326 295)" 
+        style="fill:#afec00;stroke-width:0"/>
+      <line x1="327" y1="276" x2="341" y2="279" 
+        style="stroke:#338f05;stroke-width:6"/>
+      <line x1="341" y1="279" x2="341" y2="293" 
+        style="stroke:#338f05;stroke-width:6"/>
+      <line x1="341" y1="293" x2="327" y2="297" 
+        style="stroke:#338f05;stroke-width:6"/>
+      <line x1="327" y1="297" x2="313" y2="293" 
+        style="stroke:#338f05;stroke-width:6"/>
+      <line x1="313" y1="293" x2="314" y2="279" 
+        style="stroke:#338f05;stroke-width:6"/>
+      <line x1="314" y1="279" x2="327" y2="276" 
+        style="stroke:#338f05;stroke-width:6"/>
+      <ellipse cx="327" cy="276" rx="3" ry="3" 
+        style="fill:#338f05;stroke-width:0"/>
+      <ellipse cx="341" cy="279" rx="3" ry="3" 
+        style="fill:#338f05;stroke-width:0"/>
+      <ellipse cx="341" cy="293" rx="3" ry="3" 
+        style="fill:#338f05;stroke-width:0"/>
+      <ellipse cx="327" cy="297" rx="3" ry="3" 
+        style="fill:#338f05;stroke-width:0"/>
+      <ellipse cx="313" cy="293" rx="3" ry="3" 
+        style="fill:#338f05;stroke-width:0"/>
+      <ellipse cx="314" cy="279" rx="3" ry="3" 
+        style="fill:#338f05;stroke-width:0"/>
+      <rect x="320" y="334" width="14.50" height="27" 
+        transform="rotate(90 327 347)" 
+        style="fill:#afec00;stroke-width:0"/>
+      <polygon points="327,337 313,341 340,341" 
+        style="fill:#afec00;stroke-width:0"/>
+      <polygon points="326,352 312,356 339,356" 
+        transform="rotate(180 326 355)" 
+        style="fill:#afec00;stroke-width:0"/>
+      <line x1="327" y1="338" x2="341" y2="341" 
+        style="stroke:#338f05;stroke-width:6"/>
+      <line x1="341" y1="341" x2="341" y2="353" 
+        style="stroke:#338f05;stroke-width:6"/>
+      <line x1="341" y1="353" x2="327" y2="357" 
+        style="stroke:#338f05;stroke-width:6"/>
+      <line x1="327" y1="357" x2="313" y2="353" 
+        style="stroke:#338f05;stroke-width:6"/>
+      <line x1="313" y1="353" x2="314" y2="341" 
+        style="stroke:#338f05;stroke-width:6"/>
+      <line x1="314" y1="341" x2="327" y2="338" 
+        style="stroke:#338f05;stroke-width:6"/>
+      <ellipse cx="327" cy="338" rx="3" ry="3" 
+        style="fill:#338f05;stroke-width:0"/>
+      <ellipse cx="341" cy="341" rx="3" ry="3" 
+        style="fill:#338f05;stroke-width:0"/>
+      <ellipse cx="341" cy="353" rx="3" ry="3" 
+        style="fill:#338f05;stroke-width:0"/>
+      <ellipse cx="327" cy="357" rx="3" ry="3" 
+        style="fill:#338f05;stroke-width:0"/>
+      <ellipse cx="313" cy="353" rx="3" ry="3" 
+        style="fill:#338f05;stroke-width:0"/>
+      <ellipse cx="314" cy="341" rx="3" ry="3" 
+        style="fill:#338f05;stroke-width:0"/>
+      <rect x="361" y="335" width="14.50" height="27" 
+        transform="rotate(90 368 348)" 
+        style="fill:#afec00;stroke-width:0"/>
+      <polygon points="368,338 354,342 381,342" 
+        style="fill:#afec00;stroke-width:0"/>
+      <polygon points="367,353 353,357 380,357" 
+        transform="rotate(180 367 356)" 
+        style="fill:#afec00;stroke-width:0"/>
+      <line x1="368" y1="339" x2="382" y2="342" 
+        style="stroke:#338f05;stroke-width:6"/>
+      <line x1="382" y1="342" x2="381" y2="354" 
+        style="stroke:#338f05;stroke-width:6"/>
+      <line x1="381" y1="354" x2="368" y2="358" 
+        style="stroke:#338f05;stroke-width:6"/>
+      <line x1="368" y1="358" x2="355" y2="354" 
+        style="stroke:#338f05;stroke-width:6"/>
+      <line x1="355" y1="354" x2="355" y2="342" 
+        style="stroke:#338f05;stroke-width:6"/>
+      <line x1="355" y1="342" x2="368" y2="339" 
+        style="stroke:#338f05;stroke-width:6"/>
+      <ellipse cx="368" cy="339" rx="3" ry="3" 
+        style="fill:#338f05;stroke-width:0"/>
+      <ellipse cx="382" cy="342" rx="3" ry="3" 
+        style="fill:#338f05;stroke-width:0"/>
+      <ellipse cx="381" cy="354" rx="3" ry="3" 
+        style="fill:#338f05;stroke-width:0"/>
+      <ellipse cx="368" cy="358" rx="3" ry="3" 
+        style="fill:#338f05;stroke-width:0"/>
+      <ellipse cx="355" cy="354" rx="3" ry="3" 
+        style="fill:#338f05;stroke-width:0"/>
+      <ellipse cx="355" cy="342" rx="3" ry="3" 
+        style="fill:#338f05;stroke-width:0"/>
+      <rect x="378" y="312" width="18.00" height="12" 
+        transform="rotate(90 387 318)" 
+        style="fill:#afec00;stroke-width:0"/>
+      <polygon points="387,304 380,309 392,310" 
+        style="fill:#afec00;stroke-width:0"/>
+      <polygon points="386,325 379,330 391,331" 
+        transform="rotate(180 386 328)" 
+        style="fill:#afec00;stroke-width:0"/>
+      <line x1="387" y1="305" x2="393" y2="310" 
+        style="stroke:#338f05;stroke-width:6"/>
+      <line x1="393" y1="310" x2="392" y2="326" 
+        style="stroke:#338f05;stroke-width:6"/>
+      <line x1="392" y1="326" x2="386" y2="331" 
+        style="stroke:#338f05;stroke-width:6"/>
+      <line x1="386" y1="331" x2="380" y2="326" 
+        style="stroke:#338f05;stroke-width:6"/>
+      <line x1="380" y1="326" x2="381" y2="309" 
+        style="stroke:#338f05;stroke-width:6"/>
+      <line x1="381" y1="309" x2="387" y2="305" 
+        style="stroke:#338f05;stroke-width:6"/>
+      <ellipse cx="387" cy="305" rx="3" ry="3" 
+        style="fill:#338f05;stroke-width:0"/>
+      <ellipse cx="393" cy="310" rx="3" ry="3" 
+        style="fill:#338f05;stroke-width:0"/>
+      <ellipse cx="392" cy="326" rx="3" ry="3" 
+        style="fill:#338f05;stroke-width:0"/>
+      <ellipse cx="386" cy="331" rx="3" ry="3" 
+        style="fill:#338f05;stroke-width:0"/>
+      <ellipse cx="380" cy="326" rx="3" ry="3" 
+        style="fill:#338f05;stroke-width:0"/>
+      <ellipse cx="381" cy="309" rx="3" ry="3" 
+        style="fill:#338f05;stroke-width:0"/>
+      <rect x="302" y="311" width="18.00" height="14" 
+        transform="rotate(90 311 318)" 
+        style="fill:#afec00;stroke-width:0"/>
+      <polygon points="311,304 303,309 317,310" 
+        style="fill:#afec00;stroke-width:0"/>
+      <polygon points="310,325 302,330 316,331" 
+        transform="rotate(180 310 328)" 
+        style="fill:#afec00;stroke-width:0"/>
+      <line x1="311" y1="305" x2="318" y2="310" 
+        style="stroke:#338f05;stroke-width:6"/>
+      <line x1="318" y1="310" x2="317" y2="326" 
+        style="stroke:#338f05;stroke-width:6"/>
+      <line x1="317" y1="326" x2="310" y2="331" 
+        style="stroke:#338f05;stroke-width:6"/>
+      <line x1="310" y1="331" x2="303" y2="326" 
+        style="stroke:#338f05;stroke-width:6"/>
+      <line x1="303" y1="326" x2="304" y2="309" 
+        style="stroke:#338f05;stroke-width:6"/>
+      <line x1="304" y1="309" x2="311" y2="305" 
+        style="stroke:#338f05;stroke-width:6"/>
+      <ellipse cx="311" cy="305" rx="3" ry="3" 
+        style="fill:#338f05;stroke-width:0"/>
+      <ellipse cx="318" cy="310" rx="3" ry="3" 
+        style="fill:#338f05;stroke-width:0"/>
+      <ellipse cx="317" cy="326" rx="3" ry="3" 
+        style="fill:#338f05;stroke-width:0"/>
+      <ellipse cx="310" cy="331" rx="3" ry="3" 
+        style="fill:#338f05;stroke-width:0"/>
+      <ellipse cx="303" cy="326" rx="3" ry="3" 
+        style="fill:#338f05;stroke-width:0"/>
+      <ellipse cx="304" cy="309" rx="3" ry="3" 
+        style="fill:#338f05;stroke-width:0"/>
+      <ellipse cx="371" cy="241" rx="6" ry="5" 
+        transform="rotate(90 371 241)" 
+        style="fill:#000000;stroke-width:0"/>
+      <ellipse cx="335" cy="241" rx="6" ry="5" 
+        transform="rotate(90 335 241)" 
+        style="fill:#000000;stroke-width:0"/>
+    </g>
+  </defs>
+  <use x="0" y="0" xlink:href="#g1" />
+</svg>

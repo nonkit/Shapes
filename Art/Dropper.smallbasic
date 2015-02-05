@@ -1,0 +1,122 @@
+' Dropper
+' Copyright (c) 2012 Nonki Takahashi. All rights reserved.
+'
+' 2012/09/06 19:24:26 Generated
+' by Shapes Editor 0.2
+'
+GraphicsWindow.BackgroundColor = "LightGray"
+x = 271   ' x offset
+y = 80    ' y offset
+a = 45    ' rotate angle
+For s = 1 To 1 / 8 Step -1 / 8 ' scale
+  If oRect2 <> "" Then
+    Shapes.Remove(oRect2)
+  EndIf
+  If oEll1 <> "" Then
+    Shapes.Remove(oEll1)
+  EndIf
+  If oEll2 <> "" Then
+    Shapes.Remove(oEll2)
+  EndIf
+  If oEll3 <> "" Then
+    Shapes.Remove(oEll3)
+  EndIf
+  DrawDropper()
+  Program.Delay(500)
+EndFor
+
+Sub DrawDropper
+  ' param x, y - offset
+  ' param s - scale
+  ' param a - angle
+  Stack.PushValue("local", x)
+  Stack.PushValue("local", y)
+  Stack.PushValue("local", a)
+  Stack.PushValue("local", x0)
+  Stack.PushValue("local", y0)
+  Stack.PushValue("local", a0)
+  x0 = x
+  y0 = y
+  a0 = a
+  w = 55
+  h = (85 + 170)
+  cx = w / 2
+  cy = h / 2
+  GraphicsWindow.PenWidth = 8 * s
+  GraphicsWindow.PenColor = "#999999"
+  GraphicsWindow.BrushColor = "#99CCCC"
+  oRect2 = Shapes.AddRectangle(17 * s, 170 * s)
+  w2 = 17 / 2
+  h2 = 170 / 2
+  cx2 = 19 + w2
+  cy2 = 85 + h2
+  RotateCenter2()
+  Shapes.Move(oRect2, x0 + (cx2 - w2) * s, y0 + (cy2 -h2) * s)
+  Shapes.Rotate(oRect2, a0)
+  oEll1 = Shapes.AddEllipse(51 * s, 51 * s)
+  w2 = 51 / 2
+  h2 = 51 / 2
+  cx2 = 2 + w2
+  cy2 = 83 + h2
+  RotateCenter2()
+  Shapes.Move(oEll1, x0 + (cx2 - w2) * s, y0 + (cy2 -h2) * s)
+  Shapes.Rotate(oEll1, a0)
+  GraphicsWindow.PenColor = "#602020"
+  GraphicsWindow.BrushColor = "#993333"
+  oEll2 = Shapes.AddEllipse(55 * s, 87 * s)
+  w2 = 55 / 2
+  h2 = 87 / 2
+  cx2 = 0 + w2
+  cy2 = 0 + h2
+  RotateCenter2()
+  Shapes.Move(oEll2, x0 + (cx2 - w2) * s, y0 + (cy2 -h2) * s)
+  Shapes.Rotate(oEll2, a0)
+  oEll3 = Shapes.AddEllipse(35 * s, 17 * s)
+  w2 = 35 / 2
+  h2 = 17 / 2
+  cx2 = 10 + w2
+  cy2 = 76 + h2
+  RotateCenter2()
+  Shapes.Move(oEll3, x0 + (cx2 - w2) * s, y0 + (cy2 -h2) * s)
+  Shapes.Rotate(oEll3, a0)
+  a0 = Stack.PopValue("local")
+  y0 = Stack.PopValue("local")
+  x0 = Stack.PopValue("local")
+  a = Stack.PopValue("local")
+  y = Stack.PopValue("local")
+  x = Stack.PopValue("local")
+EndSub
+
+Sub RotateCenter2
+  ' param cx2, cy2  - center of a shape
+  ' param w2, h2  - size of a shape
+  ' param cx, cy  - center of shapes
+  x = cx2 - cx
+  y = cy2 - cy
+  Math_XYtoAngle()
+  a2 = a + a0
+  x = r * Math.Cos(a2 * Math.Pi / 180)
+  y = r * Math.Sin(a2 * Math.Pi / 180)
+  cx2 = x + cx
+  cy2 = y + cy
+EndSub
+
+Sub Math_XYtoAngle
+  ' param x,  y  - vector (x, y)
+  ' return a - angle [degree]
+  ' return r - |(x, y)|
+  r = Math.SquareRoot(x * x + y * y)
+  If x = 0 And y > 0 Then 
+    a = 90
+  ElseIf x = 0 And y < 0 Then 
+    a = -90
+  Else
+    a = Math.ArcTan(y / x) * 180 / Math.Pi
+  EndIf
+  If x < 0 Then
+    a = a + 180
+  ElseIf x > 0 And y < 0 Then
+    a = a + 360
+  EndIf
+EndSub
+    

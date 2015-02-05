@@ -1,0 +1,250 @@
+' 9/18/2012 4:37:19 PM Generated
+' by Shapes Editor 0.9
+'
+' initialize shapes
+Shapes_Init()
+' add shapes
+scale = 1
+Shapes_Add()
+angle = 0
+
+Sub Shapes_Init
+  ' Shapes | Initialize shapes data
+  ' return shX, shY - current position of shapes
+  ' return shape - array of shapes
+  shX = 234 ' x offset
+  shY = 51.666664123535 ' y offset
+  shape[1] = "func=rect;x=20.516662597656;y=113.800010681153;width=109;height=181;bc=#FF0000;pc=#FF000000;pw=2;"
+  shape[2] = "func=tri;x=0;y=197.333335876465;x1=32;y1=0;x2=0;y2=74;x3=64;y3=74;angle=26;bc=#FFADAD;pc=#FF000000;pw=2;"
+  shape[3] = "func=tri;x=97;y=219.333335876465;x1=31;y1=0;x2=0;y2=79;x3=62;y3=79;angle=337;bc=#FFADAD;pc=#FF000000;pw=2;"
+  shape[4] = "func=line;x=75.366668701172;y=211.900016784668;x1=1.116668701172;y1=0.000000000000;x2=0.000000000000;y2=79.283325195313;pc=#FF000000;pw=2;"
+  shape[5] = "func=tri;x=40.116668701172;y=293.716667175293;x1=36;y1=0;x2=0;y2=30;x3=72;y3=30;bc=#FFADAD;pc=#FF000000;pw=2;"
+  shape[6] = "func=tri;x=13.783355712891;y=0.000000000000;x1=62;y1=0;x2=0;y2=115;x3=124;y3=115;bc=#FFADAD;pc=#FF000000;pw=2;"
+  shape[7] = "func=ell;x=52.116668701172;y=329.283317565918;width=45;height=102;bc=#FF0700;pc=#FF000000;pw=2;"
+  shape[8] = "func=ell;x=57.233337402344;y=341.333335876465;width=34;height=71;bc=#FF7E07;pc=#FF000000;pw=2;"
+  shape[9] = "func=ell;x=64.533332824707;y=355.583335876465;width=19;height=42;bc=#FFFF00;pc=#FF000000;pw=2;"
+  shape[10] = "func=rect;x=11;y=382.333335876465;width=141;height=43;bc=#FFFFFF;pc=#FFFFFF;pw=2;"
+EndSub
+
+Sub Shapes_Add
+  ' Shapes | Add shapes as shapes data
+  ' param shape - array of shapes
+  ' param scale - to zoom
+  ' return shWidth, shHeight - total size of shapes
+  ' return shAngle - current angle of shapes
+  Stack.PushValue("local", i)
+  Stack.PushValue("local", x)
+  Stack.PushValue("local", y)
+  Shapes_CalcWidthAndHeight()
+  s = scale
+  For i = 1 To nShapes
+    GraphicsWindow.PenWidth = shape[i]["pw"] * s
+    If shape[i]["pw"] > 0 Then
+      GraphicsWindow.PenColor = shape[i]["pc"]
+    EndIf
+    If shape[i]["func"] = "rect" Then
+      GraphicsWindow.BrushColor = shape[i]["bc"]
+      x = shape[i]["x"]
+      y = shape[i]["y"]
+      width = shape[i]["width"]
+      height = shape[i]["height"]
+      shape[i]["obj"] = Shapes.AddRectangle(width * s, height * s)
+      Shapes.Move(shape[i]["obj"], shX + x * s, shY + y * s)
+      If shape[i]["angle"] <> 0 Then
+        Shapes.Rotate(shape[i]["obj"], shape[i]["angle"])
+      EndIf
+    ElseIf shape[i]["func"] = "ell" Then
+      GraphicsWindow.BrushColor = shape[i]["bc"]
+      x = shape[i]["x"]
+      y = shape[i]["y"]
+      width = shape[i]["width"]
+      height = shape[i]["height"]
+      shape[i]["obj"] = Shapes.AddEllipse(width * s, height * s)
+      Shapes.Move(shape[i]["obj"], shX + x * s, shY + y * s)
+      If shape[i]["angle"] <> 0 Then
+        Shapes.Rotate(shape[i]["obj"], shape[i]["angle"])
+      EndIf
+    ElseIf shape[i]["func"] = "tri" Then
+      GraphicsWindow.BrushColor = shape[i]["bc"]
+      x = shape[i]["x"]
+      y = shape[i]["y"]
+      x1 = shape[i]["x1"]
+      y1 = shape[i]["y1"]
+      x2 = shape[i]["x2"]
+      y2 = shape[i]["y2"]
+      x3 = shape[i]["x3"]
+      y3 = shape[i]["y3"]
+      shape[i]["obj"] = Shapes.AddTriangle(x1 * s, y1 * s, x2 * s, y2 * s, x3 * s, y3 * s)
+      Shapes.Move(shape[i]["obj"], shX + x * s, shY + y * s)
+      If shape[i]["angle"] <> 0 Then
+        Shapes.Rotate(shape[i]["obj"], shape[i]["angle"])
+      EndIf
+    ElseIf shape[i]["func"] = "line" Then
+      x = shape[i]["x"]
+      y = shape[i]["y"]
+      x1 = shape[i]["x1"]
+      y1 = shape[i]["y1"]
+      x2 = shape[i]["x2"]
+      y2 = shape[i]["y2"]
+      shape[i]["obj"] = Shapes.AddLine(x1 * s, y1 * s, x2 * s, y2 * s)
+      Shapes.Move(shape[i]["obj"], shX + x * s, shY + y * s)
+    EndIf
+    shape[i]["rx"] = x
+    shape[i]["ry"] = y
+  EndFor
+  shAngle = 0
+  y = Stack.PopValue("local")
+  x = Stack.PopValue("local")
+  i = Stack.PopValue("local")
+EndSub
+
+Sub Shapes_CalcWidthAndHeight
+  ' Shapes | Calculate total width and height of shapes
+  ' return nShapes - number of shapes
+  ' return shWidth, shHeight - total size of shapes
+  nShapes = Array.GetItemCount(shape)
+  For i = 1 To nShapes
+    If shape[i]["func"] = "tri" Or shape[i]["func"] = "line" Then
+      xmin = shape[i]["x1"]
+      xmax = shape[i]["x1"]
+      ymin = shape[i]["y1"]
+      ymax = shape[i]["y1"]
+      If shape[i]["x2"] < xmin Then
+        xmin = shape[i]["x2"]
+      EndIf
+      If xmax < shape[i]["x2"] Then
+        xmax = shape[i]["x2"]
+      EndIf
+      If shape[i]["y2"] < ymin Then
+        ymin = shape[i]["y2"]
+      EndIf
+      If ymax < shape[i]["y2"] Then
+        ymax = shape[i]["y2"]
+      EndIf
+      If shape[i]["func"] = "tri" Then
+        If shape[i]["x3"] < xmin Then
+          xmin = shape[i]["x3"]
+        EndIf
+        If xmax < shape[i]["x3"] Then
+          xmax = shape[i]["x3"]
+        EndIf
+        If shape[i]["y3"] < ymin Then
+          ymin = shape[i]["y3"]
+        EndIf
+        If ymax < shape[i]["y3"] Then
+          ymax = shape[i]["y3"]
+        EndIf
+      EndIf
+      shape[i]["width"] = xmax - xmin
+      shape[i]["height"] = ymax - ymin
+    EndIf
+    If i = 1 Then
+      shWidth = shape[i]["x"] + shape[i]["width"]
+      shHeight = shape[i]["y"] + shape[i]["height"]
+    Else
+      If shWidth < shape[i]["x"] + shape[i]["width"] Then
+        shWidth = shape[i]["x"] + shape[i]["width"]
+      EndIf
+      If shHeight < shape[i]["y"] + shape[i]["height"] Then
+        shHeight = shape[i]["y"] + shape[i]["height"]
+      EndIf
+    EndIf
+  EndFor
+EndSub
+
+Sub Shapes_CalcRotatePos
+  ' Shapes | Calculate position for rotated shape
+  ' param x, y - position of a shape
+  ' param width, height - size of a shape
+  ' param cx, cy - center of shapes
+  ' param shAngle - rotate angle
+  ' return x, y - rotated position of a shape
+  _cx = param["x"] + param["width"] / 2
+  _cy = param["y"] + param["height"] / 2
+  x = _cx - param["cx"]
+  y = _cy - param["cy"]
+  Math_CartesianToPolar()
+  a = a + param["angle"]
+  x = r * Math.Cos(a * Math.Pi / 180)
+  y = r * Math.Sin(a * Math.Pi / 180)
+  _cx = x + param["cx"]
+  _cy = y + param["cy"]
+  x = _cx - param["width"] / 2
+  y = _cy - param["height"] / 2
+EndSub
+
+Sub Shapes_Move
+  ' Shapes | Move shapes
+  ' param shape - array of shapes
+  ' param scale - to zoom
+  ' param x, y - position to move
+  ' return shX, shY - new position of shapes
+  Stack.PushValue("local", i)
+  dx = x - shX
+  dy = y - shY
+  shX = x
+  shY = y
+  For i = 1 To nShapes
+    _x = shape[i]["rx"] + dx
+    _y = shape[i]["ry"] + dy
+    Shapes.Move(shape[i]["obj"], shX + _x * s, shY + _y * s)
+  EndFor
+  i = Stack.PopValue("local")
+EndSub
+
+Sub Shapes_Remove
+  ' Shapes | Remove shapes
+  ' param shape - array of shapes
+  Stack.PushValue("local", i)
+  For i = 1 To nShapes
+    Shapes.Remove(shape[i]["obj"])
+  EndFor
+  i = Stack.PopValue("local")
+EndSub
+
+Sub Shapes_Rotate
+  ' Shapes | Rotate shapes
+  ' param shape - array of shapes
+  ' param scale - to zoom
+  ' param angle - to rotate
+  Stack.PushValue("local", i)
+  Stack.PushValue("local", x)
+  Stack.PushValue("local", y)
+  s = scale
+  param["angle"] = angle
+  param["cx"] = shWidth / 2
+  param["cy"] = shHeight / 2
+  For i = 1 To nShapes
+    param["x"] = shape[i]["x"]
+    param["y"] = shape[i]["y"]
+    param["width"] = shape[i]["width"]
+    param["height"] = shape[i]["height"]
+    Shapes_CalcRotatePos()
+    shape[i]["rx"] = x
+    shape[i]["ry"] = y
+    Shapes.Move(shape[i]["obj"], shX + x * s, shY + y * s)
+    Shapes.Rotate(shape[i]["obj"], shAngle + shape[i]["angle"])
+  EndFor
+  y = Stack.PopValue("local")
+  x = Stack.PopValue("local")
+  i = Stack.PopValue("local")
+EndSub
+
+Sub Math_CartesianToPolar
+  ' Math | convert cartesian coodinate to polar coordinate
+  ' param x, y - cartesian coordinate
+  ' return r, a - polar coordinate
+  r = Math.SquareRoot(x * x + y * y)
+  If x = 0 And y > 0 Then
+    a = 90 ' [degree]
+  ElseIf x = 0 And y < 0 Then
+    a = -90
+  Else
+    a = Math.ArcTan(y / x) * 180 / Math.Pi
+  EndIf
+  If x < 0 Then
+    a = a + 180
+  ElseIf x > 0 And y < 0 Then
+    a = a + 360
+  EndIf
+EndSub

@@ -1,0 +1,153 @@
+' Lion 0.2
+' Copyright (c) 2010 Nonki Takahshi.  All right reserved.
+'
+' History :
+'  0.2 2012/09/19 Modified for Shapes 1.12.
+'  0.1 2012/08/02 Created. (VGM186)
+'
+GraphicsWindow.Title = "Lion 0.2"
+nShapes = 0
+' Draw tail
+param = "x=310;y=230;r=200;width=20;a1=90;a2=180;color=Coral;"
+Arc()
+' Draw body
+param = "x=250;y=290;width=120;height=150;color=Coral;angle=0;"
+Rectangle()
+' Draw crest
+param = "x2=0;y2=100;x1=50;y1=0;x3=100;y3=100;color=Brown;"
+r = 150
+cx = 310
+cy = 200
+For i = 0.5 To　11.5
+  param["x"] = cx + r * Math.Sin(i / 6 * Math.Pi) - 50
+  param["y"] = cy - r * Math.Cos(i / 6 * Math.Pi) - 50
+  param["angle"] = i / 6 * 180
+  Triangle()
+EndFor
+' Draw face
+param = "x=205;y=95;width=210;height=210;color=Coral;angle=0;"
+Ellipse()
+' Draw eyes
+param = "x=240;y=180;width=40;height=40;color=Black;angle=0;"
+Ellipse()
+param = "x=340;y=180;width=40;height=40;color=Black;angle=0;"
+Ellipse()
+' Draw nose
+param = "x=300;y=224;width=20;height=20;color=Brown;angle=0;"
+Ellipse()
+' Draw mouth
+param = "x=270;y=250;width=80;height=40;color=Maroon;angle=0;"
+Rectangle()
+' Draw fangs
+param = "x=270;y=250;x1=0;y1=0;x2=10;y2=10;x3=20;y3=0;color=White;angle=0"
+Triangle()
+param = "x=330;y=250;x1=0;y1=0;x2=10;y2=10;x3=20;y3=0;color=White;angle=0"
+Triangle()
+DumpShapes()
+
+Sub DumpShapes
+  WQ = Text.GetCharacter(34) ' double quote
+  For i = 1 To nShapes
+    TextWindow.WriteLine("shape[" + i + "] = " + WQ + shape[i] + WQ)
+  EndFor
+EndSub
+
+Sub Ellipse
+  ' param["x"] - left x position
+  ' param["y"] - top y position
+  ' param["width"] - width
+  ' param["height"] - height
+  ' param["color"] - fill color
+  ' param["angle"] - rotate angle
+  color = param["color"]
+  GraphicsWindow.PenWidth = 0
+  GraphicsWindow.BrushColor = color
+  x = param["x"]
+  y = param["y"]
+  width = param["width"]
+  height = param["height"]
+  angle = param["angle"]
+  oEllipse = Shapes.AddEllipse(width, height)
+  Shapes.Move(oEllipse, x, y)
+  Shapes.Rotate(oEllipse, angle)
+  nShapes = nShapes + 1
+  shape[nShapes] = "func=ell;x=" + Math.Floor(x) + ";y=" + Math.Floor(y) + ";width=" + width + ";height=" + height + ";angle=" + angle + ";pw=0;bc=" + color + ";"
+EndSub
+
+Sub Rectangle
+  ' param["x"] - left x position
+  ' param["y"] - top y position
+  ' param["width"] - width
+  ' param["height"] - height
+  ' param["color"] - fill color
+  ' param["angle"] - rotate angle
+  color = param["color"]
+  GraphicsWindow.PenWidth = 0
+  GraphicsWindow.BrushColor = color
+  x = param["x"]
+  y = param["y"]
+  width = param["width"]
+  height = param["height"]
+  angle = param["angle"]
+  oRectangle = Shapes.AddRectangle(width, height)
+  Shapes.Move(oRectangle, x, y)
+  Shapes.Rotate(oRectangle, angle)
+  nShapes = nShapes + 1
+  shape[nShapes] = "func=rect;x=" + Math.Floor(x) + ";y=" + Math.Floor(y) + ";width=" + width + ";height=" + height + ";angle=" + angle + ";pw=0;bc=" + color + ";"
+EndSub
+
+Sub Triangle
+  ' param["x"] - left x position
+  ' param["y"] - top y position
+  ' param["x1"] - 1st vertex x position
+  ' param["y1"] - 1st vertex y position
+  ' param["x2"] - 2nd vertex x position
+  ' param["y2"] - 2nd  vertex y position
+  ' param["x3"] - 3rd vertex x position
+  ' param["y3"] - 3rd vertex y position
+  ' param["color"] - fill color
+  ' param["angle"] - rotate angle
+  color = param["color"]
+  GraphicsWindow.PenWidth = 0
+  GraphicsWindow.BrushColor = color
+  x = param["x"]
+  y = param["y"]
+  x1 = param["x1"]
+  y1 = param["y1"]
+  x2 = param["x2"]
+  y2 = param["y2"]
+  x3 = param["x3"]
+  y3 = param["y3"]
+  angle = param["angle"]
+  oTriangle = Shapes.AddTriangle(x1, y1, x2, y2, x3, y3)
+  Shapes.Move(oTriangle, x, y)
+  Shapes.Rotate(oTriangle, angle)
+  nShapes = nShapes + 1
+  shape[nShapes] = "func=tri;x=" + Math.Floor(x) + ";y=" + Math.Floor(y) + ";x1=" + x1 + ";y1=" + y1 + ";x2=" + x2 + ";y2=" + y2 + ";x3=" + x3 + ";y3=" + y3 + "angle=" + Math.Floor(angle) + ";pw=0;bc=" + color + ";"
+EndSub
+
+Sub Arc
+  ' param["x"] - center x position
+  ' param["y"] - center y position
+  ' param["r"] - radius
+  ' param["a1"] - start angle [degree]
+  ' param["a2"] - end angle [degree]
+  ' param["width"] - pen width
+  ' param["color"] -  pen color
+  GraphicsWindow.PenWidth = 0
+  GraphicsWindow.BrushColor = param["color"]
+  a1 = param["a1"]
+  a2 = param["a2"]
+  x = param["x"]
+  y = param["y"]
+  r = param["r"]
+  width = param["width"]
+  For a = a1 To a2
+    left = x + r * Math.Cos(a * Math.Pi / 180) - width / 2
+    top = y + r * Math.Sin(a * Math.Pi / 180) - width / 2
+    oEllipse = Shapes.AddEllipse(width, width)
+    Shapes.Move(oEllipse, left, top)
+    nShapes = nShapes + 1
+    shape[nShapes] = "func=ell;x=" + Math.Floor(left) + ";y=" + Math.Floor(top) + ";width=" + width + ";height=" + width + ";pw=0;bc=" + param["color"] + ";"
+  EndFor
+EndSub

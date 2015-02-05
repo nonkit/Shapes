@@ -1,0 +1,106 @@
+' Panda 0.2
+' Copyright (c) 2012 Nonki Takahashi.  All rights reserved.
+'
+' History : 
+' 0.2 2012/09/18 Changed for Shapes Converter.
+' 0.1 2012/08/24 Created. (WVJ580)
+'
+GraphicsWindow.Title = "Panda 0.2"
+Add_Panda()
+' Blink start
+While "True"
+  Program.Delay(2900)
+  Shapes.HideShape(oEyeLeft2)
+  Shapes.HideShape(oEyeRight2)
+  Program.Delay(100)
+  Shapes.ShowShape(oEyeLeft2)
+  Shapes.ShowShape(oEyeRight2)
+EndWhile
+
+Sub Add_Panda
+  scale = 4
+  x0 = 60 * scale
+  y0 = 24 * scale
+  ' GraphicsWindow.BackgroundColor = "OliveDrab"
+  GraphicsWindow.PenWidth = 0
+  ' Ears
+  GraphicsWindow.BrushColor = "Black"
+  oEarLeft = Shapes.AddEllipse(10 * scale, 7 * scale)
+  Shapes.Move(oEarLeft, x0, y0)
+  Shapes.Rotate(oEarLeft, -45)
+  oEarRight = Shapes.AddEllipse(10 * scale, 7 * scale)
+  Shapes.Move(oEarRight, x0 + 30 * scale, y0)
+  Shapes.Rotate(oEarRight, 45)
+  ' Chest
+  GraphicsWindow.BrushColor = "Black"
+  oChest = Shapes.AddEllipse(40 * scale, 15 * scale)
+  Shapes.Move(oChest, x0, y0 + 28 * scale)
+  ' Body
+  GraphicsWindow.BrushColor = "White"
+  oBody = Shapes.AddEllipse(50 * scale, 35 * scale)
+  Shapes.Move(oBody, x0 - 5 * scale, y0 + 40 * scale)
+  ' Legs
+  GraphicsWindow.BrushColor = "Black"
+  oLegLeft = Shapes.AddEllipse(30 * scale, 15 * scale)
+  Shapes.Move(oLegLeft, x0 - 15 * scale, y0 + 58 * scale)
+  Shapes.Rotate(oLegLeft, 20)
+  oLegRight = Shapes.AddEllipse(30 * scale, 15 * scale)
+  Shapes.Move(oLegRight, x0 + 25 * scale, y0 + 58 * scale)
+  Shapes.Rotate(oLegRight, -20)
+  ' Feets
+  GraphicsWindow.BrushColor = "#080808"
+  oFootLeft = Shapes.AddEllipse(25 * scale, 15 * scale)
+  Shapes.Move(oFootLeft, x0 - 10 * scale, y0 + 60.5 * scale)
+  Shapes.Rotate(oFootLeft, 5)
+  oFootRight = Shapes.AddEllipse(25 * scale, 15 * scale)
+  Shapes.Move(oFootRight, x0 + 25 * scale, y0 + 60.5 * scale)
+  Shapes.Rotate(oFootRight, -5)
+  ' Sholders
+  GraphicsWindow.BrushColor = "Black"
+  oSholderLeft = Shapes.AddEllipse(30 * scale, 15 * scale)
+  Shapes.Move(oSholderLeft, x0 - 10 * scale, y0 + 33 * scale)
+  Shapes.Rotate(oSholderLeft, -60)
+  oSholderRight = Shapes.AddEllipse(30 * scale, 15 * scale)
+  Shapes.Move(oSholderRight, x0 + 20 * scale, y0 + 33 * scale)
+  Shapes.Rotate(oSholderRight, 60)
+  ' Arms
+  GraphicsWindow.BrushColor = "Black"
+  oArmLeft = Shapes.AddEllipse(20 * scale, 10 * scale)
+  Shapes.Move(oArmLeft, x0 - 5 * scale, y0 + 48.5 * scale)
+  Shapes.Rotate(oArmLeft, 20)
+  oArmRight = Shapes.AddEllipse(20 * scale, 10 * scale)
+  Shapes.Move(oArmRight, x0 + 25 * scale, y0 + 48.5 * scale)
+  Shapes.Rotate(oArmRight, -20)
+  ' Face
+  GraphicsWindow.BrushColor = "White"
+  oFace = Shapes.AddEllipse(38 * scale, 32 * scale)
+  Shapes.Move(oFace, x0 + scale, y0)
+  ' Nose
+  GraphicsWindow.BrushColor = "Black"
+  oNose = Shapes.AddTriangle(0, 0, 8 * scale, 0, 4 * scale, 3 * scale)
+  Shapes.Move(oNose, x0 + 16 * scale, y0 + 22 * scale)
+  ' Eyes
+  GraphicsWindow.BrushColor = "Black"
+  GraphicsWindow.PenColor = "DimGray"
+  oEyeLeft = Shapes.AddEllipse(11 * scale, 7 * scale)
+  Shapes.Move(oEyeLeft, x0 + 7 * scale, y0 + 12 * scale)
+  Shapes.Rotate(oEyeLeft, -60)
+  GraphicsWindow.PenWidth = 1
+  oEyeLeft2 = Shapes.AddEllipse(4 * scale, 4 * scale)
+  Shapes.Move(oEyeLeft2, x0 + 12 * scale, y0 + 11 * scale)
+  GraphicsWindow.PenWidth = 0
+  oEyeRight = Shapes.AddEllipse(11 * scale, 7 * scale)
+  Shapes.Move(oEyeRight, x0 + 22 * scale, y0 + 12 * scale)
+  Shapes.Rotate(oEyeRight, 60)
+  GraphicsWindow.PenWidth = 1
+  oEyeRight2 = Shapes.AddEllipse(4 * scale, 4 * scale)
+  Shapes.Move(oEyeRight2, x0 + 24 * scale, y0 + 11 * scale)
+  GraphicsWindow.PenWidth = 0
+  ' Mouth
+  GraphicsWindow.PenColor = "Black"
+  GraphicsWindow.PenWidth = 2
+  oMouthLeft = Shapes.AddLine(0, 1.5 * scale, 4 * scale, 0)
+  Shapes.Move(oMouthLeft, x0 + 16 * scale, y0 + 26.5 * scale)
+  oMouthRight = Shapes.AddLine(0, 0, 4 * scale, 1.5 * scale)
+  Shapes.Move(oMouthRight, x0 + 20 * scale, y0 + 26.5 * scale)
+EndSub

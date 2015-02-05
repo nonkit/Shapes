@@ -1,0 +1,108 @@
+' 2012/09/18 9:30:13 Generated
+' by Shapes 1.1
+'
+' initialize shapes
+Shapes_Init()
+' add shapes
+scale = 1
+Shapes_Add()
+angle = 0
+
+Sub Shapes_Init
+  ' Shapes | Initialize shapes data
+  ' return shX, shY - current position of shapes
+  ' return shape - array of shapes
+  shX = 70 ' x offset
+  shY = 70 ' y offset
+  shape = ""
+  shape[1] = "func=tri;x=56;y=195;x1=38;y1=0;x2=0;y2=67;x3=77;y3=67;bc=#1F1F1F;pc=#000000;pw=2;"
+  shape[2] = "func=tri;x=0;y=197;x1=14;y1=0;x2=0;y2=69;x3=29;y3=69;bc=#939393;pc=#000000;pw=2;"
+  shape[3] = "func=tri;x=159;y=200;x1=12;y1=0;x2=0;y2=69;x3=24;y3=69;bc=#939393;pc=#000000;pw=2;"
+  shape[4] = "func=rect;x=13;y=69;width=159;height=181;bc=#939393;pc=#000000;pw=2;"
+  shape[5] = "func=tri;x=82;y=200;x1=12;y1=0;x2=0;y2=69;x3=24;y3=69;bc=#939393;pc=#000000;pw=2;"
+  shape[6] = "func=tri;x=15;y=0;x1=77;y1=0;x2=0;y2=70;x3=155;y3=70;bc=#7A1515;pc=#000000;pw=2;"
+  shape[7] = "func=ell;x=42;y=81;width=99;height=99;bc=#939393;pc=#000000;pw=2;"
+  shape[8] = "func=ell;x=54;y=93;width=76;height=76;bc=#5ABCCD;pc=#000000;pw=2;"
+  shape[9] = "func=ell;x=20;y=220;width=20;height=20;bc=#939393;pc=#000000;pw=2;"
+  shape[10] = "func=ell;x=50;y=220;width=20;height=20;bc=#939393;pc=#000000;pw=2;"
+  shape[11] = "func=ell;x=115;y=220;width=20;height=20;bc=#939393;pc=#000000;pw=2;"
+  shape[12] = "func=ell;x=145;y=220;width=20;height=20;bc=#939393;pc=#000000;pw=2;"
+  shape[13] = "func=rect;x=249;y=168;width=227;height=188;bc=#939393;pc=#000000;pw=2;"
+  shape[14] = "func=ell;x=283;y=223;width=52;height=55;bc=#CD9F5A;pc=#000000;pw=2;"
+  shape[15] = "func=ell;x=393;y=224;width=52;height=55;bc=#CD9F5A;pc=#000000;pw=2;"
+  shape[16] = "func=rect;x=320;y=309;width=90;height=25;bc=#1F1F1F;pc=#000000;pw=2;"
+  shape[17] = "func=tri;x=199;y=243;x1=26;y1=0;x2=0;y2=44;x3=52;y3=44;angle=91;bc=#939393;pc=#000000;pw=2;"
+  shape[18] = "func=tri;x=472;y=240;x1=26;y1=0;x2=0;y2=44;x3=52;y3=44;angle=270;bc=#939393;pc=#000000;pw=2;"
+EndSub
+
+Sub Shapes_Add
+  ' Shapes | Add shapes as shapes data
+  ' param shape - array of shapes
+  ' param scale - to zoom
+  ' return nShapes - number of shapes
+  ' return shAngle - current angle of shapes
+  Stack.PushValue("local", i)
+  Stack.PushValue("local", x)
+  Stack.PushValue("local", y)
+  nShapes = Array.GetItemCount(shape)
+  s = scale
+  For i = 1 To nShapes
+    GraphicsWindow.PenWidth = shape[i]["pw"] * s
+    If shape[i]["pw"] > 0 Then
+      GraphicsWindow.PenColor = shape[i]["pc"]
+    EndIf
+    If shape[i]["func"] = "rect" Then
+      GraphicsWindow.BrushColor = shape[i]["bc"]
+      x = shape[i]["x"]
+      y = shape[i]["y"]
+      width = shape[i]["width"]
+      height = shape[i]["height"]
+      shape[i]["obj"] = Shapes.AddRectangle(width * s, height * s)
+      Shapes.Move(shape[i]["obj"], shX + x * s, shY + y * s)
+      If shape[i]["angle"] <> 0 Then
+        Shapes.Rotate(shape[i]["obj"], shape[i]["angle"])
+      EndIf
+    ElseIf shape[i]["func"] = "ell" Then
+      GraphicsWindow.BrushColor = shape[i]["bc"]
+      x = shape[i]["x"]
+      y = shape[i]["y"]
+      width = shape[i]["width"]
+      height = shape[i]["height"]
+      shape[i]["obj"] = Shapes.AddEllipse(width * s, height * s)
+      Shapes.Move(shape[i]["obj"], shX + x * s, shY + y * s)
+      If shape[i]["angle"] <> 0 Then
+        Shapes.Rotate(shape[i]["obj"], shape[i]["angle"])
+      EndIf
+    ElseIf shape[i]["func"] = "tri" Then
+      GraphicsWindow.BrushColor = shape[i]["bc"]
+      x = shape[i]["x"]
+      y = shape[i]["y"]
+      x1 = shape[i]["x1"]
+      y1 = shape[i]["y1"]
+      x2 = shape[i]["x2"]
+      y2 = shape[i]["y2"]
+      x3 = shape[i]["x3"]
+      y3 = shape[i]["y3"]
+      shape[i]["obj"] = Shapes.AddTriangle(x1 * s, y1 * s, x2 * s, y2 * s, x3 * s, y3 * s)
+      Shapes.Move(shape[i]["obj"], shX + x * s, shY + y * s)
+      If shape[i]["angle"] <> 0 Then
+        Shapes.Rotate(shape[i]["obj"], shape[i]["angle"])
+      EndIf
+    ElseIf shape[i]["func"] = "line" Then
+      x = shape[i]["x"]
+      y = shape[i]["y"]
+      x1 = shape[i]["x1"]
+      y1 = shape[i]["y1"]
+      x2 = shape[i]["x2"]
+      y2 = shape[i]["y2"]
+      shape[i]["obj"] = Shapes.AddLine(x1 * s, y1 * s, x2 * s, y2 * s)
+      Shapes.Move(shape[i]["obj"], shX + x * s, shY + y * s)
+    EndIf
+    shape[i]["rx"] = x
+    shape[i]["ry"] = y
+  EndFor
+  shAngle = 0
+  y = Stack.PopValue("local")
+  x = Stack.PopValue("local")
+  i = Stack.PopValue("local")
+EndSub

@@ -1,21 +1,19 @@
 Module ShapesModule
-    Dim title, pgmname, debug, gw, gh, __Not, WQ, qt, CR, LF, LT, UPPER, LOWER, DIGIT, LCHAR, TCHAR, shape, nShapes, iMin, iMax, cont, param, clicked, __in, out, c, obj, icut, icopy, ipaste, selectedshape, i, __select, shp, _x, arrow_dx, _y, arrow_dy, x, y, a, cx, cy, len, width, height, angle, mxM, myM, mxD, myD, _i, nPinch, pnch, pinch, r, nMenu, mnu, menu, func, selecteditem, mode, repeat, clipboard, index, scale, shX, shY, resize, w, h, bcolor, pwidth, pcolor, xt, xmin, ymin, x1, x2, y1, y2, pen, nPen, pw, size, color, grid, colorGrid, stepGrid, sizeMenu, fromMenu, cxMenu, cyMenu, xMenu, yMenu, imenubar, margin, url, itemname, msWait, t, x3, y3, oItem, _index, buf, month, day, xmax, ymax, filename, subname, sp, rx, ry, dx, dy, _iMax, _mxD, _myD, _mxM, _myM, lowerExt, ext, mxU, myU, sizePinch, shWidth, shHeight, xPinch, yPinch, shAngle, moved, released, oFrame, _x1, _y1, _x2, _y2, _x3, _y3, sR, sColor, sG, sB, sHex, iR, iDec, iG, iB, rLightness, rN2, rSaturation, rN1, rH, rHue, iValue, rR, rG, rB, rMax, rMin, UNDEFINED, rRC, rGC, rBC, rV, nPalette, pltt, palette, tPalette, maxPalette, iSlider, iHue, iLightness, iSaturation, level, iRed, iGreen, iBlue, red, green, blue, iPalette, BORDERCOLOR, oRect, min, max, left, top, TOPY, caption, DELTAY, LEFTX, CAPTIONCOLOR, oNewColor, numSlider, slider, oPalette, sldr, colorInit, POPUPCOLOR, oPopup, oOK, oCancel, relPath, oRectCurrent, oColor, cancel, absPath, curDir, path, folder, n, p, oMsg, oText, oFilename, oCaption, pFilename, iBackslash, iDot, basename, oOpen, fifok, oSave, typed, TEXTCOLOR, OPACITY, done, lastExt, dummy, yes, caution, oMsgBox, oCaution, yCaution, oYes, oNo, fifos, fifoc, _shift, _ctrl, keys, shift, ctrl, key, iLen, iPtr, cmr, attr, handler, lAngle, match, pAngle, dmu, smrc, _p, pc, bc, pSave, tag, findNext, pTag, lTag, pAttr, lAttr, pEnd, pEq, pQ, txt, pL, pR, pKw, pStyle, kw, value, pValue, pColon, points, px, py, nPoints, pPoints, ptr, _ptr, isSpace, __char, BOXCOLOR, SLITCOLOR, _buf, notFound, ptrSub, _ptre, _ptrq, ptrEndSub, ox, oy, alpha, silverlight, s, fs, _cx, _cy, mag, x0, x0_, x1_, y0 As Primitive
+    Dim title, pgmname, debug, __Not, gw, gh, WQ, qt, CR, LF, LT, UPPER, LOWER, DIGIT, LCHAR, TCHAR, shape, nShapes, iMin, iMax, cont, param, clicked, __in, out, c, obj, icut, icopy, ipaste, selectedshape, i, __select, shp, _x, arrow_dx, _y, arrow_dy, x, y, a, cx, cy, len, width, height, angle, mxM, myM, mxD, myD, _i, nPinch, pnch, pinch, r, nMenu, mnu, menu, func, selecteditem, mode, repeat, clipboard, index, scale, shX, shY, resize, w, h, bcolor, pwidth, pcolor, xt, xmin, ymin, x1, x2, y1, y2, pen, nPen, pw, size, color, grid, colorGrid, stepGrid, sizeMenu, fromMenu, cxMenu, cyMenu, xMenu, yMenu, imenubar, margin, url, itemname, msWait, t, x3, y3, oItem, _index, filename, buf, month, day, xmax, ymax, subname, sp, rx, ry, dx, dy, _iMax, _mxD, _myD, _mxM, _myM, lowerExt, ext, mxU, myU, sizePinch, shWidth, shHeight, xPinch, yPinch, shAngle, moved, released, oFrame, _x1, _y1, _x2, _y2, _x3, _y3, caution, yes, sR, sColor, sG, sB, sHex, iR, iDec, iG, iB, rLightness, rN2, rSaturation, rN1, rH, rHue, iValue, rR, rG, rB, rMax, rMin, UNDEFINED, rRC, rGC, rBC, rV, nPalette, pltt, palette, tPalette, maxPalette, iSlider, iHue, iLightness, iSaturation, level, iRed, iGreen, iBlue, red, green, blue, iPalette, BORDERCOLOR, oRect, min, max, left, top, TOPY, caption, DELTAY, LEFTX, CAPTIONCOLOR, oNewColor, numSlider, slider, oPalette, sldr, colorInit, POPUPCOLOR, oPopup, oOK, oCancel, oMsgBox, oRectCurrent, oColor, cancel, oCaution, yCaution, oYes, oNo, fifos, relPath, absPath, curDir, path, folder, n, p, oMsg, oText, oFilename, oCaption, pFilename, iBackslash, iDot, basename, oOpen, fifok, typed, done, TEXTCOLOR, OPACITY, oSave, lastExt, dummy, fifoc, _shift, _ctrl, keys, shift, ctrl, key, iLen, iPtr, cmr, attr, handler, lAngle, match, pAngle, dmu, smrc, _p, pc, bc, pSave, tag, findNext, pTag, lTag, pAttr, lAttr, pEnd, pEq, pQ, txt, pL, pR, pKw, pStyle, kw, value, pValue, pColon, points, px, py, nPoints, pPoints, ptr, _ptr, isSpace, __char, BOXCOLOR, SLITCOLOR, _buf, notFound, ptrSub, _ptre, _ptrq, ptrEndSub, ox, oy, alpha, silverlight, s, fs, _cx, _cy, mag, x0, x0_, x1_, y0 As Primitive
     Sub Main()
         ' Shapes
         ' Copyright © 2012-2015 Nonki Takahashi.  The MIT License.
-        ' Version 2.02b
-        ' Last update 2015-01-09
+        ' Version 2.1b
+        ' Last update 2015-02-04
         ' Repository https://git01.codeplex.com/shapesinsmallbasic
         '
-        ' History:
-        '  Created from Small SVG Editor 1.99b and Shapes 1.7b.
-        '  Removed TextWindow.WriteLine for debug.
-        '  Increased colors from 16 to 24 for color palette.
-        '
         ' TODO:
+        '  [✓] #16 Bug fix: Pen color missing after pw=0
+        '  [✓] #15 Bug fix: Shapes.smallbasic overwritten as output
+        '  [ ] #13 Show file name in title
+        '  [ ] #12 Support PowerPoint VBA format output 
         '  [ ] #11 Support transparent brush color
-        '  [ ] #10 Support New command
-        '  [✓] #8 Redesign color palette
+        '  [✓] #10 Support New command
         '  [ ] #7 Support text tag (element)
         '  [ ] #6 Check illegal behavior in Silverlight environment
         '  [ ] #5 Sort subroutines
@@ -23,10 +21,11 @@ Module ShapesModule
         '  [ ] #2 Bug fix for Silverlight:  Rotated triangles move after click
         '  [ ] #1 Bug fix for Silverlight:  Lines come different place
         '
-        title = "Shapes 2.02b"
+        title = "Shapes 2.1b"
         pgmname = "Shapes.smallbasic"
         GraphicsWindow.Title = title
         debug = false
+        __Not = "False=True;True=False;"
         SB_Workaround()
         gw = 598
         gh = 428
@@ -55,7 +54,7 @@ Module ShapesModule
         KB_Init()
         param = "down=True;move=False;up=True;" ' wait to click
         Mouse_SetHandler()
-        While cont
+        While true
             If clicked Then ' mouse clicked
                 DetectClickedObject()
                 DoObject()
@@ -72,6 +71,8 @@ Module ShapesModule
                 ElseIf c = CType("^v", Primitive) Then
                     obj = "menu" + ipaste
                     DoMenu()
+                ElseIf c = CType("^n", Primitive) Then
+                    __New()
                 ElseIf c = CType("DEL", Primitive) Then
                     If selectedshape <> CType("", Primitive) Then
                         DeleteSelectedShape()
@@ -94,6 +95,7 @@ Module ShapesModule
                 Program.Delay(100)
             End If
         End While
+
     End Sub
     Sub CalcDetectBorder()
         ' param i - index of shapes
@@ -276,8 +278,10 @@ dco_exit:
             obj = ""
             mnu = menu(i)
             func = mnu("func")
-            __select = true
-            ItemSelect() ' shows menu item frame
+            If i <= nMenu Then
+                __select = true
+                ItemSelect() ' shows menu item frame
+            End If
             If (selecteditem = i) And Text.IsSubText("rect|ell|tri|line", func) Then
                 If mode = CType("repeat", Primitive) Then
                     mode = "single"
@@ -458,6 +462,11 @@ dco_exit:
                 shp = shape(i)
                 If func = CType("pw", Primitive) Then
                     shp("pw") = pwidth
+                    If (pwidth = 0) And (shp("pc") <> CType("", Primitive)) Then
+                        shp("pc") = ""
+                    ElseIf (0 < pwidth) And (shp("pc") = CType("", Primitive)) Then
+                        shp("pc") = pcolor
+                    End If
                 ElseIf func = CType("pc", Primitive) Then
                     shp("pc") = pcolor
                 ElseIf func = CType("bc", Primitive) Then
@@ -754,6 +763,7 @@ dm_exit:
         Next
     End Sub
     Sub GenerateSB()
+        Stack.PushValue("local", filename)
         buf = "' "
         buf = buf + Clock.Year + "-"
         month = Clock.month
@@ -768,12 +778,12 @@ dm_exit:
         buf = buf + day + " " + Clock.Time + " Shapes generated"
         buf = buf + " by " + title + "." + CR + LF
         buf = buf + "'" + CR + LF
-        buf = buf + "' initialize shapes" + CR + LF
         buf = buf + "SB_Workaround()" + CR + LF
         buf = buf + "gw = 598" + CR + LF
         buf = buf + "gh = 428" + CR + LF
         buf = buf + "GraphicsWindow.Width = gw" + CR + LF
         buf = buf + "GraphicsWindow.Height = gh" + CR + LF
+        buf = buf + "' initialize shapes" + CR + LF
         buf = buf + "Shapes_Init()" + CR + LF
         buf = buf + "' add shapes" + CR + LF
         buf = buf + "scale = 1" + CR + LF
@@ -879,6 +889,7 @@ dm_exit:
         subname = "Shapes_Rotate"
         SB_AppendSub()
         buf = buf + CR + LF
+        filename = Stack.PopValue("local")
     End Sub
     Sub GenerateSVG()
         sp(4) = "    "
@@ -1047,14 +1058,16 @@ dm_exit:
     End Sub
     Sub ReadShapes()
         File_Open()
-        File_GetBasename()
-        lowerExt = Text.ConvertToLowerCase(ext)
-        If lowerExt = CType("svg", Primitive) Then
-            Parse_SVG()
-        ElseIf (lowerExt = CType("sb", Primitive)) Or (lowerExt = CType("smallbasic", Primitive)) Then
-            Parse_SB()
+        If buf <> CType("", Primitive) Then
+            File_GetBasename()
+            lowerExt = Text.ConvertToLowerCase(ext)
+            If lowerExt = CType("svg", Primitive) Then
+                Parse_SVG()
+            ElseIf (lowerExt = CType("sb", Primitive)) Or (lowerExt = CType("smallbasic", Primitive)) Then
+                Parse_SB()
+            End If
+            Shapes_Add()
         End If
-        Shapes_Add()
     End Sub
     Sub RegisterShapeData()
         ' param i - index of shapes
@@ -1218,7 +1231,7 @@ dm_exit:
         ' return mxD, myD - clicked point
         param = "down=True;move=False;up=False;" ' wait to click
         Mouse_SetHandler()
-        While clicked = CType(false, Primitive)
+        While __Not(clicked)
             Program.Delay(100)
         End While
     End Sub
@@ -1239,7 +1252,7 @@ dm_exit:
         mxM = mxD
         myM = myD
         moved = true
-        While released = CType(false, Primitive)
+        While __Not(released)
             If moved Then
                 param = "move=False;" ' while moving a shape
                 Mouse_SetHandler()
@@ -1323,7 +1336,7 @@ dm_exit:
         End If
         Shapes.SetOpacity(oFrame(func), 0)
         Shapes.Move(oFrame(func), _x, _y)
-        While released = CType(false, Primitive)
+        While __Not(released)
             If moved Then
                 param = "move=False;" ' while sizing a shape
                 Mouse_SetHandler()
@@ -1363,7 +1376,7 @@ dm_exit:
         param = "down=False;move=True;up=True;" ' for sizing a shape / wait to release
         Mouse_SetHandler()
         moved = true
-        While released = CType(false, Primitive)
+        While __Not(released)
             If moved Then
                 param = "move=False;" ' while sizing a shape
                 Mouse_SetHandler()
@@ -1416,6 +1429,25 @@ dm_exit:
         End If
         File_Save()
         i = Stack.PopValue("local")
+    End Sub
+    Sub __New()
+        If 0 < nShapes Then
+            caution = "Are you sure to clear all shapes?"
+            Dialog_YesNo()
+            If yes Then
+                If selectedshape <> CType("", Primitive) Then
+                    i = selectedshape
+                    __select = false
+                    ShapeSelect() ' removes pinches if a shape selected
+                End If
+                iMin = 1
+                iMax = nShapes
+                Shapes_Remove()
+                shape = ""
+                nShapes = 0
+                iMax = nShapes
+            End If
+        End If
     End Sub
     Sub Color_ColorToRGB()
         ' Color | Convert Color to RGB
@@ -1938,6 +1970,32 @@ scco_obj_found:
             cancel = false
         End If
     End Sub
+    Sub Dialog_YesNo()
+        ' param caution - message
+        ' return yes - if [Yes] pushed
+        yes = true
+        GraphicsWindow.BrushColor = POPUPCOLOR
+        oMsgBox = Shapes.AddRectangle(gw, gh)
+        Shapes.SetOpacity(oMsgBox, 64)
+        GraphicsWindow.BrushColor = CAPTIONCOLOR
+        oCaution = Shapes.AddText(caution)
+        yCaution = (gh - 80) / 2
+        Shapes.Move(oCaution, 150, yCaution)
+        oYes = Controls.AddButton("Yes", 360, yCaution + 50)
+        oNo = Controls.AddButton("No", 400, yCaution + 50)
+        cont = true ' continue
+        AddHandler Controls.ButtonClicked, AddressOf File_OnButtonClicked
+        While cont
+            Program.Delay(500)
+        End While
+        If Controls.LastClickedButton = oNo Then
+            yes = false
+        End If
+        Controls.Remove(oNo)
+        Controls.Remove(oYes)
+        Shapes.Remove(oCaution)
+        Shapes.Remove(oMsgBox)
+    End Sub
     Sub File_GetAbsPath()
         ' param curDir - current directory
         ' param relPath - relative path
@@ -2033,6 +2091,8 @@ scco_obj_found:
         ' return buf
         ' return filename
         Stack.PushValue("local", cont)
+        relPath = ""
+        filename = ""
         File_OpenDialog()
         oOpen = Controls.AddButton("Open", 486, gh - 34)
         Shapes.SetText(oMsg, "You can also click above, push Ctrl+V to paste from clipboard")
@@ -2040,32 +2100,42 @@ scco_obj_found:
         AddHandler Controls.TextTyped, AddressOf File_OnTextTyped
         subname = "Shapes_Init"
         typed = false
-        cont = true ' continue
-        While cont
-            If typed Then
-                curDir = Program.Directory
-                relPath = Controls.GetTextBoxText(oFilename)
-                File_GetAbsPath()
-                filename = absPath
-                buf = ""
-                buf = File.ReadContents(filename)
-                Controls.SetTextBoxText(oText, buf)
-                typed = false
+        done = false
+        While __Not(done)
+            cont = true ' continue
+            While cont
+                If typed Then
+                    curDir = Program.Directory
+                    relPath = Controls.GetTextBoxText(oFilename)
+                    File_GetAbsPath()
+                    filename = absPath
+                    buf = ""
+                    buf = File.ReadContents(filename)
+                    Controls.SetTextBoxText(oText, buf)
+                    typed = false
+                Else
+                    Program.Delay(200)
+                End If
+            End While
+            If Controls.LastClickedButton = oOpen Then
+                buf = Controls.GetTextBoxText(oText)
+                If buf <> CType("", Primitive) Then
+                    done = true
+                End If
             Else
-                Program.Delay(200)
+                buf = ""
+                relPath = ""
+                filename = ""
+                done = true
             End If
         End While
-        If Controls.LastClickedButton = oOpen Then
-            buf = Controls.GetTextBoxText(oText)
-        Else
-            buf = ""
-        End If
         Controls.Remove(oOpen)
         File_CloseDialog()
         cont = Stack.PopValue("local")
     End Sub
     Sub File_OpenDialog()
         ' File | Open dialog and common parts for Open/Save
+        ' param relPath
         ' return oPopup
         ' return oCaption
         ' return oFilename
@@ -2084,6 +2154,7 @@ scco_obj_found:
         oFilename = Controls.AddTextBox(LEFTX + 80, TOPY)
         Shapes.SetOpacity(oFilename, OPACITY)
         Controls.SetSize(oFilename, 300, 24)
+        Controls.SetTextBoxText(oFilename, relPath)
         oText = Controls.AddMultiLineTextBox(LEFTX, TOPY + 30)
         Controls.SetSize(oText, gw - 20, gh - 84)
         Shapes.SetOpacity(oText, OPACITY)
@@ -2093,24 +2164,19 @@ scco_obj_found:
         GraphicsWindow.BrushColor = TEXTCOLOR
         oCancel = Controls.AddButton("Cancel", 535, gh - 34)
     End Sub
-    Sub File_OnTextTyped()
-        ' File | Textbox event handler
-        If Controls.LastTypedTextBox = oFilename Then
-            typed = true
-        End If
-    End Sub
     Sub File_Save()
         ' File | Show output code to save
         ' param buf - program buffer
+        ' param filename
         Stack.PushValue("local", cont)
         File_OpenDialog()
         Controls.SetTextBoxText(oText, buf)
         oSave = Controls.AddButton("Save", 488, gh - 34)
         Shapes.SetText(oMsg, "You can also click above, push Ctrl+A, Ctrl+C to copy to clipboard")
         AddHandler Controls.ButtonClicked, AddressOf File_OnButtonClicked
+        AddHandler Controls.TextTyped, AddressOf File_OnTextTyped
         done = false
         lastExt = lowerExt
-        filename = ""
         While __Not(done)
             cont = true ' continue
             While cont
@@ -2142,34 +2208,14 @@ scco_obj_found:
                 yes = true
                 If dummy <> CType("", Primitive) Then
                     caution = "'" + basename + "." + ext + "' already exists." + CR + LF + "Do you want to replace it?"
-                    GraphicsWindow.BrushColor = POPUPCOLOR
-                    oMsgBox = Shapes.AddRectangle(gw, gh)
-                    Shapes.SetOpacity(oMsgBox, 64)
-                    GraphicsWindow.BrushColor = CAPTIONCOLOR
-                    oCaution = Shapes.AddText(caution)
-                    yCaution = (gh - 80) / 2
-                    Shapes.Move(oCaution, 150, yCaution)
-                    oYes = Controls.AddButton("Yes", 360, yCaution + 50)
-                    oNo = Controls.AddButton("No", 400, yCaution + 50)
-                    cont = true ' continue
-                    AddHandler Controls.ButtonClicked, AddressOf File_OnButtonClicked
-                    While cont
-                        Program.Delay(500)
-                    End While
-                    If Controls.LastClickedButton = oNo Then
-                        yes = false
-                    End If
-                    Controls.Remove(oNo)
-                    Controls.Remove(oYes)
-                    Shapes.Remove(oCaution)
-                    Shapes.Remove(oMsgBox)
+                    Dialog_YesNo()
                 End If
                 If yes Then
                     File.WriteContents(filename, buf)
                     done = true ' saved
                 End If
-            Else
-                done = true ' cancelled
+            ElseIf Controls.LastClickedButton = oCancel Then
+                done = true ' canceled
             End If
         End While
         Controls.Remove(oSave)
@@ -2179,6 +2225,12 @@ scco_obj_found:
     Sub File_OnButtonClicked()
         ' File | Button event handler
         cont = false
+    End Sub
+    Sub File_OnTextTyped()
+        ' File | Textbox event handler
+        If Controls.LastTypedTextBox = oFilename Then
+            typed = true
+        End If
     End Sub
     Sub KB_FlushFIFO()
         ' Keyborad | Flush keyboard buffer (FIFO)
@@ -2298,7 +2350,7 @@ scco_obj_found:
             released = false
             AddHandler GraphicsWindow.MouseUp, AddressOf Mouse_OnUp
             handler("up") = "U"
-        ElseIf param("up") = CType(false, Primitive) Then
+        ElseIf __Not(param("up")) Then
             AddHandler GraphicsWindow.MouseUp, AddressOf Mouse_DoNothing
             handler("up") = ""
         End If
@@ -2306,7 +2358,7 @@ scco_obj_found:
             clicked = false
             AddHandler GraphicsWindow.MouseDown, AddressOf Mouse_OnDown
             handler("down") = "D"
-        ElseIf param("down") = CType(false, Primitive) Then
+        ElseIf __Not(param("down")) Then
             AddHandler GraphicsWindow.MouseDown, AddressOf Mouse_DoNothing
             handler("down") = ""
         End If
@@ -2314,7 +2366,7 @@ scco_obj_found:
             moved = false
             AddHandler GraphicsWindow.MouseMove, AddressOf Mouse_OnMove
             handler("move") = "M"
-        ElseIf param("move") = CType(false, Primitive) Then
+        ElseIf __Not(param("move")) Then
             AddHandler GraphicsWindow.MouseMove, AddressOf Mouse_DoNothing
             handler("move") = ""
         End If
@@ -3190,6 +3242,7 @@ sbas_exit:
         ' Shapes | Rotate shapes
         ' param iMin, iMax - shapes indices to rotate
         ' param shape - array of shapes
+        ' param cx, cy - rotation center
         ' param scale - to zoom
         ' param angle - to rotate
         Stack.PushValue("local", i)
@@ -3197,8 +3250,18 @@ sbas_exit:
         Stack.PushValue("local", y)
         s = scale
         param("angle") = angle
-        param("cx") = shWidth / 2
-        param("cy") = shHeight / 2
+        If cx <> CType("", Primitive) Then
+            param("cx") = cx
+        Else
+            cx = "" ' to avoid syntax error
+            param("cx") = shWidth / 2
+        End If
+        If cy <> CType("", Primitive) Then
+            param("cy") = cy
+        Else
+            cy = "" ' to avoid syntax error
+            param("cy") = shHeight / 2
+        End If
         For i = iMin To iMax
             shp = shape(i)
             param("x") = shp("x")
@@ -3291,7 +3354,7 @@ sbas_exit:
         ' param iSlider
         param = "down=False;move=True;up=True;" ' for slider moving / wait to release
         Mouse_SetHandler()
-        While released = CType(false, Primitive)
+        While __Not(released)
             If moved Then
                 param = "move=False;" ' while slider moving
                 Mouse_SetHandler()

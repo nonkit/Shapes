@@ -1,0 +1,251 @@
+' Elephant 0.2
+' Copyright (c) 2012 Nonki Takahashi.  All rights reserved.
+'
+' History :
+'  0.2 2012/09/18 Changed for Shapes 1.1.
+'  0.1 2012/08/14 Created. (WRG641)
+'
+GraphicsWindow.Title = "Elephant 0.2"
+WQ = Text.GetCharacter(34) ' double quote
+scale = 1
+GraphicsWindow.PenWidth = 0
+' Add legs
+GraphicsWindow.BrushColor = "#AAAAAA"
+param = "name=oLeg1;width=70;height=160;"
+AddRectangleToElement()
+param = "name=oLeg2;width=70;height=160;"
+AddRectangleToElement()
+' Add tail
+param = "name=oTail;a1=270;a2=360;r=150;width=10;"
+AddArcToElement()
+' Add body
+param = "name=oBody;width=300;height=300;"
+AddEllipseToElement()
+' Add ears
+GraphicsWindow.BrushColor = "#BBBBBB"
+param = "name=oEar1;width=150;height=200;"
+AddEllipseToElement()
+param = "name=oEar2;width=150;height=200;"
+AddEllipseToElement()
+' Add head
+param = "name=oHead;width=250;height=250;"
+AddEllipseToElement()
+' Add nose
+r = Math.Floor(ele["oHead.width"] / 2)
+param = "name=oNose;a1=315;a2=360;r=" + r + ";width=50;"
+AddArcToElement()
+' Add eyes
+GraphicsWindow.BrushColor = "#000000"
+param = "name=oClosedEye1;width=20;height=3;"
+AddRectangleToElement()
+param = "name=oClosedEye2;width=20;height=3;"
+AddRectangleToElement()
+param = "name=oEye1;width=20;height=20;"
+AddEllipseToElement()
+param = "name=oEye2;width=20;height=20;"
+AddEllipseToElement()
+
+' Move body
+param = "name=oBody;cx=320;cy=200;"
+MoveElement()
+' Move legs
+rx = ele["oBody.width"] / 2
+ry = ele["oBody.height"] / 2
+ang = 270 - 25
+cx = ele["oBody.cx"] + rx * Math.Cos(ang / 180 * Math.Pi)
+cy = ele["oBody.cy"] - ry * Math.Sin(ang / 180 * Math.Pi)
+param = "name=oLeg1;cx=" + Math.Floor(cx) + ";cy=" + Math.Floor(cy) + ";"
+MoveElement()
+ang = 270 + 25
+cx = ele["oBody.cx"] + rx * Math.Cos(ang / 180 * Math.Pi)
+cy = ele["oBody.cy"] - ry * Math.Sin(ang / 180 * Math.Pi)
+param = "name=oLeg2;cx=" + Math.Floor(cx) + ";cy=" + Math.Floor(cy) + ";"
+MoveElement()
+' Move head
+cx = ele["oBody.cx"] - 20
+cy = ele["oBody.cy"] - 30
+param = "name=oHead;cx=" + cx + ";cy=" + cy + ";"
+MoveElement()
+' Move nose
+cx = Math.Floor(ele["oHead.cx"] - ele["oHead.width"] / 2)
+cy = Math.Floor(ele["oHead.cy"] + ele["oHead.height"] / 2)
+param = "name=oNose;cx=" + cx + ";cy=" + cy + ";"
+MoveArc()
+' Move tail
+cx = ele["oBody.cx"] 
+cy = Math.Floor(ele["oBody.cy"] - ele["oBody.height"] / 2)
+param = "name=oTail;cx=" + cx + ";cy=" + cy + ";"
+MoveArc()
+' Move ears
+cx = Math.Floor(ele["oHead.cx"] - ele["oHead.width"] / 1.5)
+cy = ele["oHead.cy"]
+param = "name=oEar1;cx=" + cx + ";cy=" + cy + ";"
+MoveElement()
+cx = Math.Floor(ele["oHead.cx"] + ele["oHead.width"] / 1.5)
+param = "name=oEar2;cx=" + cx + ";cy=" + cy + ";"
+MoveElement()
+' Move eyes
+rx = ele["oHead.width"] / 4
+ry = ele["oHead.height"] / 4
+ang = 270 - 60
+cx = ele["oHead.cx"] + rx * Math.Cos(ang / 180 * Math.Pi)
+cy = ele["oHead.cy"] - ry * Math.Sin(ang / 180 * Math.Pi)
+param = "name=oEye1;cx=" + Math.Floor(cx) + ";cy=" + Math.Floor(cy) + ";"
+MoveElement()
+param["name"] = "oClosedEye1"
+MoveElement()
+ang = 270 + 60
+cx = ele["oHead.cx"] + rx * Math.Cos(ang / 180 * Math.Pi)
+cy = ele["oHead.cy"] - ry * Math.Sin(ang / 180 * Math.Pi)
+param = "name=oEye2;cx=" + Math.Floor(cx) + ";cy=" + Math.Floor(cy) + ";"
+MoveElement()
+param["name"] = "oClosedEye2"
+MoveElement()
+ConvertElementToShape()
+' Blink start
+While "True"
+  Program.Delay(2900)
+  Shapes.HideShape(ele["oEye1"])
+  Shapes.HideShape(ele["oEye2"])
+  Program.Delay(100)
+  Shapes.ShowShape(ele["oEye1"])
+  Shapes.ShowShape(ele["oEye2"])
+EndWhile
+
+Sub ConvertElementToShape
+  nEle = Array.GetItemCount(ele)
+  indexEle = Array.GetAllIndices(ele)
+  shape = ""
+  nShapes = 0
+  For i = 1 To nEle
+    index = indexEle[i]
+    If Text.GetIndexOf(index, ".") = 0 Then ' object
+      object = index
+      If Text.StartsWith(ele[index], "Rectangle") Then
+        For s = 1 To nShapes
+          If shape[s]["obj"] = object Then
+            Goto cets_rect_found
+          EndIf
+        EndFor
+        nShapes = nShapes + 1 ' not found
+        shape[s]["obj"] = object
+cets_rect_found:
+        shape[s]["func"] = "rect"
+      ElseIf Text.StartsWith(ele[index], "Ellipse") Then
+        For s = 1 To nShapes
+          If shape[s]["obj"] = object Then
+            Goto cets_ell_found
+          EndIf
+        EndFor
+        nShapes = nShapes + 1 ' not found
+        shape[s]["obj"] = object
+cets_ell_found:
+        shape[s]["func"] = "ell"
+      EndIf
+    Else ' property
+      p = Text.GetIndexOf(index, ".")
+      prop = Text.GetSubTextToEnd(index, p + 1)
+      object = Text.GetSubText(index, 1, p - 1)
+      For s = 1 To nShapes
+        If shape[s]["obj"] = object Then
+          Goto cets_prop_found
+        EndIf
+      EndFor
+      nShapes = nShapes + 1 ' not found
+      shape[s]["obj"] = object
+cets_prop_found:
+      shape[s][prop] = ele[index]
+    EndIf
+  EndFor
+  For s = 1 To nShapes
+    TextWindow.WriteLine("shape[" + s + "] = " + WQ + shape[s] + WQ)
+  EndFor
+EndSub
+
+Sub AddEllipseToElement
+  ' param["name"] - object name
+  ' param["width"] - width of rectangle
+  ' param["height"] - height of rectangle
+  ' param scale - scale of size
+  ele[param["name"] + ".width"] = param["width"] 
+  ele[param["name"] + ".height"] = param["height"]
+  ele[param["name"]] = Shapes.AddEllipse(ele[param["name"] + ".width"] * scale, ele[param["name"] + ".height"] * scale)
+EndSub
+
+Sub AddRectangleToElement
+  ' param["name"] - object name
+  ' param["width"] - width of rectangle
+  ' param["height"] - height of rectangle
+  ' param scale - scale of size
+  ele[param["name"] + ".width"] = param["width"]
+  ele[param["name"] + ".height"] = param["height"]
+  ele[param["name"]] = Shapes.AddRectangle(ele[param["name"] + ".width"] * scale, ele[param["name"] + ".height"] * scale)
+EndSub
+  
+Sub AddArcToElement
+  ' param["name"] - object name    
+  ' param["a1"] - start angle [degree]
+  ' param["a2"] - end angle [degree]
+  ' param["r"] - radius
+  ' param["width"] - pen width
+  name = param["name"]
+  a1 = param["a1"]
+  a2 = param["a2"]
+  r = param["r"]
+  width = param["width"]
+  ele[name + ".a1"] = a1
+  ele[name + ".a2"] = a2
+  ele[name + ".r"] = r
+  ele[name + ".width"] = width
+  For a = a1 To a2
+    ele[name + a] = Shapes.AddEllipse(width * scale, width * scale)
+  EndFor
+EndSub
+
+Sub MoveArc
+  ' param["name"] - object name    
+  ' param["cx"] - center x position
+  ' param["cy"] - center y position
+  name = param["name"]
+  cx = param["cx"]
+  cy = param["cy"]
+  a1 = ele[name + ".a1"]
+  a2 = ele[name + ".a2"]
+  r = ele[name + ".r"]
+  width = ele[name + ".width"]
+  For a = a1 To a2
+    left = cx + r * Math.Cos(a * Math.Pi / 180) - width / 2
+    top = cy - r * Math.Sin(a * Math.Pi / 180) - width / 2
+    Shapes.Move(ele[name + a], left * scale, top * scale)
+    ele[name + a + ".x"] = Math.Floor(left * scale)
+    ele[name + a + ".y"] = Math.Floor(top * scale)
+    ele[name + a + ".width"] = width
+    ele[name + a + ".height"] = width
+  EndFor
+EndSub
+
+Sub MoveElement
+  ' param["name"] - object name
+  ' param["cx"] - center x coordinate
+  ' param["cy"] - center y coordinate
+  ' param scale - scale of size
+  ele[param["name"] + ".cx"] = param["cx"]
+  ele[param["name"] + ".cy"] = param["cy"]
+  Shapes.Move(ele[param["name"]], (ele[param["name"] + ".cx"] - ele[param["name"] + ".width"] / 2) * scale, (ele[param["name"] + ".cy"] - ele[param["name"] + ".height"] / 2) * scale)
+EndSub
+
+Sub DumpParam
+  n = Array.GetItemCount(param)
+  index = Array.GetAllIndices(param)
+  For i = 1 To n
+    TextWindow.WriteLine("param[" + index[i] + "]=" + param[index[i]])
+  EndFor
+EndSub
+
+Sub DumpElements
+  n = Array.GetItemCount(ele)
+  index = Array.GetAllIndices(ele)
+  For i = 1 To n
+    TextWindow.WriteLine("ele[" + index[i] + "]=" + ele[index[i]])
+  EndFor
+EndSub

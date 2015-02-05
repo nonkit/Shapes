@@ -1,0 +1,159 @@
+' RQB683 2012/09/07 8:09:40 Generated
+' by Shapes Editor 0.2
+'
+x = 300 ' x offset
+y =  20 ' y offset
+s = 1.5 ' scale
+a = -60 ' angle
+DrawShapes()
+
+Sub DrawShapes
+  Stack.PushValue("local", x)
+  Stack.PushValue("local", y)
+  Stack.PushValue("local", a)
+  Stack.PushValue("local", x0)
+  Stack.PushValue("local", y0)
+  x0 = x
+  y0 = y
+  a0 = a
+  cx = (376 - x0) / 2
+  cy = (391 - y0) / 2
+  GraphicsWindow.PenWidth = 2 * s
+  GraphicsWindow.PenColor = "#000000"
+  GraphicsWindow.BrushColor = "#999999"
+  x2 = 0
+  y2 = 172
+  w2 = 38
+  h2 = 84
+  oTri1 = Shapes.AddTriangle(19 * s, 0 * s, 0 * s, 84 * s, 38 * s, 84 * s)
+  RotatePos()
+  Shapes.Move(oTri1, x0 + x2 * s, y0 + y2 * s)
+  Shapes.Rotate(oTri1, a0)
+  x2 = 129
+  y2 = 168
+  w2 = 38
+  h2 = 87
+  oTri2 = Shapes.AddTriangle(19 * s, 0 * s, 0 * s, 87 * s, 38 * s, 87 * s)
+  RotatePos()
+  Shapes.Move(oTri2, x0 + x2 * s, y0 + y2 * s)
+  Shapes.Rotate(oTri2, a0)
+  GraphicsWindow.BrushColor = "#990000"
+  x2 = 15
+  y2 = 0
+  w2 = 132
+  h2 = 77
+  oTri3 = Shapes.AddTriangle(66 * s, 0 * s, 0 * s, 77 * s, 132 * s, 77 * s)
+  RotatePos()
+  Shapes.Move(oTri3, x0 + x2 * s, y0 + y2 * s)
+  Shapes.Rotate(oTri3, a0)
+  GraphicsWindow.BrushColor = "#999999"
+  x2 = 13
+  y2 = 78
+  w2 = 137
+  h2 = 173
+  oRect4 = Shapes.AddRectangle(w2 * s, h2 * s)
+  RotatePos()
+  Shapes.Move(oRect4, x0 + x2 * s, y0 + y2 * s)
+  Shapes.Rotate(oRect4, a0)
+  x2 = 64
+  y2 = 167
+  w2 = 37
+  h2 = 92
+  oTri5 = Shapes.AddTriangle(18 * s, 0 * s, 0 * s, 92 * s, 37 * s, 92 * s)
+  RotatePos()
+  Shapes.Move(oTri5, x0 + x2 * s, y0 + y2 * s)
+  Shapes.Rotate(oTri5, a0)
+  x2 = 43
+  y2 = 88
+  w2 = 78
+  h2 = 77
+  oEll6 = Shapes.AddEllipse(w2 * s, h2 * s)
+  RotatePos()
+  Shapes.Move(oEll6, x0 + x2 * s, y0 + y2 * s)
+  Shapes.Rotate(oEll6, a0)
+  GraphicsWindow.BrushColor = "#6699CC"
+  x2 = 56
+  y2 = 97
+  w2 = 57
+  h2 = 59
+  oEll7 = Shapes.AddEllipse(w2 * s, h2 * s)
+  RotatePos()
+  Shapes.Move(oEll7, x0 + x2 * s, y0 + y2 * s)
+  Shapes.Rotate(oEll7, a0)
+  GraphicsWindow.BrushColor = "#999999"
+  x2 = 23
+  y2 = 230
+  w2 = 14
+  h2 = 14
+  oEll8 = Shapes.AddEllipse(w2 * s, h2 * s)
+  RotatePos()
+  Shapes.Move(oEll8, x0 + x2 * s, y0 + y2 * s)
+  Shapes.Rotate(oEll8, a0)
+  x2 = 43
+  y2 = 232
+  w2 = 13
+  h2 = 13
+  oEll9 = Shapes.AddEllipse(w2 * s, h2 * s)
+  RotatePos()
+  Shapes.Move(oEll9, x0 + x2 * s, y0 + y2 * s)
+  Shapes.Rotate(oEll9, a0)
+  x2 = 106
+  y2 = 231
+  w2 = 13
+  h2 = 13
+  oEll10 = Shapes.AddEllipse(w2 * s, h2 * s)
+  RotatePos()
+  Shapes.Move(oEll10, x0 + x2 * s, y0 + y2 * s)
+  Shapes.Rotate(oEll10, a0)
+  x2 = 127
+  y2 = 231
+  w2 = 13
+  h2 = 14
+  oEll11 = Shapes.AddEllipse(w2 * s, h2 * s)
+  RotatePos()
+  Shapes.Move(oEll11, x0 + x2 * s, y0 + y2 * s)
+  Shapes.Rotate(oEll11, a0)
+  y0 = Stack.PopValue("local")
+  x0 = Stack.PopValue("local")
+  a = Stack.PopValue("local")
+  y = Stack.PopValue("local")
+  x = Stack.PopValue("local")
+EndSub
+
+Sub RotatePos
+  ' param x2, y2 - position of a shape
+  ' param w2, h2 - size of a shape
+  ' param cx, cy - center of shapes
+  ' param a0 - rotate angle
+  ' return x2, y2 - rotated position of a shape
+  cx2 = x2 + w2 / 2
+  cy2 = y2 + h2 / 2
+  x = cx2 - cx
+  y = cy2 - cy
+  Math_CartesianToPolar()
+  a2 = a + a0
+  x = r * Math.Cos(a2 * Math.Pi / 180)
+  y = r * Math.Sin(a2 * Math.Pi / 180)
+  cx2 = x + cx
+  cy2 = y + cy
+  x2 = cx2 - w2 / 2
+  y2 = cy2 - h2 / 2
+EndSub
+
+Sub Math_CartesianToPolar
+  ' param x, y - cartesian coordinate
+  ' return r, a - polar coordinate
+  r = Math.SquareRoot(x * x + y * y)
+  If x = 0 And y > 0 Then
+    a = 90 ' [degree]
+  ElseIf x = 0 And y < 0 Then
+    a = -90
+  Else
+    a = Math.ArcTan(y / x) * 180 / Math.Pi
+  EndIf
+  If x < 0 Then
+    a = a + 180
+  ElseIf x > 0 And y < 0 Then
+    a = a + 360
+  EndIf
+EndSub

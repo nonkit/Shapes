@@ -1,0 +1,100 @@
+' 2012/09/30 19:33:19 Generated  by Shapes 1.31  ; Takahashi Nonki  made
+'   make a transcolor  Image and save it to a  PNG file  
+
+Shapes_Init()
+scale = 0.8
+Shapes_Add()
+angle = 0
+Pname=Program.Directory+"\testpng.png"
+LDUtilities.GWCapture(Pname,"False")
+GraphicsWindow.BackgroundColor="black"
+crab= ImageList.LoadImage(Pname)
+crab=PictureTools.SetTransparencyColor(crab,"White")
+Pname2=Program.Directory+"\Crabpng.png"
+PictureTools.SaveImage(crab,Pname2)
+
+Program.Delay(1000)
+
+Pic= ImageList.LoadImage(Pname2)
+scrab=Shapes.AddImage(Pic)
+Shapes.Move(scrab,300,10)
+GraphicsWindow.BackgroundColor="Blue"
+Shapes.Animate(scrab,-500,500,3000)
+
+
+
+Sub Shapes_Init
+  shX = 100       ' x offset
+  shY = 97        ' y offset
+  shape = ""
+  shape[1] = "func=rect;x=109;y=173;width=138;height=81;bc=#B55D1D;pc=#B55D1D;pw=2;"
+  shape[2] = "func=ell;x=96;y=173;width=26;height=80;bc=#B55D1D;pc=#B55D1D;pw=2;"
+  shape[3] = "func=ell;x=233;y=174;width=26;height=80;bc=#B55D1D;pc=#B55D1D;pw=2;"
+  shape[4] = "func=rect;x=253;y=172;width=58;height=14;angle=341;bc=#B55D1D;pc=#B55D1D;pw=2;"
+  shape[5] = "func=tri;x=341;y=130;x1=6;y1=0;x2=0;y2=87;x3=13;y3=87;angle=95;bc=#B5451D;pc=#B55D1D;pw=2;"
+  shape[6] = "func=rect;x=257;y=197;width=58;height=14;angle=356;bc=#B55D1D;pc=#B55D1D;pw=2;"
+  shape[7] = "func=tri;x=340;y=179;x1=7;y1=0;x2=0;y2=76;x3=14;y3=76;angle=113;bc=#B5451D;pc=#B55D1D;pw=2;"
+  shape[8] = "func=rect;x=256;y=219;width=48;height=16;angle=1;bc=#B55D1D;pc=#B55D1D;pw=2;"
+  shape[9] = "func=tri;x=317;y=210;x1=7;y1=0;x2=0;y2=53;x3=14;y3=53;angle=113;bc=#B5451D;pc=#B55D1D;pw=2;"
+  shape[10] = "func=rect;x=252;y=246;width=43;height=13;angle=15;bc=#B55D1D;pc=#B55D1D;pw=2;"
+  shape[11] = "func=tri;x=302;y=247;x1=6;y1=0;x2=0;y2=43;x3=12;y3=43;angle=124;bc=#B5451D;pc=#B55D1D;pw=2;"
+  shape[12] = "func=rect;x=215;y=150;width=7;height=25;bc=#B5451D;pc=#B55D1D;pw=2;"
+  shape[13] = "func=rect;x=226;y=148;width=8;height=0;bc=#B5451D;pc=#B55D1D;pw=2;"
+  shape[14] = "func=ell;x=205;y=135;width=20;height=20;bc=#000000;pc=#B55D1D;pw=2;"
+  shape[15] = "func=rect;x=135;y=150;width=7;height=25;bc=#B5451D;pc=#B55D1D;pw=2;"
+  shape[16] = "func=ell;x=125;y=131;width=20;height=20;bc=#000000;pc=#B55D1D;pw=2;"
+  shape[17] = "func=rect;x=241;y=149;width=72;height=14;angle=321;bc=#B55D1D;pc=#B55D1D;pw=2;"
+  shape[18] = "func=ell;x=194;y=73;width=137;height=61;angle=25;bc=#B5451D;pc=#B55D1D;pw=2;"
+  shape[19] = "func=tri;x=231;y=85;x1=8;y1=0;x2=0;y2=14;x3=16;y3=14;angle=31;bc=#FFFFFF;pc=#B55D1D;pw=2;"
+  shape[20] = "func=tri;x=216;y=77;x1=8;y1=0;x2=0;y2=14;x3=16;y3=14;angle=25;bc=#FFFFFF;pc=#B55D1D;pw=2;"
+  shape[21] = "func=tri;x=262;y=98;x1=8;y1=0;x2=0;y2=14;x3=16;y3=14;angle=26;bc=#FFFFFF;pc=#B55D1D;pw=2;"
+  shape[22] = "func=tri;x=276;y=106;x1=8;y1=0;x2=0;y2=14;x3=16;y3=14;angle=28;bc=#FFFFFF;pc=#B55D1D;pw=2;"
+  shape[23] = "func=tri;x=291;y=112;x1=8;y1=0;x2=0;y2=14;x3=16;y3=14;angle=22;bc=#FFFFFF;pc=#B55D1D;pw=2;"
+  shape[24] = "func=tri;x=247;y=92;x1=8;y1=0;x2=0;y2=14;x3=16;y3=14;angle=31;bc=#FFFFFF;pc=#B55D1D;pw=2;"
+  shape[25] = "func=rect;x=64;y=247;width=43;height=13;angle=339;bc=#B55D1D;pc=#B55D1D;pw=2;"
+  shape[26] = "func=tri;x=43;y=250;x1=6;y1=0;x2=0;y2=43;x3=12;y3=43;angle=236;bc=#B5451D;pc=#B55D1D;pw=2;"
+  shape[27] = "func=rect;x=49;y=223;width=48;height=16;angle=348;bc=#B55D1D;pc=#B55D1D;pw=2;"
+  shape[28] = "func=tri;x=19;y=216;x1=6;y1=0;x2=0;y2=55;x3=13;y3=55;angle=250;bc=#B5451D;pc=#B55D1D;pw=2;"
+  shape[29] = "func=rect;x=39;y=200;width=58;height=14;angle=357;bc=#B55D1D;pc=#B55D1D;pw=2;"
+  shape[30] = "func=tri;x=2;y=187;x1=6;y1=0;x2=0;y2=79;x3=12;y3=79;angle=243;bc=#B5451D;pc=#B55D1D;pw=2;"
+  shape[31] = "func=rect;x=43;y=179;width=58;height=14;angle=6;bc=#B55D1D;pc=#B55D1D;pw=2;"
+  shape[32] = "func=tri;x=0;y=153;x1=6;y1=0;x2=0;y2=89;x3=13;y3=89;angle=249;bc=#B5451D;pc=#B55D1D;pw=2;"
+  shape[33] = "func=rect;x=41;y=150;width=69;height=15;angle=37;bc=#B55D1D;pc=#B55D1D;pw=2;"
+  shape[34] = "func=ell;x=42;y=100;width=83;height=34;angle=140;bc=#B55D1D;pc=#B55D1D;pw=2;"
+  shape[35] = "func=line;x=99;y=98;x1=6;y1=0;x2=0;y2=15;pc=#FFFFFF;pw=2;"
+  shape[36] = "func=line;x=82;y=112;x1=19;y1=0;x2=0;y2=2;pc=#FFFFFF;pw=2;"
+  shape[37] = "func=line;x=83;y=113;x1=0;y1=0;x2=0;y2=18;pc=#FFFFFF;pw=2;"
+  shape[38] = "func=line;x=62;y=130;x1=0;y1=5;x2=20;y2=0;pc=#FFFFFF;pw=2;"
+  shape[39] = "func=line;x=158;y=43;x1=0;y1=0;x2=1;y2=0;pc=#FFFFFF;pw=2;"
+  shape[40] = "func=line;x=126;y=192;x1=0;y1=0;x2=15;y2=12;pc=#B5451D;pw=2;"
+  shape[41] = "func=line;x=139;y=205;x1=0;y1=0;x2=2;y2=15;pc=#B5451D;pw=2;"
+  shape[42] = "func=line;x=127;y=217;x1=14;y1=0;x2=0;y2=18;pc=#B5451D;pw=2;"
+  shape[43] = "func=line;x=210;y=192;x1=14;y1=0;x2=0;y2=9;pc=#B5451D;pw=2;"
+  shape[44] = "func=line;x=209;y=202;x1=0;y1=0;x2=0;y2=18;pc=#B5451D;pw=2;"
+  shape[45] = "func=line;x=210;y=221;x1=0;y1=0;x2=8;y2=11;pc=#B5451D;pw=2;"
+EndSub
+
+Sub Shapes_Add
+  nShapes = Array.GetItemCount(shape)
+  s = scale
+  For i = 1 To nShapes
+    GraphicsWindow.PenWidth = shape[i]["pw"] * s
+    If shape[i]["pw"] > 0 Then
+      GraphicsWindow.PenColor = shape[i]["pc"]
+    EndIf
+    GraphicsWindow.BrushColor = shape[i]["bc"]
+    If shape[i]["func"] = "rect" Then
+      shape[i]["obj"] = Shapes.AddRectangle(shape[i]["width"]* s, shape[i]["height"] * s)
+    ElseIf shape[i]["func"] = "ell" Then
+      shape[i]["obj"] = Shapes.AddEllipse(shape[i]["width"] * s, shape[i]["height"]* s)
+    ElseIf shape[i]["func"] = "tri" Then
+      shape[i]["obj"] = Shapes.AddTriangle(shape[i]["x1"] * s, shape[i]["y1"] * s, shape[i]["x2"] * s, shape[i]["y2"] * s, shape[i]["x3"] * s, shape[i]["y3"] * s)
+    ElseIf shape[i]["func"] = "line" Then
+      shape[i]["obj"] = Shapes.AddLine(shape[i]["x1"] * s, shape[i]["y1"]* s, shape[i]["x2"] * s, shape[i]["y2"] * s)
+    EndIf
+    Shapes.Move(shape[i]["obj"], shX + shape[i]["x"] * s, shY + shape[i]["y"] * s)
+    If shape[i]["angle"] <> 0 Then
+      Shapes.Rotate(shape[i]["obj"], shape[i]["angle"])
+    EndIf
+  EndFor
+EndSub

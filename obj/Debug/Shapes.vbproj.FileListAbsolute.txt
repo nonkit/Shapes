@@ -1,7 +1,7 @@
-C:\Users\Nonki\SkyDrive\Documents\SmallBasic\Shapes\obj\Debug\Shapes.vbprojResolveAssemblyReference.cache
 C:\Users\Nonki\SkyDrive\Documents\SmallBasic\Shapes\bin\Debug\Shapes.exe
 C:\Users\Nonki\SkyDrive\Documents\SmallBasic\Shapes\bin\Debug\Shapes.pdb
 C:\Users\Nonki\SkyDrive\Documents\SmallBasic\Shapes\bin\Debug\SmallBasicLibrary.dll
 C:\Users\Nonki\SkyDrive\Documents\SmallBasic\Shapes\bin\Debug\SmallBasicLibrary.xml
+C:\Users\Nonki\SkyDrive\Documents\SmallBasic\Shapes\obj\Debug\Shapes.vbprojResolveAssemblyReference.cache
 C:\Users\Nonki\SkyDrive\Documents\SmallBasic\Shapes\obj\Debug\Shapes.exe
 C:\Users\Nonki\SkyDrive\Documents\SmallBasic\Shapes\obj\Debug\Shapes.pdb
