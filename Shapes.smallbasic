@@ -1,16 +1,15 @@
 ' Shapes
 ' Copyright © 2012-2015 Nonki Takahashi.  The MIT License.
-' Version 2.1b
-' Last update 2015-02-04
+' Version 2.2b
+' Last update 2015-10-10
 ' Repository https://git01.codeplex.com/shapesinsmallbasic
 '
 ' TODO:
-'  [✓] #16 Bug fix: Pen color missing after pw=0
-'  [✓] #15 Bug fix: Shapes.smallbasic overwritten as output
+'  [✓] #18 Bug fix: Pen Width command doesn't work after Open
+'  [✓] #17 Bug fix: Divided by zero happens in Small Basic 1.2
 '  [ ] #13 Show file name in title
 '  [ ] #12 Support PowerPoint VBA format output
 '  [ ] #11 Support transparent brush color
-'  [✓] #10 Support New command
 '  [ ] #7 Support text tag (element)
 '  [ ] #6 Check illegal behavior in Silverlight environment
 '  [ ] #5 Sort subroutines
@@ -18,7 +17,7 @@
 '  [ ] #2 Bug fix for Silverlight:  Rotated triangles move after click
 '  [ ] #1 Bug fix for Silverlight:  Lines come different place
 '
-title = "Shapes 2.1b"
+title = "Shapes 2.2b"
 pgmname = "Shapes.smallbasic"
 GraphicsWindow.Title = title
 debug = "False"
@@ -297,7 +296,7 @@ Sub DoMenu                        ' if a menu item clicked do the funciton
         selectedshape = i
       EndIf
     EndIf
-    If func = "open" Then     ' open shapes from file
+    If func = "open" Then         ' open shapes from file
       ReadShapes()
     ElseIf func = "save" Then     ' save shapes to file
       WriteShapes()
@@ -1056,11 +1055,13 @@ Sub ReadShapes
   If buf <> "" Then
     File_GetBasename()
     lowerExt = Text.ConvertToLowerCase(ext)
+    Stack.PushValue("local", pw)
     If lowerExt = "svg" Then
       Parse_SVG()
     ElseIf (lowerExt = "sb") Or (lowerExt = "smallbasic") Then
       Parse_SB()
     EndIf
+    pw = Stack.PopValue("local")
     Shapes_Add()
   EndIf
 EndSub
@@ -1333,7 +1334,7 @@ Sub WaitToReleaseR ' for rotating a shape
   Shapes.Move(oFrame[func], _x, _y)
   While Not[released]
     If moved Then
-      param = "move=False;"       ' while sizing a shape
+      param = "move=False;"       ' while rotating a shape
       Mouse_SetHandler()
       x = mxM - cx
       y = myM - cy
@@ -1346,7 +1347,7 @@ Sub WaitToReleaseR ' for rotating a shape
       EndIf
       Shapes.Rotate(oFrame[func], angle)
       Shapes.SetOpacity(oFrame[func], 50)
-      param = "move=True;"        ' for next sizing a shape
+      param = "move=True;"        ' for next rotating a shape
       Mouse_SetHandler()
     Else
       Program.Delay(100)
@@ -2303,6 +2304,8 @@ Sub Math_CartesianToPolar
     a = 90 ' [degree]
   ElseIf x = 0 And y < 0 Then
     a = -90
+  ElseIf x = 0 Then
+    a = 0
   Else
     a = Math.ArcTan(y / x) * 180 / Math.Pi
   EndIf
