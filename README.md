@@ -9,4 +9,4 @@ Following two files are runtime executables.
 - Shapes.exe
 
 Following file is the source code. This file is read from Shapes.exe at run time.
-- Shpaes.smallbasic
+- Shapes.smallbasic
