@@ -1,5 +1,6 @@
-Shapes in Small Basic
-=====================
+![icon](img/icon.png)
+
+# Shapes in Small Basic
 
 Shapes in Small Basic is a simple Scalable Vector Graphics editor written in Microsoft Small Basic program language.  This program can also read/write Small Basic program which has shape array.
 
