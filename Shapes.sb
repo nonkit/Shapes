@@ -1,13 +1,12 @@
 ' Shapes
-' Copyright © 2012-2015 Nonki Takahashi.  The MIT License.
-' Version 2.2b
-' Last update 2015-10-10
-' Repository https://git01.codeplex.com/shapesinsmallbasic
+' Copyright © 2012-2017 Nonki Takahashi.  The MIT License.
+' Version 2.21b
+' Last update 2017-05-15
+' Repository https://github.com/nonkit/Shapes
 '
 ' TODO:
-'  [✓] #18 Bug fix: Pen Width command doesn't work after Open
-'  [✓] #17 Bug fix: Divided by zero happens in Small Basic 1.2
-'  [ ] #13 Show file name in title
+'  [✓] #24 Rename Shapes.smallbasic to Shapes.sb
+'  [ ] #14 Show file name in title
 '  [ ] #12 Support PowerPoint VBA format output
 '  [ ] #11 Support transparent brush color
 '  [ ] #7 Support text tag (element)
@@ -17,8 +16,8 @@
 '  [ ] #2 Bug fix for Silverlight:  Rotated triangles move after click
 '  [ ] #1 Bug fix for Silverlight:  Lines come different place
 '
-title = "Shapes 2.2b"
-pgmname = "Shapes.smallbasic"
+title = "Shapes 2.21b"
+pgmname = "Shapes.sb"
 GraphicsWindow.Title = title
 debug = "False"
 Not = "False=True;True=False;"
