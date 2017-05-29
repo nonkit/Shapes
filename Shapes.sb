@@ -1,11 +1,12 @@
 ' Shapes
+' Version 2.3b
 ' Copyright © 2012-2017 Nonki Takahashi.  The MIT License.
-' Version 2.21b
-' Last update 2017-05-15
+' Last update 2017-05-29
 ' Repository https://github.com/nonkit/Shapes
 '
 ' TODO:
-'  [✓] #24 Rename Shapes.smallbasic to Shapes.sb
+'  [✓] #26 Passive text support
+'  [ ] #25 Support group array specification
 '  [ ] #14 Show file name in title
 '  [ ] #12 Support PowerPoint VBA format output
 '  [ ] #11 Support transparent brush color
@@ -16,7 +17,7 @@
 '  [ ] #2 Bug fix for Silverlight:  Rotated triangles move after click
 '  [ ] #1 Bug fix for Silverlight:  Lines come different place
 '
-title = "Shapes 2.21b"
+title = "Shapes 2.3b"
 pgmname = "Shapes.sb"
 GraphicsWindow.Title = title
 debug = "False"
@@ -90,6 +91,7 @@ While "True"
     Program.Delay(100)
   EndIf
 EndWhile
+
 Sub CalcDetectBorder
   ' param i - index of shapes
   shp = shape[i]
@@ -120,6 +122,7 @@ Sub CalcDetectBorder
   EndIf
   shape[i] = shp
 EndSub
+
 Sub CalcPinchPos
   ' param i - shape index
   ' return mxM, myM - center of pinch
@@ -146,6 +149,7 @@ Sub CalcPinchPos
   y = Stack.PopValue("local")
   x = Stack.PopValue("local")
 EndSub
+
 Sub CalcVertexes
   ' param i - pinch index
   ' param angle - angle of a shape
@@ -195,6 +199,7 @@ Sub CalcVertexes
     myM = y
   EndIf
 EndSub  
+
 Sub DeleteSelectedShape
   ' param selectedshape
   shp = shape[selectedshape]
@@ -206,6 +211,7 @@ Sub DeleteSelectedShape
   shape[nShapes + 1] = ""
   selectedshape = ""
 EndSub
+
 Sub DetectClickedObject
   ' mxD, myD - clicked position
   ' return obj - name of object (menu, shape or pinch)
@@ -263,6 +269,7 @@ Sub DetectClickedObject
   EndIf
   i = Stack.PopValue("local")
 EndSub
+
 Sub DoMenu                        ' if a menu item clicked do the funciton
   If Text.StartsWith(obj, "menu") Then
     param = "down=False;move=False;up=False;"   ' wait button pushed
@@ -485,6 +492,7 @@ Sub DoMenu                        ' if a menu item clicked do the funciton
     EndIf
   EndIf
 EndSub
+
 Sub DoObject
   ' param obj - clicked object
   While obj <> ""
@@ -498,6 +506,7 @@ Sub DoObject
     EndIf
   EndWhile
 EndSub
+
 Sub DoPinch                     ' if a pinch clicked then rotate or re-size a shape
   ' param obj - clicked object
   ' param selectedshape - parent shape index of the pinch
@@ -538,6 +547,7 @@ Sub DoPinch                     ' if a pinch clicked then rotate or re-size a sh
     EndIf
   EndIf
 EndSub
+
 Sub DoShape                     ' if a shape clicked then move it
   If Text.StartsWith(obj, "shape") Then
     If selectedshape <> "" Then ' if other shape selected
@@ -554,6 +564,7 @@ Sub DoShape                     ' if a shape clicked then move it
     obj = ""
   EndIf
 EndSub
+
 Sub DrawGrid
   ' param colorGrid - color for grid
   ' param stepGrid - step for grid
@@ -566,6 +577,7 @@ Sub DrawGrid
     GraphicsWindow.DrawLine(0, y, gw, y)
   EndFor
 EndSub
+
 Sub DrawMenu
   ' return menu[] - array of menu data
   pwidth = GraphicsWindow.PenWidth
@@ -602,6 +614,7 @@ Sub DrawMenu
   mnu["func"] = "menubar"
   menu[i] = mnu
 EndSub
+
 Sub DrawMenuItem
   ' param i - item number
   ' param pwidth - pen width
@@ -742,6 +755,7 @@ Sub DrawMenuItem
   GraphicsWindow.FontBold = "True"
   GraphicsWindow.FontSize = 12
 EndSub
+
 Sub DumpShape
   TextWindow.WriteLine("shX=" + shX)
   TextWindow.WriteLine("shY=" + shY)
@@ -755,6 +769,7 @@ Sub DumpShape
     TextWindow.WriteLine("shape[" + _index[i] + "]=" + WQ + shape[i] + WQ)
   EndFor
 EndSub
+
 Sub GenerateSB
   Stack.PushValue("local", filename)
   buf = "' "
@@ -847,11 +862,30 @@ Sub GenerateSB
       buf = buf + "y1=" + shp["y1"] + ";"
       buf = buf + "x2=" + shp["x2"] + ";"
       buf = buf + "y2=" + shp["y2"] + ";"
+    ElseIf shp["func"] = "text" Then
+      buf = buf + "  shape[" + i + "] = " + WQ + "func=text;"
+      buf = buf + "x=" + (shp["x"] - xmin) + ";"
+      buf = buf + "y=" + (shp["y"] - ymin) + ";"
+      buf = buf + "text=" + shp["text"] + ";"
+      buf = buf + "fs=" + shp["fs"] + ";"
+      If shp["fn"] <> "" Then
+        buf = buf + "fn=" + shp["fn"] + ";"
+      EndIf
+      If shp["fb"] <> "" Then
+        buf = buf + "fb=" + shp["fb"] + ";"
+      EndIf
+      If shp["fi"] <> "" Then
+        buf = buf + "fi=" + shp["fi"] + ";"
+      EndIf
+      buf = buf + "bc=" + shp["bc"] + ";"
     EndIf
     If shp["pw"] > 0 Then
       buf = buf + "pc=" + shp["pc"] + ";"
     EndIf
-    buf = buf + "pw=" + shp["pw"] + ";" + WQ + CR + LF
+    If shp["func"] <> "text" Then
+      buf = buf + "pw=" + shp["pw"] + ";"
+    EndIf
+    buf = buf + WQ + CR + LF
   EndFor
   buf = buf + "EndSub" + CR + LF
   filename = Program.Directory + "\" + pgmname
@@ -884,6 +918,7 @@ Sub GenerateSB
   buf = buf + CR + LF
   filename = Stack.PopValue("local")
 EndSub
+
 Sub GenerateSVG
   sp[4] = "    "
   sp[6] = "      "
@@ -983,6 +1018,7 @@ Sub GenerateSVG
   buf = buf + "  " + LT + "use x=" + WQ + xmin + WQ + " y=" + WQ + ymin + WQ + " xlink:href=" + WQ + "#g1" + WQ + " />" + CR + LF
   buf = buf + LT + "/svg>" + CR + LF
 EndSub
+
 Sub ItemSelect
   ' i - menu index
   ' select - "True" if selected
@@ -1001,6 +1037,7 @@ Sub ItemSelect
     GraphicsWindow.DrawRectangle(x, y, width, height)
   EndIf
 EndSub
+
 Sub MoveShape
   ' param i - shape index
   ' param _x, _y - new position of the shape
@@ -1030,6 +1067,7 @@ Sub MoveShape
     Shapes.Move(pnch["obj"], pnch["_x0"], pnch["_y0"])
   EndFor
 EndSub
+
 Sub NormalizePos
   ' param mxD, myD - fixed vertex of a shape rotated
   ' param mxM, myM - opposite vertex of a shape rotated
@@ -1049,6 +1087,7 @@ Sub NormalizePos
   _mxM = Math.Floor(x)
   _myM = Math.Floor(y)
 EndSub
+
 Sub ReadShapes
   File_Open()
   If buf <> "" Then
@@ -1064,6 +1103,7 @@ Sub ReadShapes
     Shapes_Add()
   EndIf
 EndSub
+
 Sub RegisterShapeData
   ' param i - index of shapes
   ' param func - "rect", "ell", "tri" or "line"
@@ -1074,6 +1114,7 @@ Sub RegisterShapeData
   RegisterShapeStyle()
   RegisterShapeMetrics()
 EndSub
+
 Sub RegisterShapeMetrics
   ' param i - index of shapes
   ' param func - "rect", "ell", "tri" or "line"
@@ -1125,6 +1166,7 @@ Sub RegisterShapeMetrics
   shape[i] = shp
   CalcDetectBorder()
 EndSub
+
 Sub RegisterShapeStyle
   ' param i - index of shapes
   ' param pwidth  - pen width
@@ -1143,6 +1185,7 @@ Sub RegisterShapeStyle
   EndIf
   shape[i] = shp
 EndSub
+
 Sub ShapeSelect
   ' Show or remove pinches for a selected shape
   ' param i - shape index
@@ -1222,6 +1265,7 @@ Sub ShapeSelect
     nPinch = 0
   EndIf
 EndSub
+
 Sub WaitToClick
   ' return mxD, myD - clicked point
   param = "down=True;move=False;up=False;"     ' wait to click
@@ -1230,6 +1274,7 @@ Sub WaitToClick
     Program.Delay(100)
   EndWhile
 EndSub
+
 Sub WaitToReleaseM ' for moving a shape
   ' param i - shape index
   ' param mxD, myD - fixed vertex of a shape
@@ -1297,6 +1342,7 @@ Sub WaitToReleaseM ' for moving a shape
     oFrame[func] = ""
   EndIf
 EndSub
+
 Sub WaitToReleaseR ' for rotating a shape
   ' param i - shape index
   ' return angle - angle for rotation
@@ -1359,6 +1405,7 @@ Sub WaitToReleaseR ' for rotating a shape
     oFrame[func] = ""
   EndIf
 EndSub
+
 Sub WaitToReleaseS  ' for sizing a shape
   ' param func - "rect", "ell", "tri" or "line" because shape index may not decided
   ' param mxD, myD - fixed vertex of a shape
@@ -1415,6 +1462,7 @@ Sub WaitToReleaseS  ' for sizing a shape
     oFrame[func] = ""
   EndIf
 EndSub
+
 Sub WriteShapes
   Stack.PushValue("local", i)
   If (lowerExt = "sb") Or (lowerExt = "smallbasic") Then
@@ -1425,6 +1473,7 @@ Sub WriteShapes
   File_Save()
   i = Stack.PopValue("local")
 EndSub
+
 Sub New
   If 0 < nShapes Then
     caution = "Are you sure to clear all shapes?"
@@ -1444,6 +1493,7 @@ Sub New
     EndIf
   EndIf
 EndSub
+
 Sub Color_ColorToRGB
   ' Color | Convert Color to RGB
   ' param sColor - "#rrggbb"
@@ -1461,6 +1511,7 @@ Sub Color_ColorToRGB
   Math_Hex2Dec()
   iB = iDec
 EndSub
+
 Sub Color_HSLtoRGB
   ' Color | Convert HSL to RGB
   ' param rHue - [0, 360) or UNDEFINED
@@ -1491,6 +1542,7 @@ Sub Color_HSLtoRGB
   EndIf
   sColor = GraphicsWindow.GetColorFromRGB(iR, iG, iB)
 EndSub
+
 Sub Color_RGBtoHSL
   ' Color | Convert RGB to HSL
   ' param sColor - "#rrggbb"
@@ -1540,6 +1592,7 @@ Sub Color_RGBtoHSL
     EndIf
   EndIf
 EndSub
+
 Sub Color_Value
   ' Color | Function value
   ' param rN1, rN2
@@ -1562,6 +1615,7 @@ Sub Color_Value
   EndIf
   iValue = Math.Round(rV * 255)
 EndSub
+
 Sub CS_AddColorToPalette
   ' Color Selector | Add color to palette
   ' param color - color to set
@@ -1589,6 +1643,7 @@ Sub CS_AddColorToPalette
   csactp_not_new_color:  
   i = Stack.PopValue("local")
 EndSub
+
 Sub CS_AdjustSlider
   ' Color Selector | Adjust slider
   ' param iSlider - moved slider
@@ -1633,6 +1688,7 @@ Sub CS_AdjustSlider
   EndIf
   iSlider = Stack.PopValue("local")
 EndSub
+
 Sub CS_DoObject
   ' Color Selector | Do object
   ' param - obj
@@ -1643,6 +1699,7 @@ Sub CS_DoObject
     EndIf
   EndWhile
 EndSub
+
 Sub CS_DoPalette
   ' Color Selector | Do palette
   ' param obj - clicked object
@@ -1658,6 +1715,7 @@ Sub CS_DoPalette
     Mouse_SetHandler()
   EndIf
 EndSub
+
 Sub CS_DoSlider
   ' Color Selector | Do slider
   ' param obj - clicked object
@@ -1669,6 +1727,7 @@ Sub CS_DoSlider
     Mouse_SetHandler()
   EndIf
 EndSub
+
 Sub CS_DrawColorRect
   ' Color Selector | Draw color rectangle
   ' param color - color of rectangle
@@ -1682,6 +1741,7 @@ Sub CS_DrawColorRect
   oRect = Shapes.AddRectangle(width, height)
   Shapes.Move(oRect, x, y)
 EndSub
+
 Sub CS_DrawPalette
   ' Color Selector | Draw palette
   ' param palette[] - color palette
@@ -1705,6 +1765,7 @@ Sub CS_DrawPalette
   EndFor
   i = Stack.PopValue("local")
 EndSub
+
 Sub CS_GetColorFromSlider
   ' Color Selector | get color from slider
   ' return color
@@ -1721,6 +1782,7 @@ Sub CS_GetColorFromSlider
   color = GraphicsWindow.GetColorFromRGB(red, green, blue)
   iSlider = Stack.PopValue("local")
 EndSub
+
 Sub CS_Init
   ' Color Selector | Initialize sliders
   width = 256
@@ -1777,6 +1839,7 @@ Sub CS_Init
   oNewColor = Shapes.AddText("")
   Shapes.Move(oNewColor, LEFTX, top)
 EndSub
+
 Sub CS_DumpSlider
   ' Color Selector | Dump slider for debug
   For i = 1 To numSlider
@@ -1784,6 +1847,7 @@ Sub CS_DumpSlider
     TextWindow.WriteLine(slider[i])
   EndFor
 EndSub
+
 Sub CS_InitPalette
   ' Color Selector | Initialize palette
   ' This subroutine should be called before CS_ShowPopup().
@@ -1805,6 +1869,7 @@ Sub CS_InitPalette
   pltt["color"] = bcolor
   palette[2] = pltt
 EndSub
+
 Sub CS_RemovePalette
   ' Color Selector | Remove palette
   ' param nPalette - number of color in palette
@@ -1817,6 +1882,7 @@ Sub CS_RemovePalette
   EndFor
   i = Stack.PopValue("local")
 EndSub
+
 Sub CS_RemoveSliders
   ' Color Selector | Remove sliders
   For iSlider = 1 To numSlider
@@ -1824,6 +1890,7 @@ Sub CS_RemoveSliders
   EndFor
   numSlider = 0
 EndSub
+
 Sub CS_SearchClickedObject
   ' Color Selector | Check slider clicked
   ' param mxD, myD - clicked point
@@ -1857,6 +1924,7 @@ Sub CS_SearchClickedObject
   scco_obj_found:
   i = Stack.PopValue("local")
 EndSub
+
 Sub CS_SetColorToSlider
   ' Color Selector | Set color to slider
   ' param color
@@ -1875,12 +1943,14 @@ Sub CS_SetColorToSlider
   CS_AdjustSlider()
   iSlider = Stack.PopValue("local")
 EndSub
+
 Sub CS_ShowNewColor
   ' Color Selector | Show new color
   ' param oColor
   ' param color
   Shapes.SetText(oNewColor, color)
 EndSub
+
 Sub CS_ShowPopup
   ' Color Selector | Show popup
   ' param color - current color
@@ -1895,6 +1965,7 @@ Sub CS_ShowPopup
   Shapes.SetOpacity(oPopup, 64)
   Shapes.Move(oPopup, LEFTX - 10, TOPY - 10)
   GraphicsWindow.BrushColor = CAPTIONCOLOR
+  GraphicsWindow.FontSize = 12
   oOK = Controls.AddButton("OK", gw - 100, gh - 34)
   oCancel = Controls.AddButton("Cancel", gw - 60, gh - 34)
   Controls.ButtonClicked = CS_OnButtonClicked
@@ -1956,6 +2027,7 @@ Sub CS_ShowPopup
   Shapes.Remove(oPopup)
   cont = Stack.PopValue("local")
 EndSub
+
 Sub CS_OnButtonClicked
   ' Color Selector | Event handler on button clicked
   cont = "False"
@@ -1965,6 +2037,7 @@ Sub CS_OnButtonClicked
     cancel = "False"
   EndIf
 EndSub
+
 Sub Dialog_YesNo
   ' param caution - message
   ' return yes - if [Yes] pushed
@@ -1991,6 +2064,7 @@ Sub Dialog_YesNo
   Shapes.Remove(oCaution)
   Shapes.Remove(oMsgBox)
 EndSub
+
 Sub File_GetAbsPath
   ' param curDir - current directory
   ' param relPath - relative path
@@ -2002,6 +2076,7 @@ Sub File_GetAbsPath
     File_RemoveDots()
   EndIf
 EndSub
+
 Sub File_RemoveDots
   ' param absPath - with dots
   ' return absPath - without dots
@@ -2036,6 +2111,7 @@ Sub File_RemoveDots
     absPath = absPath + "\" + folder[i]
   EndFor
 EndSub
+
 Sub File_RemoveEntry
   ' param folder - entry array
   ' param i - entry index
@@ -2047,6 +2123,7 @@ Sub File_RemoveEntry
   folder[n] = ""
   n = n - 1
 EndSub
+
 Sub File_CloseDialog
   ' File | Close dialog for Open/Save
   ' param oPopup
@@ -2062,6 +2139,7 @@ Sub File_CloseDialog
   Controls.Remove(oCaption)
   Controls.Remove(oPopup)
 EndSub
+
 Sub File_GetBasename
   ' FIle | Get basename from filename
   ' param filename
@@ -2081,6 +2159,7 @@ Sub File_GetBasename
     ext = ""
   EndIf
 EndSub
+
 Sub File_Open
   ' File | Show input code to open
   ' return buf
@@ -2128,6 +2207,7 @@ Sub File_Open
   File_CloseDialog()
   cont = Stack.PopValue("local")
 EndSub
+
 Sub File_OpenDialog
   ' File | Open dialog and common parts for Open/Save
   ' param relPath
@@ -2143,6 +2223,7 @@ Sub File_OpenDialog
   Shapes.SetOpacity(oPopup, 64)
   Shapes.Move(oPopup, LEFTX - 10, TOPY - 10)
   GraphicsWindow.BrushColor = CAPTIONCOLOR
+  GraphicsWindow.FontSize = 12
   oCaption = Shapes.AddText("Filename")
   Shapes.Move(oCaption, LEFTX, TOPY + 4)
   GraphicsWindow.BrushColor = TEXTCOLOR
@@ -2159,6 +2240,7 @@ Sub File_OpenDialog
   GraphicsWindow.BrushColor = TEXTCOLOR
   oCancel = Controls.AddButton("Cancel", 535, gh - 34)
 EndSub
+
 Sub File_Save
   ' File | Show output code to save
   ' param buf - program buffer
@@ -2217,16 +2299,19 @@ Sub File_Save
   File_CloseDialog()
   cont = Stack.PopValue("local")
 EndSub
+
 Sub File_OnButtonClicked
   ' File | Button event handler
   cont = "False"
 EndSub
+
 Sub File_OnTextTyped
   ' File | Textbox event handler
   If Controls.LastTypedTextBox = oFilename Then
     typed = "True"
   EndIf
 EndSub
+
 Sub KB_FlushFIFO
   ' Keyborad | Flush keyboard buffer (FIFO)
   For out = out + 1 To in
@@ -2235,6 +2320,7 @@ Sub KB_FlushFIFO
     fifoc[out] = ""
   EndFor    
 EndSub
+
 Sub KB_InKey
   ' Keyboard | In key
   ' return c - input key
@@ -2259,6 +2345,7 @@ Sub KB_InKey
     c = Text.Append(_ctrl, c)
   EndIf
 EndSub  
+
 Sub KB_Init
   ' Keyboard | Initialization for Shapes (use only ^x, ^c, ^v, del and arrow keys)
   shift = ""
@@ -2271,6 +2358,7 @@ Sub KB_Init
   GraphicsWindow.KeyDown = KB_OnKeyDown
   GraphicsWindow.KeyUp = KB_OnKeyUp
 EndSub  
+
 Sub KB_OnKeyDown
   ' Keyboard | Key down event handler
   key = GraphicsWindow.LastKey
@@ -2285,6 +2373,7 @@ Sub KB_OnKeyDown
     fifoc[in] = ctrl
   EndIf
 EndSub
+
 Sub KB_OnKeyUp
   ' Keyboard | Key up event handler
   key = GraphicsWindow.LastKey
@@ -2294,6 +2383,7 @@ Sub KB_OnKeyUp
     ctrl = ""
   EndIf
 EndSub
+
 Sub Math_CartesianToPolar
   ' Math | convert cartesian coodinate to polar coordinate
   ' param x, y - cartesian coordinate
@@ -2314,6 +2404,7 @@ Sub Math_CartesianToPolar
     a = a + 360
   EndIf
 EndSub
+
 Sub Math_Hex2Dec
   ' Math | Convert hexadecimal to decimal
   ' param sHex
@@ -2324,6 +2415,7 @@ Sub Math_Hex2Dec
     iDec = iDec * 16 + Text.GetIndexOf("0123456789ABCDEF", Text.GetSubText(sHex, iPtr, 1)) - 1
   EndFor
 EndSub
+
 Sub Mouse_Init
   ' Mouse | Initialize for common event handler
   clicked = "False"
@@ -2334,6 +2426,7 @@ Sub Mouse_Init
     Timer.Tick = Mouse_OnTick
   EndIf
 EndSub
+
 Sub Mouse_SetHandler
   ' Mouse | Set or reset common event handler
   ' param["down"] - "True" if set, "False" if reset
@@ -2372,6 +2465,7 @@ Sub Mouse_SetHandler
     smrc = " set "
   EndIf
 EndSub
+
 Sub Mouse_OnDown
   ' Mouse | Common event handler on mouse down
   ' return mxD, myD - position on mouse down
@@ -2383,9 +2477,11 @@ Sub Mouse_OnDown
     smrc = " clicked " + mxD + "," + myD
   EndIf
 EndSub
+
 Sub Mouse_DoNothing
   ' Mouse | Common event handler to do nothing
 EndSub
+
 Sub Mouse_OnMove
   ' Mouse | Common event handler on mouse move
   ' return mxM, myM - position on mouse move
@@ -2396,6 +2492,7 @@ Sub Mouse_OnMove
     smrc = " moved " + mxM + "," + myM
   EndIf
 EndSub
+
 Sub Mouse_OnTick
   ' Mouse | debug routine
   If clicked Then
@@ -2411,6 +2508,7 @@ Sub Mouse_OnTick
   EndIf
   GraphicsWindow.Title = title + smrc + " " + dmu + " " + cmr
 EndSub
+
 Sub Mouse_OnUp
   ' Mouse | Common event handler on mouse up
   ' return mxU, myU - position on mouse up
@@ -2421,6 +2519,7 @@ Sub Mouse_OnUp
     smrc = " released " + mxU + "," + myU
   EndIf
 EndSub
+
 Sub Parse_Angle
   ' param attr["transform"] - transform attribute in tag
   ' return angle - angle
@@ -2431,6 +2530,7 @@ Sub Parse_Angle
     angle = Text.GetSubText(attr["transform"], pAngle, lAngle)
   EndIf
 EndSub
+
 Sub Parse_Defs
   ' param buf - SVG buffer
   ' param p - pointer to SVG buffer
@@ -2451,6 +2551,7 @@ Sub Parse_Defs
     EndIf
   EndIf
 EndSub
+
 Sub Parse_Ellipse
   ' param buf - SVG buffer
   ' param p - pointer to SVG buffer
@@ -2480,6 +2581,7 @@ Sub Parse_Ellipse
     match = "True"
   EndIf
 EndSub
+
 Sub Parse_FindTag
   ' find tag from html buffer
   ' param["tag"] - tag name
@@ -2523,6 +2625,7 @@ Sub Parse_FindTag
     p = pSave
   EndIf
 EndSub
+
 Sub Parse_GetAttrAndText
   ' get attributes and text from given tag
   ' param tag - given tag
@@ -2571,6 +2674,7 @@ Sub Parse_GetAttrAndText
     EndIf  
   EndWhile
 EndSub
+
 Sub Parse_GetStyleAttr
   ' param kw - keyword
   ' param attr["style"] - style attribute
@@ -2588,6 +2692,7 @@ Sub Parse_GetStyleAttr
     value = Text.GetSubText(attr["style"], pValue, pColon - 1)
   EndIf
 EndSub
+
 Sub Parse_Header
   ' param buf - SVG buffer
   ' param p - pointer to SVG buffer
@@ -2605,6 +2710,7 @@ Sub Parse_Header
     EndIf
   EndIf
 EndSub
+
 Sub Parse_Line
   ' param buf - SVG buffer
   ' param p - pointer to SVG buffer
@@ -2633,6 +2739,7 @@ Sub Parse_Line
     match = "True"
   EndIf
 EndSub
+
 Sub Parse_Points
   ' param points - points in a polygon
   ' return px[], py[] - array of the points
@@ -2686,6 +2793,7 @@ Sub Parse_Points
   width = xmax - xmin
   height = ymax - ymin
 EndSub
+
 Sub Parse_Polygon
   ' param buf - SVG buffer
   ' param p - pointer to SVG buffer
@@ -2719,6 +2827,7 @@ Sub Parse_Polygon
     match = "True"
   EndIf
 EndSub
+
 Sub Parse_SetStyle
   pStyle = 1
   kw = "fill"
@@ -2731,6 +2840,7 @@ Sub Parse_SetStyle
   Parse_GetStyleAttr()
   pw = value
 EndSub
+
 Sub Parse_SB
   subname = "Shapes_Init"
   buf = ""
@@ -2820,6 +2930,7 @@ Sub Parse_SB
   shY = 0
   scale = 1
 EndSub
+
 Sub Parse_SkipSpaceInTag
   ' param pTag - pointer to tag
   ' param tag - tag
@@ -2834,6 +2945,7 @@ Sub Parse_SkipSpaceInTag
     EndIf
   EndWhile
 EndSub
+
 Sub Parse_Space
   ' param p - pointer to buffer
   ' param buf - buffer
@@ -2848,6 +2960,7 @@ Sub Parse_Space
     EndIf
   EndWhile
 EndSub
+
 Sub Parse_SVG
   ' param buf - SVG buffer
   scale = 1
@@ -2889,6 +3002,7 @@ Sub Parse_SVG
   nShapes = iMax
   Parse_Use()
 EndSub
+
 Sub Parse_Rect
   ' param buf - SVG buffer
   ' param p - pointer to SVG buffer
@@ -2918,6 +3032,7 @@ Sub Parse_Rect
     match = "True"
   EndIf
 EndSub
+
 Sub Parse_Use
   param = "tag=use;"
   Parse_FindTag() ' p is updated
@@ -2949,6 +3064,7 @@ Sub Parse_Use
     CalcDetectBorder()
   EndFor
 EndSub
+
 Sub DumpBuf
   If sp[10] = "" Then
     For i = 1 To 10
@@ -2958,6 +3074,7 @@ Sub DumpBuf
   TextWindow.WriteLine(Text.GetSubText(buf, p - 10, 21))
   TextWindow.WriteLine(sp[10] + "^" + sp[10])
 EndSub
+
 Sub Popup_Init
   TOPY = 10   ' top y
   LEFTX = 10  ' left x
@@ -2971,6 +3088,7 @@ Sub Popup_Init
   SLITCOLOR = "#555555"
   UNDEFINED = "N/A"
 EndSub
+
 Sub SB_AppendSub
   ' Small Basic | Append subroutine from Small Basic source file
   ' param filename - file name
@@ -3022,6 +3140,7 @@ Sub SB_AppendSub
   buf = buf + Text.GetSubText(_buf, ptrSub, len)
   sbas_exit:
 EndSub
+
 Sub SB_RotateWorkaround
   ' Small Basic | Rotate workaround for Silverlight
   ' param shp - current shape
@@ -3040,6 +3159,7 @@ Sub SB_RotateWorkaround
   x = x1 * Math.Cos(alpha) - y1 * Math.Sin(alpha) + ox
   y = x1 * Math.Sin(alpha) + y1 * Math.Cos(alpha) + oy
 EndSub
+
 Sub SB_Workaround
   ' Small Basic | Workaround for Silverlight
   ' returns silverlight - "True" if in remote
@@ -3051,6 +3171,7 @@ Sub SB_Workaround
     silverlight = "False"
   EndIf
 EndSub
+
 Sub Shapes_Init
   ' Shapes | Initialize scissors shapes data for menu icon
   ' return shX, shY - current position of shapes
@@ -3066,6 +3187,7 @@ Sub Shapes_Init
   shape[6] = "func=ell;x=61;y=163;width=13;height=15;bc=#6E6E6E;pw=0;"
   shape[7] = "func=ell;x=70;y=236;width=64;height=104;bc=#00EEEEEE;pc=#0C95BB;pw=16;"
 EndSub
+
 Sub Shapes_Add
   ' Shapes | add shapes as shapes data
   ' param iMin, iMax - shape indices to add
@@ -3126,6 +3248,7 @@ Sub Shapes_Add
   x = Stack.PopValue("local")
   i = Stack.PopValue("local")
 EndSub
+
 Sub Shapes_CalcRotatePos
   ' Shapes | Calculate position for rotated shape
   ' param["x"], param["y"] - position of a shape
@@ -3146,6 +3269,7 @@ Sub Shapes_CalcRotatePos
   x = _cx - param["width"] / 2
   y = _cy - param["height"] / 2
 EndSub
+
 Sub Shapes_CalcWidthAndHeight
   ' Shapes | Calculate total width and height of shapes
   ' param iMin, iMax - shape indices to add
@@ -3200,6 +3324,7 @@ Sub Shapes_CalcWidthAndHeight
     shape[i] = shp
   EndFor
 EndSub
+
 Sub Shapes_Move
   ' Shapes | Move shapes
   ' param iMin, iMax - shape indices to add
@@ -3224,6 +3349,7 @@ Sub Shapes_Move
   EndFor
   i = Stack.PopValue("local")
 EndSub
+
 Sub Shapes_Remove
   ' Shapes | Remove shapes
   ' param iMin, iMax - shapes indices to remove
@@ -3235,6 +3361,7 @@ Sub Shapes_Remove
   EndFor
   i = Stack.PopValue("local")
 EndSub
+
 Sub Shapes_Rotate
   ' Shapes | Rotate shapes
   ' param iMin, iMax - shapes indices to rotate
@@ -3282,6 +3409,7 @@ Sub Shapes_Rotate
   x = Stack.PopValue("local")
   i = Stack.PopValue("local")
 EndSub
+
 Sub Slider_Add
   ' Slider | Add slider as shapes and property
   ' param width
@@ -3320,6 +3448,7 @@ Sub Slider_Add
   slider[iSlider] = sldr
   Slider_SetLevel()
 EndSub
+
 Sub Slider_CallBack
   ' Slider | Call back
   ' param iSlider - changed slider
@@ -3328,6 +3457,7 @@ Sub Slider_CallBack
   CS_ShowNewColor()       ' show new color name
   CS_DrawColorRect()      ' draw new color rectangle
 EndSub
+
 Sub Slider_GetLevel
   ' Slider | Get latest level of slider
   ' param iSlider
@@ -3335,6 +3465,7 @@ Sub Slider_GetLevel
   sldr = slider[iSlider]
   level = sldr["level"]
 EndSub
+
 Sub Slider_GetMouseLevel
   ' Slider | Get mouse level of slider
   ' param iSlider
@@ -3346,6 +3477,7 @@ Sub Slider_GetMouseLevel
   min = sldr["min"]
   level = min + Math.Floor((max - min) * (mxM - x0) / (x1 - x0))
 EndSub
+
 Sub Slider_WaitToRelease
   ' Slider | Get released point for slider moving
   ' param iSlider
@@ -3376,6 +3508,7 @@ Sub Slider_WaitToRelease
   param = "move=False;up=False;"  ' mouse released
   Mouse_SetHandler()
 EndSub
+
 Sub Slider_Remove
   ' Slider | Remove a slider
   ' param iSlider
@@ -3385,6 +3518,7 @@ Sub Slider_Remove
   Shapes.Remove(sldr["oBox"])
   Shapes.Remove(sldr["oLevel"])
 EndSub
+
 Sub Slider_SetLevel
   ' Slider | Set slider level and move slider box
   ' param iSlider
@@ -3410,4 +3544,3 @@ Sub Slider_SetLevel
   slider[iSlider] = sldr
   width = Stack.PopValue("local")
 EndSub
-  

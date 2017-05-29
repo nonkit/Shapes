@@ -28,16 +28,6 @@ Sub Shapes_Init
   shape[10] = "func=tri;x=65;y=3;x1=63;y1=0;x2=0;y2=76;x3=126;y3=76;bc=#5AACCD;pc=#000000;pw=4;"
   shape[11] = "func=tri;x=221;y=3;x1=63;y1=0;x2=0;y2=76;x3=126;y3=76;bc=#4A4A4A;pc=#000000;pw=4;"
   shape[12] = "func=rect;x=127;y=0;width=158;height=80;bc=#5AACCD;pc=#000000;pw=4;"
-pw=;"
-pw=;"
-pw=;"
-pw=;"
-pw=;"
-pw=;"
-pw=;"
-pw=;"
-pw=;"
-pw=;"
 EndSub
 Sub Math_CartesianToPolar
   ' Math | convert cartesian coodinate to polar coordinate
