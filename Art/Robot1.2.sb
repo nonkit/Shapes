@@ -1,5 +1,5 @@
-' 2012/09/18 8:28:08 Generated (PSN020)
-' by Shapes 1.1
+' 2017-08-16 18:45:00 Generated
+' by GetShapes VBA.ppm
 '
 ' initialize shapes
 Shapes_Init()
@@ -7,7 +7,7 @@ Shapes_Init()
 scale = 1
 Shapes_Add()
 Shapes_CalcWidthAndHeight() ' is needed for rotation after Shapes 1.1
-For angle = 0 To 360
+For angle = 0 To 360 Step 10
   Shapes_Rotate()
   Program.Delay(500)
 EndFor
@@ -16,15 +16,15 @@ Sub Shapes_Init
   ' Shapes | Initialize shapes data
   ' return shX, shY - current position of shapes
   ' return shape - array of shapes
-  shX = 102 ' x offset
-  shY = 162 ' y offset
+  shX = 211 ' x offset
+  shY = 125 ' y offset
   shape = ""
-  shape[1] = "func=rect;x=34;y=0;width=227;height=188;angle=27;bc=#6A5ACD;pc=#000000;pw=2;"
-  shape[2] = "func=ell;x=82;y=15;width=52;height=55;bc=#CD5AAC;pc=#000000;pw=2;"
-  shape[3] = "func=ell;x=190;y=70;width=52;height=55;bc=#CD5AAC;pc=#000000;pw=2;"
-  shape[4] = "func=rect;x=81;y=127;width=90;height=25;angle=27;bc=#CD5AAC;pc=#000000;pw=2;"
-  shape[5] = "func=tri;x=0;y=9;x1=26;y1=0;x2=0;y2=44;x3=52;y3=44;angle=118;bc=#CD5AAC;pc=#000000;pw=2;"
-  shape[6] = "func=tri;x=243;y=132;x1=26;y1=0;x2=0;y2=44;x3=52;y3=44;angle=296;bc=#CD5AAC;pc=#000000;pw=2;"
+  shape[1] = "func=rect;x=13;y=0;width=63;height=53;pw=1;pc=#000000;bc=#939393;name=Rectangle 94;"
+  shape[2] = "func=ell;x=20;y=10;width=16;height=16;pw=1;pc=#000000;bc=#CD9F5A;name=Oval 95;"
+  shape[3] = "func=ell;x=53;y=10;width=16;height=16;pw=1;pc=#000000;bc=#CD9F5A;name=Oval 96;"
+  shape[4] = "func=rect;x=31;y=36;width=26;height=8;pw=1;pc=#000000;bc=#222222;name=Rectangle 97;"
+  shape[5] = "func=tri;x=0;y=20;x1=7;y1=0;x2=0;y2=11;x3=14;y3=11;angle=90;pw=1;pc=#000000;bc=#939393;name=Isosceles Triangle 98;"
+  shape[6] = "func=tri;x=74;y=20;x1=7;y1=0;x2=0;y2=11;x3=14;y3=11;angle=270;pw=1;pc=#000000;bc=#939393;name=Isosceles Triangle 99;"
 EndSub
 
 Sub Shapes_Add
@@ -250,3 +250,4 @@ Sub Math_CartesianToPolar
     a = a + 360
   EndIf
 EndSub
+    
