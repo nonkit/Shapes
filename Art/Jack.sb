@@ -38,7 +38,7 @@ Shapes_Remove()
 Controls.Remove(trick)
 Shapes.Remove(orText)
 Controls.Remove(treat)
-url = "C:\Users\Nonki\SkyDrive\Pictures\"
+url = "C:\Users\Nonki\OneDrive\Pictures\etc\"
 If Controls.LastClickedButton = trick Then
   GraphicsWindow.BackgroundColor = "Purple"
   ' draw moon

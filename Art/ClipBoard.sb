@@ -1,6 +1,7 @@
-' 2012/09/10 12:52:43 Generated
+' 2012-09-10 12:52:43 Generated
 ' by Shapes Editor 0.6
-'
+' Program ID LHP512
+
 ' initialize shapes
 Shapes_Init()
 ' add shapes

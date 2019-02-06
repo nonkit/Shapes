@@ -1,13 +1,14 @@
-' 2012/09/10 8:45:57 Generated
+' 2012-09-10 8:45:57 Generated
 ' by Shapes Editor 0.5
-'
+' Program ID QHP205
+
 ' initialize shapes
 Scissors_Init()
 scissorsX = shX
 scissorsY = shY
 scissors = shape
 ' add shapes
-scale = 0.5
+scale = 1
 Shapes_Add()
 nShapes = 3
 For t = 0 To 360 * 3.3
