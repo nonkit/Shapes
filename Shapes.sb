@@ -1,11 +1,10 @@
 ' Shapes
-' Version 2.3b
+' Version 2.3.1b
 ' Copyright © 2012-2017 Nonki Takahashi.  The MIT License.
-' Last update 2017-05-29
+' Last update 2017-09-23
 ' Repository https://github.com/nonkit/Shapes
 '
 ' TODO:
-'  [✓] #26 Passive text support
 '  [ ] #25 Support group array specification
 '  [ ] #14 Show file name in title
 '  [ ] #12 Support PowerPoint VBA format output
@@ -17,7 +16,7 @@
 '  [ ] #2 Bug fix for Silverlight:  Rotated triangles move after click
 '  [ ] #1 Bug fix for Silverlight:  Lines come different place
 '
-title = "Shapes 2.3b"
+title = "Shapes 2.3.1b"
 pgmname = "Shapes.sb"
 GraphicsWindow.Title = title
 debug = "False"
@@ -2151,6 +2150,13 @@ Sub File_GetBasename
     pFilename = pFilename + iBackslash
   EndWhile
   iDot = Text.GetIndexOf(Text.GetSubTextToEnd(filename, pFilename), ".")
+  _iDot = iDot
+  While 0 < _iDot
+    _iDot = Text.GetIndexOf(Text.GetSubTextToEnd(filename, pFilename + iDot), ".")
+    If 0 < _iDot Then
+      iDot = iDot + _iDot
+    EndIf
+  EndWhile
   If 0 < iDot Then
     basename = Text.GetSubText(filename, pFilename, iDot - 1)
     ext = Text.GetSubTextToEnd(filename, pFilename + iDot)
