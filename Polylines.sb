@@ -1,0 +1,152 @@
+' Polylines Editor
+' Version 0.1
+' Copyright © 2019 Nonki Takahashi.  The MIT License.
+' Last update 2019-10-05
+
+GraphicsWindow.Title = "Polylines 0.1"
+Init()
+While "True"
+  If mouseDown Then
+    If onPoint Then
+      If Mouse.IsRightButtonDown Then
+        Shapes.ShowShape(cursor)
+        onPoint = "False"
+      ElseIf delta < Math.Max(Math.Abs(dx - lastX), Math.Abs(dy - lastY)) Then
+        If selected = 0 Then
+          point = ""
+          point[1]["x"] = lastX
+          point[1]["y"] = lastY
+          selected = Array.GetItemCount(polyline) + 1
+          polyline[selected] = point
+        Else
+          point = polyline[selected]
+        EndIf
+        nPoint = Array.GetItemCount(point)
+        point[nPoint + 1]["x"] = dx
+        point[nPoint + 1]["y"] = dy
+        polyline[selected] = point
+        DumpPolylines()
+        GraphicsWindow.DrawLine(lastX, lastY, dx, dy)
+        Shapes.Move(cursor, dx - delta / 2, dy - delta / 2)
+        lastX = dx
+        lastY = dy
+      EndIf
+    ElseIf Mouse.IsLeftButtonDown Then
+      lastX = dx
+      lastY = dy
+      Shapes.Move(cursor, lastX - delta / 2, lastY - delta / 2)
+      Shapes.ShowShape(cursor)
+      selected = 0
+      onPoint = "True"
+    EndIf
+    mouseDown = "False"
+  ElseIf mouseMove Then
+    If Not[onPoint] Then
+      CheckOnPoint()
+    EndIf
+    mouseMove = "False"
+  Else
+    Program.Delay(100)
+  EndIf
+EndWhile
+
+Sub Init
+  LF = Text.GetCharacter(10)
+  Not = "False=True;True=False;"
+  gw = GraphicsWindow.Width
+  gh = GraphicsWindow.Height
+  GraphicsWindow.Width = gw + 200
+  GraphicsWindow.BrushColor = "LightGray"
+  GraphicsWindow.FillRectangle(gw, 0, 200, gh)
+  point = ""
+  polyline = ""
+  GraphicsWindow.PenColor = "DarkBlue"
+  GraphicsWindow.BrushColor = "Transparent"
+  delta = 10
+  cursor = Shapes.AddEllipse(delta, delta)
+  Shapes.SetOpacity(cursor, 50)
+  Shapes.HideShape(cursor)
+  onPoint = "False"
+  GraphicsWindow.PenColor = "Black"
+  DrawPolylines()
+  GraphicsWindow.BrushColor = "Black"
+  tbox = Controls.AddMultiLineTextBox(gw + 10, 10)
+  Controls.SetSize(tbox, 180, gh - 20)
+  DumpPolylines()
+  GraphicsWindow.MouseDown = OnMouseDown
+  GraphicsWindow.MouseMove = OnMouseMove
+EndSub
+
+Sub DrawPolylines
+  nPolyline = Array.GetItemCount(polyline)
+  For iPolyline = 1 To nPolyline
+    point = polyline[iPolyline]
+    nPoint = Array.GetItemCount(point)
+    For iPoint = 1 To nPoint
+      x2 = point[iPoint]["x"]
+      y2 = point[iPoint]["y"]
+      If 1 < iPoint Then
+        GraphicsWindow.DrawLine(x1, y1, x2, y2)
+      EndIf
+      x1 = x2
+      y1 = y2
+    EndFor
+  EndFor
+EndSub
+
+Sub DumpPolylines
+  buf = ""
+  nPolyline = Array.GetItemCount(polyline)
+  For iPolyline = 1 To nPolyline
+    point = polyline[iPolyline]
+    nPoint = Array.GetItemCount(point)
+    buf = buf + "polyline " + iPolyline + ":" + LF
+    For iPoint = 1 To nPoint
+      x2 = point[iPoint]["x"]
+      y2 = point[iPoint]["y"]
+      If 1 < iPoint Then
+        buf = buf + "  (" + x1 + "," + y1 + ","
+        buf = buf + x2 + "," + y2 + ")" + LF
+      EndIf
+      x1 = x2
+      y1 = y2
+    EndFor
+  EndFor
+  Controls.SetTextBoxText(tbox, buf)
+EndSub
+
+Sub CheckOnPoint
+  nPolyline = Array.GetItemCount(polyline)
+  onPoint = "False"
+  For iPolyline = 1 To nPolyline
+    point = polyline[iPolyline]
+    nPoint = Array.GetItemCount(point)
+    For iPoint = 1 To nPoint
+      x = point[iPoint]["x"]
+      y = point[iPoint]["y"]
+      If Math.Max(Math.Abs(mx - x), Math.Abs(my - y)) < delta Then
+        Shapes.Move(cursor, x - delta / 2, y - delta / 2)
+        Shapes.ShowShape(cursor)
+        selected = iPolyline
+        lastX = x
+        lastY = y
+        onPoint = "True"
+      EndIf
+    EndFor
+  EndFor
+  If Not[onPoint] Then
+    Shapes.HideShape(cursor)
+  EndIf
+EndSub
+
+Sub OnMouseDown
+  dx = GraphicsWindow.MouseX
+  dy = GraphicsWindow.MouseY
+  mouseDown = "True"
+EndSub
+
+Sub OnMouseMove
+  mx = GraphicsWindow.MouseX
+  my = GraphicsWindow.MouseY
+  mouseMove = "True"
+EndSub
