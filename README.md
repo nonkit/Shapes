@@ -10,3 +10,8 @@ Following two files are runtime executables.
 
 Following file is the source code. This file is read from Shapes.exe at run time.
 - Shapes.sb
+
+## See Also
+
+- [Wiki](Wiki) (document)
+- [Anime](http://github.com/nonkit/Anime) (animation editor - alpha version)
