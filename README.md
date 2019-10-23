@@ -13,5 +13,5 @@ Following file is the source code. This file is read from Shapes.exe at run time
 
 ## See Also
 
-- [Wiki](http://github.com/nonkit/Shapes/Wiki) (document)
+- [Wiki](http://github.com/nonkit/Shapes/wiki) (document)
 - [Anime](http://github.com/nonkit/Anime) (animation editor - alpha version)
