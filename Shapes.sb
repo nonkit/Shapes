@@ -1,14 +1,12 @@
 ' Shapes
-' Version 2.4
+' Version 2.5
 ' Copyright © 2012-2020 Nonki Takahashi.  The MIT License.
 ' Last update 2020-04-09
 ' Repository https://github.com/nonkit/Shapes
 '
 ' TODO:
 '  [ ] #29 Suport to get Shapes_Init_xxx
-'  [✓] #28 Support dark grid
 '  [ ] #25 Support sprite array specification
-'  [✓] #14 Show file name in title
 '  [ ] #11 Support transparent brush color
 '  [ ] #7 Support text tag (element)
 '  [ ] #6 Check illegal behavior in Silverlight environment
@@ -197,7 +195,7 @@ Sub CalcVertexes
     mxM = x
     myM = y
   EndIf
-EndSub  
+EndSub
 
 Sub DeleteSelectedShape
   ' param selectedshape
@@ -770,6 +768,16 @@ Sub DrawMenuItem
   GraphicsWindow.FontSize = 12
 EndSub
 
+Sub DumpBuf
+  If sp[10] = "" Then
+    For i = 1 To 10
+      sp[10] = sp[10] + " "
+    EndFor
+  EndIf
+  TextWindow.WriteLine(Text.GetSubText(buf, p - 10, 21))
+  TextWindow.WriteLine(sp[10] + "^" + sp[10])
+EndSub
+
 Sub DumpShape
   TextWindow.WriteLine("shX=" + shX)
   TextWindow.WriteLine("shY=" + shY)
@@ -1082,6 +1090,26 @@ Sub MoveShape
   EndFor
 EndSub
 
+Sub New
+  If 0 < nShapes Then
+    caution = "Are you sure to clear all shapes?"
+    Dialog_YesNo()
+    If yes Then
+      If selectedshape <> "" Then
+        i = selectedshape
+        select = "False"
+        ShapeSelect()             ' removes pinches if a shape selected
+      EndIf
+      iMin = 1
+      iMax = nShapes
+      Shapes_Remove()
+      shape = ""
+      nShapes = 0
+      iMax = nShapes
+    EndIf
+  EndIf
+EndSub
+
 Sub NormalizePos
   ' param mxD, myD - fixed vertex of a shape rotated
   ' param mxM, myM - opposite vertex of a shape rotated
@@ -1290,7 +1318,7 @@ Sub WaitToClick
   EndWhile
 EndSub
 
-Sub WaitToReleaseM ' for moving a shape
+Sub WaitToReleaseM  ' for moving a shape
   ' param i - shape index
   ' param mxD, myD - fixed vertex of a shape
   ' return mxU, myU - opposite vertex of a shape
@@ -1358,7 +1386,7 @@ Sub WaitToReleaseM ' for moving a shape
   EndIf
 EndSub
 
-Sub WaitToReleaseR ' for rotating a shape
+Sub WaitToReleaseR  ' for rotating a shape
   ' param i - shape index
   ' return angle - angle for rotation
   GraphicsWindow.PenWidth = 1
@@ -1487,26 +1515,6 @@ Sub WriteShapes
   EndIf
   File_Save()
   i = Stack.PopValue("local")
-EndSub
-
-Sub New
-  If 0 < nShapes Then
-    caution = "Are you sure to clear all shapes?"
-    Dialog_YesNo()
-    If yes Then
-      If selectedshape <> "" Then
-        i = selectedshape
-        select = "False"
-        ShapeSelect()             ' removes pinches if a shape selected
-      EndIf
-      iMin = 1
-      iMax = nShapes
-      Shapes_Remove()
-      shape = ""
-      nShapes = 0
-      iMax = nShapes
-    EndIf
-  EndIf
 EndSub
 
 Sub Color_ColorToRGB
@@ -2080,18 +2088,6 @@ Sub Dialog_YesNo
   Shapes.Remove(oMsgBox)
 EndSub
 
-Sub File_GetAbsPath
-  ' param curDir - current directory
-  ' param relPath - relative path
-  ' return absPath - absolute path
-  If Text.IsSubText(relPath, ":") Or Text.StartsWith(relPath, "\") Or relPath = "" Then
-    absPath = relPath
-  Else
-    absPath = curDir + "\" + relPath
-    File_RemoveDots()
-  EndIf
-EndSub
-
 Sub File_CloseDialog
   ' File | Close dialog for Open/Save
   ' param oPopup
@@ -2106,6 +2102,18 @@ Sub File_CloseDialog
   Controls.Remove(oFilename)
   Controls.Remove(oCaption)
   Controls.Remove(oPopup)
+EndSub
+
+Sub File_GetAbsPath
+  ' param curDir - current directory
+  ' param relPath - relative path
+  ' return absPath - absolute path
+  If Text.IsSubText(relPath, ":") Or Text.StartsWith(relPath, "\") Or relPath = "" Then
+    absPath = relPath
+  Else
+    absPath = curDir + "\" + relPath
+    File_RemoveDots()
+  EndIf
 EndSub
 
 Sub File_GetBasename
@@ -2366,7 +2374,7 @@ Sub KB_InKey
     EndIf
     c = Text.Append(_ctrl, c)
   EndIf
-EndSub  
+EndSub
 
 Sub KB_Init
   ' Keyboard | Initialization for Shapes (use only ^x, ^c, ^v, del and arrow keys)
@@ -2379,7 +2387,7 @@ Sub KB_Init
   arrow_dy = "LEFT=0;RIGHT=0;UP=-1;DOWN=1;"
   GraphicsWindow.KeyDown = KB_OnKeyDown
   GraphicsWindow.KeyUp = KB_OnKeyUp
-EndSub  
+EndSub
 
 Sub KB_OnKeyDown
   ' Keyboard | Key down event handler
@@ -2850,17 +2858,34 @@ Sub Parse_Polygon
   EndIf
 EndSub
 
-Sub Parse_SetStyle
-  pStyle = 1
-  kw = "fill"
-  Parse_GetStyleAttr()
-  bc = Text.ConvertToUpperCase(value)
-  kw = "stroke"
-  Parse_GetStyleAttr()
-  pc = Text.ConvertToUpperCase(value)
-  kw = "stroke-width"
-  Parse_GetStyleAttr()
-  pw = value
+Sub Parse_Rect
+  ' param buf - SVG buffer
+  ' param p - pointer to SVG buffer
+  ' return match - "True" if match
+  ' return shp - shape entry
+  match = "False"
+  If Text.StartsWith(Text.GetSubTextToEnd(buf, p), LT + "rect") Then
+    param = "tag=rect;"
+    Parse_FindTag() ' p is updated
+    Parse_GetAttrAndText()
+    x = attr["x"]
+    y = attr["y"]
+    width = attr["width"]
+    height = attr["height"]
+    Parse_SetStyle()
+    Parse_Angle()
+    shp = ""
+    shp["func"] = "rect"
+    shp["x"] = x - Math.Floor(pw / 2)
+    shp["y"] = y - Math.Floor(pw / 2)
+    shp["width"] = width + pw
+    shp["height"] = height + pw
+    shp["angle"] = angle
+    shp["pw"] = pw
+    shp["pc"] = pc
+    shp["bc"] = bc
+    match = "True"
+  EndIf
 EndSub
 
 Sub Parse_SB
@@ -2953,6 +2978,19 @@ Sub Parse_SB
   scale = 1
 EndSub
 
+Sub Parse_SetStyle
+  pStyle = 1
+  kw = "fill"
+  Parse_GetStyleAttr()
+  bc = Text.ConvertToUpperCase(value)
+  kw = "stroke"
+  Parse_GetStyleAttr()
+  pc = Text.ConvertToUpperCase(value)
+  kw = "stroke-width"
+  Parse_GetStyleAttr()
+  pw = value
+EndSub
+
 Sub Parse_SkipSpaceInTag
   ' param pTag - pointer to tag
   ' param tag - tag
@@ -3025,36 +3063,6 @@ Sub Parse_SVG
   Parse_Use()
 EndSub
 
-Sub Parse_Rect
-  ' param buf - SVG buffer
-  ' param p - pointer to SVG buffer
-  ' return match - "True" if match
-  ' return shp - shape entry
-  match = "False"
-  If Text.StartsWith(Text.GetSubTextToEnd(buf, p), LT + "rect") Then
-    param = "tag=rect;"
-    Parse_FindTag() ' p is updated
-    Parse_GetAttrAndText()
-    x = attr["x"]
-    y = attr["y"]
-    width = attr["width"]
-    height = attr["height"]
-    Parse_SetStyle()
-    Parse_Angle()
-    shp = ""
-    shp["func"] = "rect"
-    shp["x"] = x - Math.Floor(pw / 2)
-    shp["y"] = y - Math.Floor(pw / 2)
-    shp["width"] = width + pw
-    shp["height"] = height + pw
-    shp["angle"] = angle
-    shp["pw"] = pw
-    shp["pc"] = pc
-    shp["bc"] = bc
-    match = "True"
-  EndIf
-EndSub
-
 Sub Parse_Use
   param = "tag=use;"
   Parse_FindTag() ' p is updated
@@ -3085,16 +3093,6 @@ Sub Parse_Use
     shape[i] = shp
     CalcDetectBorder()
   EndFor
-EndSub
-
-Sub DumpBuf
-  If sp[10] = "" Then
-    For i = 1 To 10
-      sp[10] = sp[10] + " "
-    EndFor
-  EndIf
-  TextWindow.WriteLine(Text.GetSubText(buf, p - 10, 21))
-  TextWindow.WriteLine(sp[10] + "^" + sp[10])
 EndSub
 
 Sub Popup_Init
@@ -3500,37 +3498,6 @@ Sub Slider_GetMouseLevel
   level = min + Math.Floor((max - min) * (mxM - x0) / (x1 - x0))
 EndSub
 
-Sub Slider_WaitToRelease
-  ' Slider | Get released point for slider moving
-  ' param iSlider
-  param = "down=False;move=True;up=True;"  ' for slider moving / wait to release
-  Mouse_SetHandler()
-  While Not[released]
-    If moved Then
-      param = "move=False;"  ' while slider moving
-      Mouse_SetHandler()
-      sldr = slider[iSlider]
-      x0_ = sldr["x0"]
-      x1_ = sldr["x1"]
-      If mxM < x0_ Then
-        mxM = x0_
-      EndIf
-      If x1_ < mxM Then
-        mxM = x1_
-      EndIf
-      Slider_GetMouseLevel()  ' get mouse level of slider
-      Slider_SetLevel()       ' set slider level and move slider box
-      Slider_CallBack()
-      param = "move=True;"    ' for next slider moving
-      Mouse_SetHandler()
-    Else
-      Program.Delay(100)
-    EndIf
-  EndWhile
-  param = "move=False;up=False;"  ' mouse released
-  Mouse_SetHandler()
-EndSub
-
 Sub Slider_Remove
   ' Slider | Remove a slider
   ' param iSlider
@@ -3566,4 +3533,34 @@ Sub Slider_SetLevel
   slider[iSlider] = sldr
   width = Stack.PopValue("local")
 EndSub
-  
+
+Sub Slider_WaitToRelease
+  ' Slider | Get released point for slider moving
+  ' param iSlider
+  param = "down=False;move=True;up=True;"  ' for slider moving / wait to release
+  Mouse_SetHandler()
+  While Not[released]
+    If moved Then
+      param = "move=False;"  ' while slider moving
+      Mouse_SetHandler()
+      sldr = slider[iSlider]
+      x0_ = sldr["x0"]
+      x1_ = sldr["x1"]
+      If mxM < x0_ Then
+        mxM = x0_
+      EndIf
+      If x1_ < mxM Then
+        mxM = x1_
+      EndIf
+      Slider_GetMouseLevel()  ' get mouse level of slider
+      Slider_SetLevel()       ' set slider level and move slider box
+      Slider_CallBack()
+      param = "move=True;"    ' for next slider moving
+      Mouse_SetHandler()
+    Else
+      Program.Delay(100)
+    EndIf
+  EndWhile
+  param = "move=False;up=False;"  ' mouse released
+  Mouse_SetHandler()
+EndSub
