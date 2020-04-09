@@ -441,7 +441,6 @@ Sub DoMenu                        ' if a menu item clicked do the funciton
       If 2 < grid Then
         grid = 0
       EndIf
-      TextWindow.WriteLine("grid=" + grid)
       If grid <> 1 Then
         GraphicsWindow.BrushColor = bgColor[grid]
         GraphicsWindow.FillRectangle(0, sizeMenu + 20, gw, gh - sizeMenu - 20)
