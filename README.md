@@ -4,6 +4,10 @@
 
 Shapes in Small Basic is a simple Scalable Vector Graphics editor written in Microsoft Small Basic program language.  This program can also read/write Small Basic program which has shape array.
 
+## Releases
+
+Releases are available [here](https://github.com/nonkit/Shapes/releases).
+
 Following two files are runtime executables.
 - SmallBasicLibrary.dll
 - Shapes.exe
@@ -14,4 +18,4 @@ Following file is the source code. This file is read from Shapes.exe at run time
 ## See Also
 
 - [Wiki](http://github.com/nonkit/Shapes/wiki) (document)
-- [Anime](http://github.com/nonkit/Anime) (animation editor - alpha version)
+- [Anime](https://nonkit.github.io/Anime/) (animation editor - alpha version)

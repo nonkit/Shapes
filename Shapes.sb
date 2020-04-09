@@ -1,24 +1,24 @@
 ' Shapes
-' Version 2.3.1b
-' Copyright © 2012-2017 Nonki Takahashi.  The MIT License.
-' Last update 2017-09-23
+' Version 2.4
+' Copyright © 2012-2020 Nonki Takahashi.  The MIT License.
+' Last update 2020-04-09
 ' Repository https://github.com/nonkit/Shapes
 '
 ' TODO:
-'  [ ] #25 Support group array specification
-'  [ ] #14 Show file name in title
-'  [ ] #12 Support PowerPoint VBA format output
+'  [ ] #29 Suport to get Shapes_Init_xxx
+'  [✓] #28 Support dark grid
+'  [ ] #25 Support sprite array specification
+'  [✓] #14 Show file name in title
 '  [ ] #11 Support transparent brush color
 '  [ ] #7 Support text tag (element)
 '  [ ] #6 Check illegal behavior in Silverlight environment
-'  [ ] #5 Sort subroutines
 '  [ ] #3 Bug fix for Silverlight:  Lines move after click
 '  [ ] #2 Bug fix for Silverlight:  Rotated triangles move after click
 '  [ ] #1 Bug fix for Silverlight:  Lines come different place
 '
-title = "Shapes 2.3.1b"
+title = "Shapes 2.4"
 pgmname = "Shapes.sb"
-GraphicsWindow.Title = title
+GraphicsWindow.Title = "Untitled - " + title
 debug = "False"
 Not = "False=True;True=False;"
 SB_Workaround()
@@ -434,20 +434,21 @@ Sub DoMenu                        ' if a menu item clicked do the funciton
       bcolor = color
       DrawMenuItem()
     ElseIf func = "gr" Then       ' grid
-      grid = Not[grid]
-      If grid Then
-        colorGrid = "#EEEEEE"
-        stepGrid = 10
-        DrawGrid()
-        colorGrid = "#AAAAAA"
-        stepGrid = 50
-        DrawGrid()
-        colorGrid = "#666666"
-        stepGrid = 100
-        DrawGrid()
-      Else
-        GraphicsWindow.BrushColor = "White"
+      ' grid = 0 ... no grid
+      ' grid = 1 ... light grid
+      ' grid = 2 ... dark grid
+      grid = grid + 1
+      If 2 < grid Then
+        grid = 0
+      EndIf
+      TextWindow.WriteLine("grid=" + grid)
+      If grid <> 1 Then
+        GraphicsWindow.BrushColor = bgColor[grid]
         GraphicsWindow.FillRectangle(0, sizeMenu + 20, gw, gh - sizeMenu - 20)
+      EndIf
+      If 0 < grid Then
+        colorGrid = colorGrids[grid]
+        DrawGrid()
       EndIf
     ElseIf func = "menubar" And selectedshape <> "" Then
       i = selectedshape
@@ -566,13 +567,25 @@ EndSub
 
 Sub DrawGrid
   ' param colorGrid - color for grid
-  ' param stepGrid - step for grid
   GraphicsWindow.PenWidth = 1
-  GraphicsWindow.PenColor = colorGrid
-  For x = 0 To gw - 1 Step stepGrid
+  For x = 0 To gw - 1 Step 10
+    If Math.Remainder(x, 100) = 0 Then
+      GraphicsWindow.PenColor = colorGrid[100]
+    ElseIf Math.Remainder(x, 50) = 0 Then
+      GraphicsWindow.PenColor = colorGrid[50]
+    Else
+      GraphicsWindow.PenColor = colorGrid[10]
+    EndIf
     GraphicsWindow.DrawLine(x, sizeMenu + 20, x, gh)
   EndFor
-  For y = sizeMenu + 20 To gh - 1 Step stepGrid
+  For y = sizeMenu + 20 To gh - 1 Step 10
+    If Math.Remainder(y, 100) = 0 Then
+      GraphicsWindow.PenColor = colorGrid[100]
+    ElseIf Math.Remainder(y, 50) = 0 Then
+      GraphicsWindow.PenColor = colorGrid[50]
+    Else
+      GraphicsWindow.PenColor = colorGrid[10]
+    EndIf
     GraphicsWindow.DrawLine(0, y, gw, y)
   EndFor
 EndSub
@@ -584,7 +597,10 @@ Sub DrawMenu
   cyMenu = 6
   sizeMenu = 40
   nMenu = 13
-  grid = "False"
+  grid = 0
+  bgColor = "0=White;2=#000033;"    ' background for grid
+  colorGrids[1] = "10=#11000000;50=#55000000;100=#AA000000;"
+  colorGrids[2] = "10=#11FFFFFF;50=#55FFFFFF;100=#AAFFFFFF;"
   GraphicsWindow.BrushColor = "#EEEEEE"
   GraphicsWindow.FillRectangle(0, 0, gw, 20 + sizeMenu)
   pw = "1=2;2=4;3=8;4=16;5=0;6=1;"  ' pen width
@@ -1100,6 +1116,7 @@ Sub ReadShapes
     EndIf
     pw = Stack.PopValue("local")
     Shapes_Add()
+    GraphicsWindow.Title = basename + "." + ext + " - " + title
   EndIf
 EndSub
 
@@ -2076,53 +2093,6 @@ Sub File_GetAbsPath
   EndIf
 EndSub
 
-Sub File_RemoveDots
-  ' param absPath - with dots
-  ' return absPath - without dots
-  path = absPath
-  folder = ""
-  n = 0
-  While Text.IsSubText(path, "\")
-    n = n + 1
-    p = Text.GetIndexOf(path, "\")
-    folder[n] = Text.GetSubText(path, 1, p - 1)
-    path = Text.GetSubTextToEnd(path, p + 1)
-  EndWhile
-  If path <> "" Then
-    n = n + 1
-    folder[n] = path
-  EndIf
-  While Array.ContainsValue(folder, ".") Or Array.ContainsValue(folder, "..")
-    For i = 1 To n
-      If folder[i] = "." Then
-        File_RemoveEntry()
-        i = n + 1 ' break
-      ElseIf folder[i] = ".." Then
-        i = i - 1
-        File_RemoveEntry()
-        File_RemoveEntry()
-        i = n + 1 ' break
-      EndIf
-    EndFor
-  EndWhile
-  absPath = folder[1]
-  For i = 2 To n
-    absPath = absPath + "\" + folder[i]
-  EndFor
-EndSub
-
-Sub File_RemoveEntry
-  ' param folder - entry array
-  ' param i - entry index
-  ' return folder - updated entry array
-  ' return n
-  For _i = i To n - 1
-    folder[_i] = folder[_i + 1]
-  EndFor
-  folder[n] = ""
-  n = n - 1
-EndSub
-
 Sub File_CloseDialog
   ' File | Close dialog for Open/Save
   ' param oPopup
@@ -2245,6 +2215,53 @@ Sub File_OpenDialog
   Shapes.Move(oMsg, LEFTX, gh - 28)
   GraphicsWindow.BrushColor = TEXTCOLOR
   oCancel = Controls.AddButton("Cancel", 535, gh - 34)
+EndSub
+
+Sub File_RemoveDots
+  ' param absPath - with dots
+  ' return absPath - without dots
+  path = absPath
+  folder = ""
+  n = 0
+  While Text.IsSubText(path, "\")
+    n = n + 1
+    p = Text.GetIndexOf(path, "\")
+    folder[n] = Text.GetSubText(path, 1, p - 1)
+    path = Text.GetSubTextToEnd(path, p + 1)
+  EndWhile
+  If path <> "" Then
+    n = n + 1
+    folder[n] = path
+  EndIf
+  While Array.ContainsValue(folder, ".") Or Array.ContainsValue(folder, "..")
+    For i = 1 To n
+      If folder[i] = "." Then
+        File_RemoveEntry()
+        i = n + 1 ' break
+      ElseIf folder[i] = ".." Then
+        i = i - 1
+        File_RemoveEntry()
+        File_RemoveEntry()
+        i = n + 1 ' break
+      EndIf
+    EndFor
+  EndWhile
+  absPath = folder[1]
+  For i = 2 To n
+    absPath = absPath + "\" + folder[i]
+  EndFor
+EndSub
+
+Sub File_RemoveEntry
+  ' param folder - entry array
+  ' param i - entry index
+  ' return folder - updated entry array
+  ' return n
+  For _i = i To n - 1
+    folder[_i] = folder[_i + 1]
+  EndFor
+  folder[n] = ""
+  n = n - 1
 EndSub
 
 Sub File_Save
@@ -3550,3 +3567,4 @@ Sub Slider_SetLevel
   slider[iSlider] = sldr
   width = Stack.PopValue("local")
 EndSub
+  
