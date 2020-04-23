@@ -1,11 +1,12 @@
 ' Shapes
-' Version 2.5
+' Version 2.6.0
 ' Copyright © 2012-2020 Nonki Takahashi.  The MIT License.
-' Last update 2020-04-09
+' Last update 2020-04-19
 ' Repository https://github.com/nonkit/Shapes
 '
 ' TODO:
-'  [ ] #29 Suport to get Shapes_Init_xxx
+'  [✓] #30 Change xlink:href to href
+'  [✓] #29 Support to get Shapes_Init_xxx
 '  [ ] #25 Support sprite array specification
 '  [ ] #11 Support transparent brush color
 '  [ ] #7 Support text tag (element)
@@ -14,7 +15,7 @@
 '  [ ] #2 Bug fix for Silverlight:  Rotated triangles move after click
 '  [ ] #1 Bug fix for Silverlight:  Lines come different place
 '
-title = "Shapes 2.4"
+title = "Shapes 2.6.0"
 pgmname = "Shapes.sb"
 GraphicsWindow.Title = "Untitled - " + title
 debug = "False"
@@ -1037,7 +1038,7 @@ Sub GenerateSVG
   EndFor
   buf = buf + sp[4] + LT + "/g>" + CR + LF
   buf = buf + "  " + LT + "/defs>" + CR + LF
-  buf = buf + "  " + LT + "use x=" + WQ + xmin + WQ + " y=" + WQ + ymin + WQ + " xlink:href=" + WQ + "#g1" + WQ + " />" + CR + LF
+  buf = buf + "  " + LT + "use x=" + WQ + xmin + WQ + " y=" + WQ + ymin + WQ + " href=" + WQ + "#g1" + WQ + " />" + CR + LF
   buf = buf + LT + "/svg>" + CR + LF
 EndSub
 
@@ -2890,8 +2891,10 @@ EndSub
 
 Sub Parse_SB
   subname = "Shapes_Init"
+  _Name = "True"
   buf = ""
   SB_AppendSub()
+  _Name = "False"
   ptr = Text.GetIndexOf(buf, "Sub " + "Shapes_Init")
   If ptr = 0 Then
     Goto rs_exit
@@ -3113,6 +3116,7 @@ Sub SB_AppendSub
   ' Small Basic | Append subroutine from Small Basic source file
   ' param filename - file name
   ' param subname - subroutine name
+  ' param _Name - "True" if additional _Name is allowed
   ' return buf - subroutine buffer
   len = Text.GetLength(subname)
   _buf = "" ' for Slilverlight
@@ -3130,8 +3134,14 @@ Sub SB_AppendSub
     While Text.GetSubText(_buf, ptr, 1) = " "
       ptr = ptr + 1
     EndWhile
-    If Text.GetSubText(_buf, ptr, len) = subname And Text.IsSubText(TCHAR, Text.GetSubText(_buf, ptr + len, 1)) = "False" Then
-      notFound = "False"
+    If _Name Then
+      If Text.GetSubText(_buf, ptr, len) = subname And (Text.GetSubText(_buf, ptr + len, 1) = "_") Then
+        notFound = "False"
+      EndIf
+    Else
+      If Text.GetSubText(_buf, ptr, len) = subname And Not[Text.IsSubText(TCHAR, Text.GetSubText(_buf, ptr + len, 1))] Then
+        notFound = "False"
+      EndIf
     EndIf
   EndWhile
   _ptre = _ptr - 1
@@ -3564,3 +3574,4 @@ Sub Slider_WaitToRelease
   param = "move=False;up=False;"  ' mouse released
   Mouse_SetHandler()
 EndSub
+  
