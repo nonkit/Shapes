@@ -1,0 +1,116 @@
+' Origami
+' Copyright © 2020 Nonki Takahashi.  The MIT License.
+' Last update 2020-04-26
+
+GraphicsWindow.Title = "Origami"
+GraphicsWindow.PenWidth = 0
+delay = 100 '[ms]
+oc[1] = "SteelBlue"
+c = oc[1]
+rate = 0.8
+Color_Whiten()
+oc[2] = c
+GraphicsWindow.BrushColor = oc[2]
+gw = GraphicsWindow.Width
+gh = GraphicsWindow.Height
+ox = gw / 2
+oy = gh / 2
+x1 = 0
+y1 = 0
+x2 = 150
+y2 = 150
+x3 = 0
+y3 = 300
+shp[2] = Shapes.AddTriangle(x1, y1, x2, y2, x3, y3)
+Shapes.Move(shp[2], gw / 2, (gh - y3) / 2)
+x1 = 0
+y1 = 150
+x2 = 150
+y2 = 0
+x3 = 150
+y3 = 300
+shp[1] = Shapes.AddTriangle(x1, y1, x2, y2, x3, y3)
+shpX[1] = (gw - x3 * 2) / 2
+shpY[1] = (gh - y3) / 2
+Shapes.Move(shp[1], shpX[1], shpY[1])
+For a = -5 To -90 Step -5
+  Program.Delay(delay)
+  LDShapes.RotateAbout(shp[1], ox, oy, a)
+  LDShapes.RotateAbout(shp[2], ox, oy, a)
+EndFor
+h = 150
+For a = 5 To 180 Step 5
+  Program.Delay(delay)
+  scaleY = LDMath.Cos(a)
+  Shapes.Zoom(shp[1], 1, Math.Abs(scaleY))
+  If a = 90 Then
+    Shapes.HideShape(shp[1])
+  ElseIf a = 95 Then
+    LDShapes.SetProperty(shp[1], "FlowDirection", "RightToLeft")
+    LDShapes.BrushColour(shp[1], oc[1])
+    Shapes.ShowShape(shp[1])
+  EndIf
+  If 90 < a Then
+    y = shpY[1] - h * Math.Abs(scaleY)
+    Shapes.Move(shp[1], shpX[1], y)
+  EndIf
+EndFor
+
+Sub Color_ColorToRGB
+  ' Color | convert color To RGB values
+  ' param c - "#rrggbb" (hexadecimal values)
+  ' return r, g, b - RGB values 0..255
+  If Text.GetLength(c) = 9 Then
+    _alpha = 2
+  Else
+    _alpha = 0
+  EndIf
+  hex = Text.GetSubText(c, _alpha + 2, 2)
+  Math_Hex2Dec()
+  r = dec
+  hex = Text.GetSubText(c, _alpha + 4, 2)
+  Math_Hex2Dec()
+  g = dec
+  hex = Text.GetSubText(c, _alpha + 6, 2)
+  Math_Hex2Dec()
+  b = dec
+EndSub
+
+Sub Color_NameToColor
+  ' Color | convert color name to color
+  ' param c - color name
+  ' returns c -"#rrggbb"
+  If Text.StartsWith(c, "#") And 6 < Text.GetLength(c) Then
+    c = Text.ConvertToUpperCase(c)
+  Else
+    Stack.PushValue("local", GraphicsWindow.PenColor)
+    GraphicsWindow.PenColor = c
+    c = GraphicsWindow.PenColor
+    GraphicsWindow.PenColor = Stack.PopValue("local")
+  EndIf
+EndSub
+
+Sub Color_Whiten
+  ' Color | Whiten given color
+  ' param c - given color
+  ' param rate - 0..1
+  ' return c - color blackened
+  Color_NameToColor()
+  Color_ColorToRGB()
+  r = 255 - Math.Floor((255 - r) * (1 - rate))
+  g = 255 - Math.Floor((255 - g) * (1 - rate))
+  b = 255 - Math.Floor((255 - b) * (1 - rate))
+  c = GraphicsWindow.GetColorFromRGB(r, g, b)
+EndSub
+
+Sub Math_Hex2Dec
+  ' Math | convert hexadecimal to decimal
+  ' param hex
+  ' returns dec
+  dec = 0
+  len = Text.GetLength(hex)
+  For ptr = 1 To len
+    dec = dec * 16 + Text.GetIndexOf("123456789ABCDEF", Text.GetSubText(hex, ptr, 1))
+  EndFor
+EndSub
+    
