@@ -1,12 +1,11 @@
 ' Shapes
-' Version 2.6.0
-' Copyright © 2012-2020 Nonki Takahashi.  The MIT License.
-' Last update 2020-04-19
+' Version 2.6.1
+' Copyright © 2012-2023 Nonki Takahashi.  The MIT License.
+' Last update 2023-05-29
 ' Repository https://github.com/nonkit/Shapes
 '
 ' TODO:
-'  [✓] #30 Change xlink:href to href
-'  [✓] #29 Support to get Shapes_Init_xxx
+'  [✓] #31 Support to get Shapes_Init
 '  [ ] #25 Support sprite array specification
 '  [ ] #11 Support transparent brush color
 '  [ ] #7 Support text tag (element)
@@ -15,7 +14,7 @@
 '  [ ] #2 Bug fix for Silverlight:  Rotated triangles move after click
 '  [ ] #1 Bug fix for Silverlight:  Lines come different place
 '
-title = "Shapes 2.6.0"
+title = "Shapes 2.6.1"
 pgmname = "Shapes.sb"
 GraphicsWindow.Title = "Untitled - " + title
 debug = "False"
@@ -3134,12 +3133,14 @@ Sub SB_AppendSub
     While Text.GetSubText(_buf, ptr, 1) = " "
       ptr = ptr + 1
     EndWhile
-    If _Name Then
-      If Text.GetSubText(_buf, ptr, len) = subname And (Text.GetSubText(_buf, ptr + len, 1) = "_") Then
-        notFound = "False"
+    If Text.GetSubText(_buf, ptr, len) = subname Then
+      _c = Text.GetSubText(_buf, ptr + len, 1)
+      If _Name Then
+        _allowed = "_' " + CR + LF
+      Else
+        _allowed = "' " + CR + LF
       EndIf
-    Else
-      If Text.GetSubText(_buf, ptr, len) = subname And Not[Text.IsSubText(TCHAR, Text.GetSubText(_buf, ptr + len, 1))] Then
+      If Text.IsSubText(_allowed, _c) Then
         notFound = "False"
       EndIf
     EndIf
